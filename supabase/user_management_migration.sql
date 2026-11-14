@@ -43,12 +43,12 @@ do $$ declare t text; begin
  drop policy if exists "Editors manage asset categories" on public.asset_categories;
  create policy "Editors manage asset categories" on public.asset_categories for all to authenticated
   using (public.is_lumetra_editor()) with check (public.is_lumetra_editor());
-end $;
+end $$;
 
 -- Keep legacy CMS helper safe for any existing policies that still reference it.
 create or replace function public.is_lumetra_admin()
 returns boolean language sql stable security definer set search_path=public
-as $ select public.is_lumetra_editor() $;
+as $$ select public.is_lumetra_editor() $$;
 
 -- Owner-only footer/contact settings. Editors may manage other site_content sections.
 alter table public.site_content enable row level security;
