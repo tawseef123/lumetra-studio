@@ -34,7 +34,16 @@ do $$ declare t text; begin
   execute format('drop policy if exists "Editors manage %1$s" on public.%1$I',t);
   execute format('create policy "Editors manage %1$s" on public.%1$I for all to authenticated using (public.is_lumetra_editor()) with check (public.is_lumetra_editor())',t);
  end loop;
-end $$;
+ -- Category policies use human-readable names from their original migrations.
+ drop policy if exists "Admins manage project categories" on public.project_categories;
+ drop policy if exists "Editors manage project categories" on public.project_categories;
+ create policy "Editors manage project categories" on public.project_categories for all to authenticated
+  using (public.is_lumetra_editor()) with check (public.is_lumetra_editor());
+ drop policy if exists "Admins manage asset categories" on public.asset_categories;
+ drop policy if exists "Editors manage asset categories" on public.asset_categories;
+ create policy "Editors manage asset categories" on public.asset_categories for all to authenticated
+  using (public.is_lumetra_editor()) with check (public.is_lumetra_editor());
+end $;
 
 -- Owner-only footer/contact settings. Editors may manage other site_content sections.
 alter table public.site_content enable row level security;
