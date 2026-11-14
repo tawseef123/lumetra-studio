@@ -49,21 +49,49 @@ $('footerSettingsForm').addEventListener('submit',async e=>{
  finally{btn.disabled=false}
 });
 
+async function callUserAdmin(payload){
+ const {data,error}=await client.functions.invoke('invite-editor',{body:payload});
+ if(error)throw error;if(data?.error)throw new Error(data.error);return data;
+}
 async function loadUsers(){
  if(currentRole!=='owner')return;
- $('usersTableBody').innerHTML='<tr><td colspan="3" class="empty">Loading users…</td></tr>';
- const {data,error}=await client.from('admin_users').select('user_id,role,created_at').order('created_at',{ascending:true});
- if(error){$('usersTableBody').innerHTML='<tr><td colspan="3" class="empty">'+esc(error.message)+'</td></tr>';return}
- $('usersTableBody').innerHTML=(data||[]).map(u=>'<tr><td>'+esc(u.user_id)+'</td><td>'+esc(u.role)+'</td><td>'+(u.role==='owner'?'Full owner access':'CMS content access')+'</td></tr>').join('')||'<tr><td colspan="3" class="empty">No CMS users found.</td></tr>';
+ $('usersTableBody').innerHTML='<tr><td colspan="5" class="empty">Loading users…</td></tr>';
+ try{
+  const data=await callUserAdmin({action:'list'});
+  const users=data.users||[];
+  $('usersTableBody').innerHTML=users.map(u=>{
+   const active=!u.banned_until||new Date(u.banned_until)<new Date();
+   const role=u.is_owner?'Owner':'Editor';
+   const actions=u.is_owner?'<span class="muted">Protected</span>':
+    '<button type="button" class="secondary user-toggle" data-user="'+esc(u.user_id)+'" data-active="'+(!active)+'">'+(active?'Deactivate':'Activate')+'</button> <button type="button" class="secondary user-remove" data-user="'+esc(u.user_id)+'">Remove</button>';
+   return '<tr><td>'+esc(u.email||u.user_id)+'</td><td>'+role+'</td><td>'+(active?'Active':'Deactivated')+'</td><td>'+esc(u.created_at?new Date(u.created_at).toLocaleDateString():'—')+'</td><td>'+actions+'</td></tr>';
+  }).join('')||'<tr><td colspan="5" class="empty">No CMS users found.</td></tr>';
+ }catch(err){$('usersTableBody').innerHTML='<tr><td colspan="5" class="empty">'+esc(err.message)+'</td></tr>'}
 }
 $('refreshUsersBtn')?.addEventListener('click',loadUsers);
+$('usersTableBody')?.addEventListener('click',async e=>{
+ const toggle=e.target.closest('.user-toggle'),remove=e.target.closest('.user-remove');
+ if(!toggle&&!remove)return;
+ const user_id=(toggle||remove).dataset.user;
+ try{
+  if(toggle){
+   const active=toggle.dataset.active==='true';
+   await callUserAdmin({action:'set-active',user_id,active});
+   notify(active?'Editor activated':'Editor deactivated');
+  }else{
+   if(!confirm('Permanently remove this editor account? This cannot be undone.'))return;
+   await callUserAdmin({action:'remove',user_id});
+   notify('Editor removed');
+  }
+  await loadUsers();
+ }catch(err){notify(err.message||'User action failed')}
+});
 $('inviteEditorForm')?.addEventListener('submit',async e=>{
  e.preventDefault();if(currentRole!=='owner')return;
  const btn=$('inviteEditorBtn');btn.disabled=true;$('inviteEditorError').textContent='';
  try{
   const email=String(new FormData(e.currentTarget).get('email')||'').trim();
-  const {data,error}=await client.functions.invoke('invite-editor',{body:{email}});
-  if(error)throw error;if(data?.error)throw new Error(data.error);
+  await callUserAdmin({action:'invite',email});
   notify('Invitation sent to '+email);e.currentTarget.reset();await loadUsers();
  }catch(err){$('inviteEditorError').textContent=err.message||'Could not send invitation. Check the Edge Function setup.'}
  finally{btn.disabled=false}
