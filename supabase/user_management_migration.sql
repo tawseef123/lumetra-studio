@@ -45,6 +45,11 @@ do $$ declare t text; begin
   using (public.is_lumetra_editor()) with check (public.is_lumetra_editor());
 end $;
 
+-- Keep legacy CMS helper safe for any existing policies that still reference it.
+create or replace function public.is_lumetra_admin()
+returns boolean language sql stable security definer set search_path=public
+as $ select public.is_lumetra_editor() $;
+
 -- Owner-only footer/contact settings. Editors may manage other site_content sections.
 alter table public.site_content enable row level security;
 drop policy if exists "Admins manage site_content" on public.site_content;
