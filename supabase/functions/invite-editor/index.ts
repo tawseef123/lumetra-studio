@@ -68,13 +68,17 @@ Deno.serve(async (req) => {
     return json({ users });
   }
 
-  if (action === "invite") {
+  if (action === "create") {
     const email = String(body.email || "").trim().toLowerCase();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      return json({ error: "Valid email required" }, 400);
-    }
-    const { data, error } = await admin.auth.admin.inviteUserByEmail(email, {
-      redirectTo: body.redirectTo || undefined,
+    const password = String(body.password || "");
+    const displayName = String(body.name || "").trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return json({ error: "Enter a valid email address." }, 400);
+    if (password.length < 8) return json({ error: "Temporary password must be at least 8 characters." }, 400);
+    if (!displayName) return json({ error: "Enter the editor's name." }, 400);
+
+    const { data, error } = await admin.auth.admin.createUser({
+      email, password, email_confirm: true,
+      user_metadata: { full_name: displayName, must_change_password: true },
     });
     if (error) return json({ error: error.message }, 400);
     const { error: roleError } = await admin.from("admin_users")
@@ -83,7 +87,7 @@ Deno.serve(async (req) => {
       await admin.auth.admin.deleteUser(data.user.id);
       return json({ error: roleError.message }, 500);
     }
-    return json({ ok: true, email, user_id: data.user.id });
+    return json({ ok: true, email, user_id: data.user.id, role: "editor" });
   }
 
   const targetId = String(body.user_id || "");
