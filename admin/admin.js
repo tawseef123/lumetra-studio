@@ -88,14 +88,17 @@ $('usersTableBody')?.addEventListener('click',async e=>{
 });
 $('inviteEditorForm')?.addEventListener('submit',async e=>{
  e.preventDefault();if(currentRole!=='owner')return;
+ const form=e.currentTarget;
  const btn=$('inviteEditorBtn');btn.disabled=true;$('inviteEditorError').textContent='';
  try{
-  const fd=new FormData(e.currentTarget);
+  const fd=new FormData(form);
   const name=String(fd.get('name')||'').trim();
   const email=String(fd.get('email')||'').trim();
   const password=String(fd.get('password')||'');
   await callUserAdmin({action:'create',name,email,password});
-  notify('Editor account created for '+email);e.currentTarget.reset();await loadUsers();
+  form.reset();
+  notify('Editor account created for '+email);
+  await loadUsers();
  }catch(err){$('inviteEditorError').textContent=err.message||'Could not create editor account.'}
  finally{btn.disabled=false}
 });
