@@ -70,7 +70,7 @@ Deno.serve(async (req) => {
 
   if (action === "invite") {
     const email = String(body.email || "").trim().toLowerCase();
-    if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)) {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return json({ error: "Valid email required" }, 400);
     }
     const { data, error } = await admin.auth.admin.inviteUserByEmail(email, {
