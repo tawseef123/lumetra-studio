@@ -90,10 +90,13 @@ $('inviteEditorForm')?.addEventListener('submit',async e=>{
  e.preventDefault();if(currentRole!=='owner')return;
  const btn=$('inviteEditorBtn');btn.disabled=true;$('inviteEditorError').textContent='';
  try{
-  const email=String(new FormData(e.currentTarget).get('email')||'').trim();
-  await callUserAdmin({action:'invite',email});
-  notify('Invitation sent to '+email);e.currentTarget.reset();await loadUsers();
- }catch(err){$('inviteEditorError').textContent=err.message||'Could not send invitation. Check the Edge Function setup.'}
+  const fd=new FormData(e.currentTarget);
+  const name=String(fd.get('name')||'').trim();
+  const email=String(fd.get('email')||'').trim();
+  const password=String(fd.get('password')||'');
+  await callUserAdmin({action:'create',name,email,password});
+  notify('Editor account created for '+email);e.currentTarget.reset();await loadUsers();
+ }catch(err){$('inviteEditorError').textContent=err.message||'Could not create editor account.'}
  finally{btn.disabled=false}
 });
 
