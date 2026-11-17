@@ -1553,10 +1553,10 @@ body[data-theme="light"] .benefit {
   display: none !important;
 }
 body[data-theme="light"] #about .benefits > .benefit {
-  background: #F7F3E8 !important;
+  background: #EEF5FC !important;
   background-image: none !important;
-  border: 1px solid #E5DCCB !important;
+  border: 1px solid #D8E6F5 !important;
   border-radius: 14px !important;
-  box-shadow: 0 7px 20px rgba(91, 77, 52, .08) !important;
+  box-shadow: 0 7px 20px rgba(75, 116, 160, .09) !important;
   color: #182238;
 }
