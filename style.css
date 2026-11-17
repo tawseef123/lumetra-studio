@@ -1424,38 +1424,29 @@ html{scroll-padding-top:70px}body{font-size:15px;line-height:1.65}.wrap,.section
 }
 
 
-/* V4.6 — Reduce Asset card scale while preserving the existing grid column count */
-#assetCategorySegments .asset-segment-grid {
-  justify-items: center;
-}
-#assetCategorySegments .asset-segment-grid .asset-card {
-  width: 100%;
-  scale: .5;
-  border-radius: 13px;
-}
-#assetCategorySegments .asset-segment-grid .asset-card img {
-  height: 116px;
-  aspect-ratio: auto;
-  object-fit: cover;
-}
-#assetCategorySegments .asset-segment-grid .asset-info {
-  padding: 9px 11px;
-}
-#assetCategorySegments .asset-segment-grid .asset-info h3 {
-  font-size: 12px;
-}
-#assetCategorySegments .asset-segment-grid .asset-info p {
-  font-size: 10px;
-}
-@media (max-width: 640px) {
+/* V4.7 — Make Asset page content tiles half-width on desktop; preserve mobile sizing */
+@media (min-width: 641px) {
+  #assetCategorySegments .asset-segment-grid {
+    justify-items: center;
+  }
   #assetCategorySegments .asset-segment-grid .asset-card {
-    width: 100%;
-    scale: .93;
+    width: 50%;
+    scale: 1;
+    justify-self: center;
+    border-radius: 13px;
   }
   #assetCategorySegments .asset-segment-grid .asset-card img {
-    height: 92px;
+    height: 116px;
+    aspect-ratio: auto;
+    object-fit: cover;
   }
   #assetCategorySegments .asset-segment-grid .asset-info {
-    padding: 8px 9px;
+    padding: 9px 11px;
+  }
+  #assetCategorySegments .asset-segment-grid .asset-info h3 {
+    font-size: 12px;
+  }
+  #assetCategorySegments .asset-segment-grid .asset-info p {
+    font-size: 10px;
   }
 }
