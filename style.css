@@ -1422,3 +1422,49 @@ html{scroll-padding-top:70px}body{font-size:15px;line-height:1.65}.wrap,.section
     grid-template-rows: repeat(3, auto);
   }
 }
+
+
+/* V4.5 — Make individual asset tiles more compact on the Asset page only */
+#assetCategorySegments .asset-segment-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+#assetCategorySegments .asset-segment-grid .asset-card {
+  border-radius: 13px;
+}
+#assetCategorySegments .asset-segment-grid .asset-card img {
+  height: 128px;
+  aspect-ratio: auto;
+  object-fit: cover;
+}
+#assetCategorySegments .asset-segment-grid .asset-info {
+  padding: 9px 11px;
+}
+#assetCategorySegments .asset-segment-grid .asset-info h3 {
+  font-size: 12px;
+}
+#assetCategorySegments .asset-segment-grid .asset-info p {
+  font-size: 10px;
+}
+@media (max-width: 1000px) {
+  #assetCategorySegments .asset-segment-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width: 640px) {
+  #assetCategorySegments .asset-segment-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  #assetCategorySegments .asset-segment-grid .asset-card img {
+    height: 100px;
+  }
+  #assetCategorySegments .asset-segment-grid .asset-info {
+    padding: 8px 9px;
+  }
+}
+@media (max-width: 390px) {
+  #assetCategorySegments .asset-segment-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
