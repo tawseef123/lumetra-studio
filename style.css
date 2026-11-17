@@ -1536,3 +1536,27 @@ body[data-theme="light"] .benefit {
   border: 0 !important;
   box-shadow: none !important;
 }
+
+
+/* V6.7 — restore rounded background cards for the four About benefit points */
+#about .benefits > .benefit {
+  min-height: 62px;
+  padding: 14px 17px;
+  border: 1px solid #203454;
+  border-radius: 14px;
+  background: #06142B;
+  box-shadow: 0 7px 20px rgba(2, 11, 29, .22);
+}
+#about .benefits > .benefit::before,
+#about .benefits > .benefit::after {
+  content: none !important;
+  display: none !important;
+}
+body[data-theme="light"] #about .benefits > .benefit {
+  background: #F7F3E8 !important;
+  background-image: none !important;
+  border: 1px solid #E5DCCB !important;
+  border-radius: 14px !important;
+  box-shadow: 0 7px 20px rgba(91, 77, 52, .08) !important;
+  color: #182238;
+}
