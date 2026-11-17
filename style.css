@@ -1389,3 +1389,25 @@ html{scroll-padding-top:70px}body{font-size:15px;line-height:1.65}.wrap,.section
     font-size: 14px;
   }
 }
+
+
+/* V4.3 — scale up hero action buttons on desktop/web */
+@media (min-width: 761px) {
+  .hero .actions {
+    gap: 14px;
+  }
+  .hero .actions .btn {
+    min-height: 54px;
+    padding: 16px 25px;
+    font-size: 15px;
+    line-height: 1.35;
+    gap: 10px;
+    border-radius: 10px;
+  }
+  .hero .actions .btn svg,
+  .hero .actions .btn .ico {
+    width: 19px;
+    height: 19px;
+    font-size: 19px;
+  }
+}
