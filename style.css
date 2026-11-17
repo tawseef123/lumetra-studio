@@ -1471,3 +1471,15 @@ html{scroll-padding-top:70px}body{font-size:15px;line-height:1.65}.wrap,.section
   .footer-bottom { font-size: 12px; line-height: 1.7; }
   .footer-legal { font-size: 12px; }
 }
+
+
+/* V6.0 — further enlarge mobile Contact and Services footer typography only */
+@media (max-width: 760px) {
+  .footer-contact-column h3,
+  .footer-services-column h3,
+  .footer-column:not(.footer-social-column) h3 { font-size: 21px; }
+  .footer-contact-column .footer-detail,
+  .footer-services-column .footer-service-link,
+  .footer-column:not(.footer-social-column) .footer-detail,
+  .footer-column:not(.footer-social-column) .footer-service-link { font-size: 17px; line-height: 1.7; }
+}
