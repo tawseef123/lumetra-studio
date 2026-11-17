@@ -1483,3 +1483,17 @@ html{scroll-padding-top:70px}body{font-size:15px;line-height:1.65}.wrap,.section
   .footer-column:not(.footer-social-column) .footer-detail,
   .footer-column:not(.footer-social-column) .footer-service-link { font-size: 17px; line-height: 1.7; }
 }
+
+
+/* V6.1 — enlarge mobile Contact and Services footer text further; Follow Us and desktop unchanged */
+@media (max-width: 760px) {
+  .footer-column:not(.footer-social-column) h3 {
+    font-size: 23px;
+    line-height: 1.3;
+  }
+  .footer-column:not(.footer-social-column) .footer-detail,
+  .footer-column:not(.footer-social-column) .footer-service-link {
+    font-size: 19px;
+    line-height: 1.75;
+  }
+}
