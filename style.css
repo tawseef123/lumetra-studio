@@ -1570,3 +1570,16 @@ body[data-theme="light"] #about .benefits > .benefit {
     background-repeat: no-repeat, no-repeat;
   }
 }
+
+
+/* V7.0 — mobile homepage hero: make the studio image cover the complete hero area */
+@media (max-width: 640px) {
+  .hero {
+    min-height: calc(100svh - 66px);
+  }
+  .hero:before {
+    background-position: center, center center !important;
+    background-size: 100% 100%, cover !important;
+    background-repeat: no-repeat, no-repeat !important;
+  }
+}
