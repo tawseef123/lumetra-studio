@@ -1430,7 +1430,7 @@ html{scroll-padding-top:70px}body{font-size:15px;line-height:1.65}.wrap,.section
 }
 #assetCategorySegments .asset-segment-grid .asset-card {
   width: 100%;
-  scale: .88;
+  scale: .5;
   border-radius: 13px;
 }
 #assetCategorySegments .asset-segment-grid .asset-card img {
