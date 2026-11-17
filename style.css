@@ -1499,14 +1499,14 @@ html{scroll-padding-top:70px}body{font-size:15px;line-height:1.65}.wrap,.section
 }
 
 
-/* V6.2 — dark navy Let's Talk button on Portfolio and Assets subpages only */
-.subpage .nav-actions .nav-cta {
+/* V6.3 — dark navy CTA button above the footer on Portfolio and Assets; header restored */
+.subpage .cta .btn {
   background: #020B1D;
   border: 1px solid #203454;
   color: #FFFFFF;
   box-shadow: 0 6px 20px rgba(2, 11, 29, .28);
 }
-.subpage .nav-actions .nav-cta:hover {
+.subpage .cta .btn:hover {
   background: #06142B;
   border-color: #365078;
 }
