@@ -1363,3 +1363,29 @@ html{scroll-padding-top:70px}body{font-size:15px;line-height:1.65}.wrap,.section
   .hero p { font-size: 14px; }
   .hero .actions .btn { font-size: 13px; }
 }
+
+
+/* V4.2 — enlarge both hero action buttons on mobile; desktop unchanged */
+@media (max-width: 640px) {
+  .hero .actions .btn {
+    min-height: 50px;
+    padding: 15px 17px;
+    font-size: 14px;
+    line-height: 1.35;
+    gap: 9px;
+    border-radius: 10px;
+  }
+  .hero .actions .btn svg,
+  .hero .actions .btn .ico {
+    width: 18px;
+    height: 18px;
+    font-size: 18px;
+  }
+}
+@media (max-width: 390px) {
+  .hero .actions .btn {
+    min-height: 50px;
+    padding: 14px 16px;
+    font-size: 14px;
+  }
+}
