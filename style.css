@@ -1516,3 +1516,10 @@ html{scroll-padding-top:70px}body{font-size:15px;line-height:1.65}.wrap,.section
   background: #06142B !important;
   border-color: #365078 !important;
 }
+
+/* V6.5 — remove light-theme background shapes behind About benefit points; dark theme unchanged */
+body[data-theme="light"] .benefit {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
