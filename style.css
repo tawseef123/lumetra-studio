@@ -1188,3 +1188,23 @@ html{scroll-padding-top:70px}body{font-size:15px;line-height:1.65}.wrap,.section
 }
 @media(max-width:390px){.wrap,.section>.wrap{width:calc(100% - 28px)}.hero h1{font-size:clamp(36px,10.5vw,43px)}.hero-content{padding-top:245px}.service-grid,.asset-grid,.benefits{grid-template-columns:minmax(0,1fr)}.service{min-height:0}.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.actions{display:grid;grid-template-columns:minmax(0,1fr)}.actions .btn{width:100%}.footer-main{grid-template-columns:minmax(0,1fr)}.footer-brand-col{grid-column:auto}}
 @media(max-width:360px){.brand img{width:108px}.nav-actions{gap:5px}.theme-toggle{width:32px;height:32px;flex-basis:32px}.menu{min-width:30px;flex-basis:30px}}
+
+
+/* V3.7 — mobile hero vertical position fix; desktop rules intentionally untouched */
+@media (max-width: 640px) {
+  .hero {
+    min-height: 0;
+    align-items: flex-start;
+  }
+  .hero-content {
+    width: 100%;
+    max-width: 100%;
+    padding: clamp(34px, 6vh, 54px) 0 32px;
+    margin: 0;
+  }
+}
+@media (max-width: 390px) {
+  .hero-content {
+    padding-top: 32px;
+  }
+}
