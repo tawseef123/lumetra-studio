@@ -1424,16 +1424,16 @@ html{scroll-padding-top:70px}body{font-size:15px;line-height:1.65}.wrap,.section
 }
 
 
-/* V4.5 — Make individual asset tiles more compact on the Asset page only */
+/* V4.6 — Reduce Asset card scale while preserving the existing grid column count */
 #assetCategorySegments .asset-segment-grid {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 14px;
+  justify-items: center;
 }
 #assetCategorySegments .asset-segment-grid .asset-card {
+  width: 90%;
   border-radius: 13px;
 }
 #assetCategorySegments .asset-segment-grid .asset-card img {
-  height: 128px;
+  height: 116px;
   aspect-ratio: auto;
   object-fit: cover;
 }
@@ -1446,25 +1446,14 @@ html{scroll-padding-top:70px}body{font-size:15px;line-height:1.65}.wrap,.section
 #assetCategorySegments .asset-segment-grid .asset-info p {
   font-size: 10px;
 }
-@media (max-width: 1000px) {
-  #assetCategorySegments .asset-segment-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
 @media (max-width: 640px) {
-  #assetCategorySegments .asset-segment-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
+  #assetCategorySegments .asset-segment-grid .asset-card {
+    width: 94%;
   }
   #assetCategorySegments .asset-segment-grid .asset-card img {
-    height: 100px;
+    height: 92px;
   }
   #assetCategorySegments .asset-segment-grid .asset-info {
     padding: 8px 9px;
-  }
-}
-@media (max-width: 390px) {
-  #assetCategorySegments .asset-segment-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
