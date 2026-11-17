@@ -23,7 +23,7 @@ async function load(){
    if(result.error){console.error('Portfolio content load error',result.error);continue;}
    if(result.kind==='home'){
      const categories=result.categories||[], projects=result.projects||[];
-     home.style.setProperty('--category-columns',String(Math.max(1,Math.ceil(categories.length/2))));
+     home.style.setProperty('--category-columns',String(Math.max(1,Math.ceil(categories.length/3))));
      home.innerHTML=categories.map(c=>{
        const items=projects.filter(p=>p.category_id===c.id||(!p.category_id&&String(p.category||'').toLowerCase()===c.name.toLowerCase()));
        const previews=items.slice(0,4).map(p=>{const id=ytId(p.youtube_url||p.url);return id?'https://img.youtube.com/vi/'+encodeURIComponent(id)+'/hqdefault.jpg':imageUrl(p.image)}).filter(Boolean);
