@@ -1517,7 +1517,20 @@ html{scroll-padding-top:70px}body{font-size:15px;line-height:1.65}.wrap,.section
   border-color: #365078 !important;
 }
 
-/* V6.5 — remove light-theme background shapes behind About benefit points; dark theme unchanged */
+/* V6.6 — strip all light-theme card decoration from the four About benefit rows only */
+body[data-theme="light"] #about .benefits > .benefit {
+  background: none !important;
+  background-image: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+body[data-theme="light"] #about .benefits > .benefit::before,
+body[data-theme="light"] #about .benefits > .benefit::after {
+  content: none !important;
+  display: none !important;
+}
 body[data-theme="light"] .benefit {
   background: transparent !important;
   border: 0 !important;
