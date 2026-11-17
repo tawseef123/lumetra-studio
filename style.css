@@ -1560,3 +1560,13 @@ body[data-theme="light"] #about .benefits > .benefit {
   box-shadow: 0 7px 20px rgba(75, 116, 160, .09) !important;
   color: #182238;
 }
+
+
+/* V6.9 — extend the mobile hero photo to the full hero height, removing the blank strip below it */
+@media (max-width: 640px) {
+  .hero:before {
+    background-position: center, 56% top;
+    background-size: auto, auto 100%;
+    background-repeat: no-repeat, no-repeat;
+  }
+}
