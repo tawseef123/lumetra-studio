@@ -1429,7 +1429,8 @@ html{scroll-padding-top:70px}body{font-size:15px;line-height:1.65}.wrap,.section
   justify-items: center;
 }
 #assetCategorySegments .asset-segment-grid .asset-card {
-  width: 90%;
+  width: 100%;
+  scale: .88;
   border-radius: 13px;
 }
 #assetCategorySegments .asset-segment-grid .asset-card img {
@@ -1448,7 +1449,8 @@ html{scroll-padding-top:70px}body{font-size:15px;line-height:1.65}.wrap,.section
 }
 @media (max-width: 640px) {
   #assetCategorySegments .asset-segment-grid .asset-card {
-    width: 94%;
+    width: 100%;
+    scale: .93;
   }
   #assetCategorySegments .asset-segment-grid .asset-card img {
     height: 92px;
