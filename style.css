@@ -1450,3 +1450,43 @@ html{scroll-padding-top:70px}body{font-size:15px;line-height:1.65}.wrap,.section
     font-size: 10px;
   }
 }
+
+
+/* V4.8 — Homepage Assets category tiles: fixed compact size for current and future categories */
+#featuredAssetCategories {
+  grid-template-columns: repeat(auto-fill, 180px);
+  grid-template-rows: none;
+  grid-auto-rows: auto;
+  justify-content: start;
+  align-items: start;
+  gap: 16px;
+}
+#featuredAssetCategories .portfolio-category-card {
+  width: 180px;
+  max-width: 100%;
+  aspect-ratio: 16 / 9;
+  justify-self: start;
+}
+#featuredAssetCategories .portfolio-category-card span {
+  left: 13px;
+  right: 13px;
+  bottom: 11px;
+  font-size: 16px;
+}
+@media (max-width: 640px) {
+  #featuredAssetCategories {
+    grid-template-columns: repeat(auto-fill, 145px);
+    gap: 12px;
+    overflow-x: visible;
+  }
+  #featuredAssetCategories .portfolio-category-card {
+    width: 145px;
+    aspect-ratio: 4 / 3;
+  }
+  #featuredAssetCategories .portfolio-category-card span {
+    left: 11px;
+    right: 11px;
+    bottom: 10px;
+    font-size: 14px;
+  }
+}
