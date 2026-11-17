@@ -1349,3 +1349,17 @@ html{scroll-padding-top:70px}body{font-size:15px;line-height:1.65}.wrap,.section
     font-size: 22px;
   }
 }
+
+
+/* V4.1 — slightly larger mobile hero typography; desktop remains unchanged */
+@media (max-width: 640px) {
+  .hero .eyebrow { font-size: 15px; }
+  .hero h1 { font-size: clamp(38px, 8.8vw, 46px); }
+  .hero p { font-size: 15px; line-height: 1.58; }
+  .hero .actions .btn { font-size: 13px; padding: 13px 15px; }
+}
+@media (max-width: 390px) {
+  .hero h1 { font-size: clamp(35px, 9vw, 40px); }
+  .hero p { font-size: 14px; }
+  .hero .actions .btn { font-size: 13px; }
+}
