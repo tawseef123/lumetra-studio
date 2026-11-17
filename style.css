@@ -1499,14 +1499,20 @@ html{scroll-padding-top:70px}body{font-size:15px;line-height:1.65}.wrap,.section
 }
 
 
-/* V6.3 — dark navy CTA button above the footer on Portfolio and Assets; header restored */
-.subpage .cta .btn {
-  background: #020B1D;
-  border: 1px solid #203454;
-  color: #FFFFFF;
-  box-shadow: 0 6px 20px rgba(2, 11, 29, .28);
+/* V6.4 — explicitly restore original gradient header button and style only the bottom CTA button */
+.subpage header.nav .nav-actions > a.nav-cta {
+  background: var(--grad) !important;
+  color: #FFFFFF !important;
+  border: 0 !important;
+  box-shadow: 0 8px 28px #3210a833 !important;
 }
-.subpage .cta .btn:hover {
-  background: #06142B;
-  border-color: #365078;
+.subpage main > section.cta > a.btn {
+  background: #020B1D !important;
+  border: 1px solid #203454 !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 6px 20px rgba(2, 11, 29, .28) !important;
+}
+.subpage main > section.cta > a.btn:hover {
+  background: #06142B !important;
+  border-color: #365078 !important;
 }
