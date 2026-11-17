@@ -1411,3 +1411,14 @@ html{scroll-padding-top:70px}body{font-size:15px;line-height:1.65}.wrap,.section
     font-size: 19px;
   }
 }
+
+
+/* V4.4 — show Homepage Portfolio category cards in three rows */
+#featuredCategories {
+  grid-template-rows: repeat(3, auto);
+}
+@media (max-width: 640px) {
+  #featuredCategories {
+    grid-template-rows: repeat(3, auto);
+  }
+}
