@@ -1461,3 +1461,13 @@ html{scroll-padding-top:70px}body{font-size:15px;line-height:1.65}.wrap,.section
   .footer-brand-col { grid-column: 1 / -1; }
   .footer-column { grid-column: 1; }
 }
+
+
+/* V5.9 — improve mobile footer text readability; desktop unchanged */
+@media (max-width: 760px) {
+  .footer-column h3 { font-size: 17px; }
+  .footer-detail, .footer-service-link, .social-row { font-size: 15px; line-height: 1.65; }
+  .footer-tagline { font-size: 17px; }
+  .footer-bottom { font-size: 12px; line-height: 1.7; }
+  .footer-legal { font-size: 12px; }
+}
