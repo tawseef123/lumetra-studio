@@ -2042,3 +2042,9 @@ body.subpage .portfolio-segment-heading h2 {
   @media(max-width:360px){.magic-nav-item{font-size:7px}.magic-nav-item svg{width:18px;height:18px}.magic-nav-indicator{width:53px;height:53px}}
   @media(prefers-reduced-motion:reduce){.magic-nav-indicator,.magic-nav-item,.magic-nav-item svg,.magic-nav-item span{transition:none!important}}
 }
+
+
+/* V8.0 — desktop uses the bottom magic navigation instead of the header link row */
+@media (min-width:761px){
+  header.nav #mainNav{display:none!important}
+}
