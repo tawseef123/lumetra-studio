@@ -1639,3 +1639,90 @@ body[data-theme="light"] #about .benefits > .benefit {
 @media (prefers-reduced-motion: reduce) {
   .glow-card::after { animation: none; }
 }
+
+
+/* V7.2 — refined, compact international typography scale */
+body {
+  font-size: 14px;
+  line-height: 1.62;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.hero h1 { font-size: clamp(44px, 5.35vw, 76px); line-height: 1.02; letter-spacing: -2.4px; }
+.hero p { font-size: clamp(14px, 1vw, 16px); line-height: 1.7; }
+.eyebrow { font-size: 12px; letter-spacing: 2.4px; }
+.section-head h2,
+.intro h2 { font-size: clamp(32px, 3.2vw, 52px); line-height: 1.12; letter-spacing: -1px; }
+.intro p { font-size: 14px; line-height: 1.7; }
+.section-head .sub { font-size: 13px; line-height: 1.65; }
+.service h3 { font-size: 15px; line-height: 1.35; }
+.service p { font-size: 12px; line-height: 1.6; }
+.project-info h3 { font-size: 16px; line-height: 1.4; }
+.project-info p { font-size: 12px; line-height: 1.55; }
+.asset-info h3 { font-size: 14px; line-height: 1.4; }
+.asset-info p { font-size: 11px; line-height: 1.5; }
+.filter { font-size: 11px; }
+.page-hero { padding: 76px 0 58px; }
+.page-hero h1 { font-size: clamp(38px, 5vw, 64px); line-height: 1.06; letter-spacing: -1.6px; }
+.page-hero p { font-size: 14px; line-height: 1.7; }
+.all-grid .project-info h3 { font-size: 17px; }
+.all-grid .project-info p { font-size: 12px; }
+.about h2 { font-size: clamp(32px, 3.2vw, 48px); }
+.about p { font-size: 14px; line-height: 1.7; }
+.benefit { font-size: 12px; line-height: 1.5; }
+.cta h2 { font-size: 24px; line-height: 1.2; }
+.cta p { font-size: 12px; line-height: 1.65; }
+.contact-copy h2 { font-size: clamp(34px, 3.5vw, 52px); }
+.contact-copy p { font-size: 14px; line-height: 1.7; }
+.contact-form input,
+.contact-form textarea { font-size: 13px; }
+.footer-column h3 { font-size: 15px; }
+.footer-detail,
+.footer-service-link,
+.social-row { font-size: 12px; line-height: 1.65; }
+.footer-tagline { font-size: 14px; }
+.footer-bottom,
+.footer-legal { font-size: 11px; line-height: 1.65; }
+@media (min-width: 1001px) {
+  .section-head h2, .intro h2 { font-size: clamp(34px, 3.2vw, 54px); }
+}
+@media (max-width: 1000px) {
+  .hero h1 { font-size: clamp(42px, 7vw, 64px); }
+  .page-hero { padding: 64px 0 48px; }
+}
+@media (max-width: 760px) {
+  .footer-column:not(.footer-social-column) h3 { font-size: 16px; line-height: 1.4; }
+  .footer-column:not(.footer-social-column) .footer-detail,
+  .footer-column:not(.footer-social-column) .footer-service-link,
+  .footer-detail, .footer-service-link, .social-row { font-size: 13px; line-height: 1.65; }
+  .footer-tagline { font-size: 14px; }
+  .footer-bottom, .footer-legal { font-size: 11px; }
+}
+@media (max-width: 640px) {
+  body { font-size: 13px; }
+  .hero h1 { font-size: clamp(40px, 11vw, 54px); letter-spacing: -1.7px; }
+  .hero p { font-size: 13px; line-height: 1.65; }
+  .section { padding: 58px 0; }
+  .intro h2, .section-head h2 { font-size: clamp(29px, 8vw, 36px); }
+  .intro p, .section-head .sub { font-size: 13px; }
+  .service h3 { font-size: 13px; }
+  .service p { font-size: 11px; line-height: 1.55; }
+  .project-info h3 { font-size: 14px; }
+  .project-info p { font-size: 11px; }
+  .asset-info h3 { font-size: 13px; }
+  .asset-info p { font-size: 11px; }
+  .page-hero { padding: 54px 0 40px; }
+  .page-hero h1 { font-size: clamp(34px, 10vw, 46px); letter-spacing: -1px; }
+  .page-hero p { font-size: 13px; }
+  .about h2, .contact-copy h2 { font-size: 32px; }
+  .about p, .contact-copy p { font-size: 13px; }
+  .benefit { font-size: 11px; }
+  .cta h2 { font-size: 22px; }
+  .cta p { font-size: 12px; }
+  .actions .btn, .btn { font-size: 12px; }
+}
+@media (max-width: 380px) {
+  .hero h1 { font-size: 39px; }
+  .page-hero h1 { font-size: 33px; }
+}
