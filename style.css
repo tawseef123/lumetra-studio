@@ -2506,3 +2506,24 @@ header.nav #magicBottomNav .magic-nav-indicator {
 @media (prefers-reduced-motion: reduce) {
   @view-transition { navigation: none; }
 }
+
+
+/* V9.1 — active pill appears with a soft pop from behind the selected item. */
+@keyframes lumetra-nav-pill-pop {
+  0% { opacity:0; transform:translate(-50%,-50%) scale(.38); filter:blur(5px); }
+  68% { opacity:1; transform:translate(-50%,-50%) scale(1.075); filter:blur(0); }
+  100% { opacity:1; transform:translate(-50%,-50%) scale(1); filter:blur(0); }
+}
+header.nav #magicBottomNav .magic-nav-indicator {
+  transition:none!important;
+  will-change:transform,opacity,filter;
+}
+header.nav #magicBottomNav.nav-pill-pop .magic-nav-indicator {
+  animation:lumetra-nav-pill-pop .42s cubic-bezier(.2,.85,.25,1) both!important;
+}
+@media(prefers-reduced-motion:reduce) {
+  header.nav #magicBottomNav.nav-pill-pop .magic-nav-indicator {animation:none!important;}
+}
+/* Cross-page sliding transition intentionally disabled. */
+@view-transition { navigation:none; }
+header.nav #magicBottomNav .magic-nav-indicator { view-transition-name:none; }
