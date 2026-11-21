@@ -134,24 +134,58 @@ body{font-size:14px;line-height:1.6}.login-wrap{padding:18px}.login-card{padding
 
 
 
-/* V4.3 — long runner with fade correctly trailing behind the bright head */
-#loginView .login-card{position:relative;isolation:isolate}
-#loginView .login-border-track{
-  position:absolute;inset:0;width:100%;height:100%;
-  z-index:10;overflow:visible;pointer-events:none;
+
+/* V5.0 — dual rotating animated glowing border beams */
+@property --beam-angle{
+  syntax:"<angle>";
+  initial-value:0deg;
+  inherits:false;
 }
-#loginView .login-border-track rect{
-  fill:none;stroke-linecap:round;
-  stroke-dasharray:70 930;
-  animation:loginBorderTrace 8s linear infinite;
+#loginView .login-card{
+  position:relative;
+  isolation:isolate;
+  z-index:1;
 }
-#loginView .login-border-track .trace-1{stroke:#fff;stroke-width:1.7;stroke-dashoffset:0;opacity:1;filter:drop-shadow(0 0 4px #fff) drop-shadow(0 0 11px #c77bff) drop-shadow(0 0 20px #7B1FA2)}
-#loginView .login-border-track .trace-2{stroke:#f0d7ff;stroke-width:1.65;stroke-dashoffset:-55;opacity:.88;filter:drop-shadow(0 0 10px #c77bff)}
-#loginView .login-border-track .trace-3{stroke:#e3bdff;stroke-width:1.6;stroke-dashoffset:-110;opacity:.72;filter:drop-shadow(0 0 9px #b45bff)}
-#loginView .login-border-track .trace-4{stroke:#d6a4ff;stroke-width:1.55;stroke-dashoffset:-165;opacity:.57;filter:drop-shadow(0 0 8px #9b45d0)}
-#loginView .login-border-track .trace-5{stroke:#c58bfa;stroke-width:1.5;stroke-dashoffset:-220;opacity:.43;filter:drop-shadow(0 0 7px #7B1FA2)}
-#loginView .login-border-track .trace-6{stroke:#ae70e2;stroke-width:1.45;stroke-dashoffset:-275;opacity:.31;filter:drop-shadow(0 0 6px #7B1FA2)}
-#loginView .login-border-track .trace-7{stroke:#985bc9;stroke-width:1.4;stroke-dashoffset:-330;opacity:.20;filter:drop-shadow(0 0 5px #7B1FA2)}
-#loginView .login-border-track .trace-8{stroke:#7B1FA2;stroke-width:1.35;stroke-dashoffset:-385;opacity:.11;filter:drop-shadow(0 0 4px #7B1FA2)}
-@keyframes loginBorderTrace{to{stroke-dashoffset:-1000}}
-@media(prefers-reduced-motion:reduce){#loginView .login-border-track rect{animation:none}}
+#loginView .login-card::before,
+#loginView .login-card::after{
+  content:"";
+  position:absolute;
+  inset:-1.5px;
+  border-radius:inherit;
+  padding:1.5px;
+  background:conic-gradient(
+    from var(--beam-angle),
+    transparent 0deg,
+    rgba(123,31,162,.22) 25deg,
+    rgba(199,123,255,.88) 50deg,
+    #ffffff 58deg,
+    transparent 64deg,
+    transparent 180deg,
+    rgba(123,31,162,.22) 205deg,
+    rgba(199,123,255,.88) 230deg,
+    #ffffff 238deg,
+    transparent 244deg,
+    transparent 360deg
+  );
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask-composite:exclude;
+  pointer-events:none;
+  animation:borderBeam 6.5s linear infinite;
+}
+#loginView .login-card::before{
+  z-index:5;
+}
+#loginView .login-card::after{
+  z-index:4;
+  filter:blur(8px);
+  opacity:.65;
+}
+@keyframes borderBeam{
+  to{--beam-angle:360deg}
+}
+@media(prefers-reduced-motion:reduce){
+  #loginView .login-card::before,
+  #loginView .login-card::after{animation:none}
+}
