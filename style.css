@@ -2572,3 +2572,57 @@ header.nav #magicBottomNav .magic-nav-item.is-active::after {
 }
 @view-transition { navigation:none; }
 header.nav #magicBottomNav .magic-nav-indicator {view-transition-name:none!important;}
+
+
+/* V10.0 — hover pop; selected pill glides from the previous item to the next. */
+header.nav #magicBottomNav .magic-nav-indicator{
+  transition:left .56s cubic-bezier(.22,1,.36,1)!important;
+  will-change:left;
+}
+header.nav #magicBottomNav .magic-nav-item{
+  transition:transform .22s cubic-bezier(.2,.8,.2,1),color .2s ease!important;
+  will-change:transform;
+}
+header.nav #magicBottomNav .magic-nav-item svg{
+  transition:transform .22s cubic-bezier(.2,.8,.2,1),filter .22s ease,color .2s ease!important;
+}
+header.nav #magicBottomNav .magic-nav-item span{
+  transition:transform .22s cubic-bezier(.2,.8,.2,1),color .2s ease,opacity .2s ease!important;
+}
+header.nav #magicBottomNav .magic-nav-item:hover{
+  transform:translateY(-3px) scale(1.045)!important;
+  color:#fff!important;
+}
+header.nav #magicBottomNav .magic-nav-item:hover svg{
+  transform:translateY(-2px) scale(1.09)!important;
+  filter:drop-shadow(0 2px 7px rgba(123,31,162,.38));
+}
+header.nav #magicBottomNav .magic-nav-item:hover span{
+  transform:translateY(-1px);
+}
+header.nav #magicBottomNav .magic-nav-item.is-active{
+  transform:none!important;
+}
+header.nav #magicBottomNav .magic-nav-item.is-active:hover{
+  transform:translateY(-2px) scale(1.035)!important;
+}
+header.nav #magicBottomNav .magic-nav-item.is-active svg{
+  transform:none!important;
+}
+header.nav #magicBottomNav .magic-nav-item.is-active:hover svg{
+  transform:translateY(-2px) scale(1.08)!important;
+}
+@media(max-width:760px){
+  header.nav #magicBottomNav .magic-nav-indicator{
+    transition:left .52s cubic-bezier(.22,1,.36,1)!important;
+  }
+  header.nav #magicBottomNav .magic-nav-item:hover{
+    transform:translateY(-2px) scale(1.025)!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  header.nav #magicBottomNav .magic-nav-indicator,
+  header.nav #magicBottomNav .magic-nav-item,
+  header.nav #magicBottomNav .magic-nav-item svg,
+  header.nav #magicBottomNav .magic-nav-item span{transition:none!important}
+}
