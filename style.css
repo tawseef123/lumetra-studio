@@ -2270,3 +2270,17 @@ body.subpage .portfolio-segment-heading h2 {
   header.nav #magicBottomNav .magic-nav-item svg,
   header.nav #magicBottomNav .magic-nav-item span{transition:none!important}
 }
+
+
+/* V8.3 — larger navigation labels and icons */
+@media (min-width:761px){
+  header.nav #magicBottomNav .magic-nav-item{font-size:11px;gap:8px}
+  header.nav #magicBottomNav .magic-nav-item svg{width:20px;height:20px}
+  header.nav #magicBottomNav .magic-nav-item span{font-size:10px}
+  header.nav #magicBottomNav .magic-nav-item.is-active svg{transform:scale(1.14)}
+}
+@media (max-width:760px){
+  header.nav #magicBottomNav .magic-nav-item{font-size:9px;gap:6px}
+  header.nav #magicBottomNav .magic-nav-item svg{width:21px;height:21px}
+  header.nav #magicBottomNav .magic-nav-item span{font-size:9px}
+}
