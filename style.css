@@ -1835,3 +1835,22 @@ body.subpage .footer-legal { font-size: 10px; line-height: 1.6; }
   body.subpage .footer-bottom,
   body.subpage .footer-legal { font-size: 9px; }
 }
+
+
+/* V7.4 — match Portfolio and Assets main titles to homepage section-title scale */
+body.subpage .page-hero h1,
+body.subpage .section-head h2,
+body.subpage .portfolio-segment-heading h2 {
+  font-size: clamp(32px, 3.2vw, 52px);
+  line-height: 1.12;
+  letter-spacing: -1px;
+}
+@media (max-width: 640px) {
+  body.subpage .page-hero h1,
+  body.subpage .section-head h2,
+  body.subpage .portfolio-segment-heading h2 {
+    font-size: clamp(29px, 8vw, 36px);
+    line-height: 1.15;
+    letter-spacing: -.7px;
+  }
+}
