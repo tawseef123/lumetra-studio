@@ -371,4 +371,4 @@ if(menu&&nav){
     schedule();
   },{passive:true});
   if(!routeMove && pageTarget===null)schedule();
-})();\n
+})();
