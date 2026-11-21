@@ -2139,3 +2139,7 @@ body.subpage .portfolio-segment-heading h2 {
   body{padding-bottom:calc(98px + env(safe-area-inset-bottom,0px))}
   body[data-theme="light"] header.nav #magicBottomNav.magic-header-nav{--nav-surface:#fff;--nav-ink:#182238;--nav-muted:#a3a9b5;background:#fff}
 }
+
+@media(max-width:760px){
+  header.nav .menu{display:none!important}
+}
