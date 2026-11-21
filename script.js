@@ -272,19 +272,27 @@ if(menu&&nav){
 
 
 
-// V7.8 — preserve the original seven navigation destinations and active-section behavior.
+// V8.8 — keep the active navigation pill moving smoothly and prevent scroll-state flicker.
 (()=>{
   const bar=document.getElementById('magicBottomNav');
   if(!bar)return;
   const items=[...bar.querySelectorAll('.magic-nav-item')];
+  if(!items.length)return;
+  let activeIndex=items.findIndex(item=>item.classList.contains('is-active'));
+  if(activeIndex<0)activeIndex=0;
+  let pendingTarget=null;
+  let settleTimer=null;
   const setActive=index=>{
     const safe=Math.max(0,Math.min(items.length-1,index));
-    bar.style.setProperty('--active-index',safe);
+    if(safe===activeIndex && items[safe]?.classList.contains('is-active'))return;
+    activeIndex=safe;
+    bar.style.setProperty('--active-index',String(safe));
     bar.style.setProperty('--notch-x',(((safe+.5)/items.length)*100)+'%');
     items.forEach((item,i)=>{
       const active=i===safe;
       item.classList.toggle('is-active',active);
-      if(active)item.setAttribute('aria-current','page');else item.removeAttribute('aria-current');
+      if(active)item.setAttribute('aria-current','page');
+      else item.removeAttribute('aria-current');
     });
   };
   const path=location.pathname;
@@ -292,17 +300,60 @@ if(menu&&nav){
   if(path.endsWith('/assets.html')){setActive(3);return;}
   const sectionMap={home:0,services:1,portfolio:2,assets:3,faq:4,about:5,contact:6};
   const sections=Object.keys(sectionMap).map(id=>document.getElementById(id)).filter(Boolean);
+  const marker=()=> (document.querySelector('.nav')?.getBoundingClientRect().bottom||64)+Math.min(145,window.innerHeight*.2);
   const update=()=>{
     if(!sections.length)return;
-    const marker=(document.querySelector('.nav')?.getBoundingClientRect().bottom||64)+Math.min(145,window.innerHeight*.2);
+    if(pendingTarget){
+      const target=document.getElementById(pendingTarget);
+      if(target && target.getBoundingClientRect().top<=marker()+10){
+        const idx=sectionMap[pendingTarget];
+        pendingTarget=null;
+        if(Number.isFinite(idx))setActive(idx);
+      }
+      if(pendingTarget)return;
+    }
     let current=sections[0];
-    sections.forEach(section=>{if(section.getBoundingClientRect().top<=marker)current=section;});
+    sections.forEach(section=>{if(section.getBoundingClientRect().top<=marker())current=section;});
     if(window.innerHeight+window.scrollY>=document.documentElement.scrollHeight-4)current=sections[sections.length-1];
     if(current)setActive(sectionMap[current.id]??0);
   };
-  items.forEach(item=>item.addEventListener('click',()=>setActive(Number(item.dataset.navIndex))));
+  items.forEach(item=>item.addEventListener('click',()=>{
+    const idx=Number(item.dataset.navIndex);
+    const href=item.getAttribute('href')||'';
+    const hash=href.includes('#')?href.split('#').pop():'';
+    if(hash && document.getElementById(hash)){
+      pendingTarget=hash;
+      setActive(idx);
+      clearTimeout(settleTimer);
+      settleTimer=setTimeout(()=>{
+        pendingTarget=null;
+        update();
+      },2200);
+    }else{
+      pendingTarget=null;
+      setActive(idx);
+    }
+  }));
   let queued=false;
-  const schedule=()=>{if(!queued){queued=true;requestAnimationFrame(()=>{queued=false;update();});}};
-  window.addEventListener('scroll',schedule,{passive:true});window.addEventListener('resize',schedule,{passive:true});
-  window.addEventListener('hashchange',schedule);schedule();
+  const schedule=()=>{
+    if(queued)return;
+    queued=true;
+    requestAnimationFrame(()=>{queued=false;update();});
+  };
+  window.addEventListener('scroll',schedule,{passive:true});
+  window.addEventListener('resize',schedule,{passive:true});
+  window.addEventListener('hashchange',schedule);
+  if('onscrollend' in window)window.addEventListener('scrollend',()=>{
+    if(pendingTarget){
+      const target=document.getElementById(pendingTarget);
+      if(target && Math.abs(target.getBoundingClientRect().top-marker())<100){
+        const idx=sectionMap[pendingTarget];
+        pendingTarget=null;
+        clearTimeout(settleTimer);
+        if(Number.isFinite(idx))setActive(idx);
+      }
+    }
+    schedule();
+  },{passive:true});
+  schedule();
 })();
