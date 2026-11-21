@@ -270,15 +270,17 @@ if(menu&&nav){
 })();
 
 
-// V7.7 — mobile magic navigation: synced active item and sliding cutout.
+
+
+// V7.8 — preserve the original seven navigation destinations and active-section behavior.
 (()=>{
   const bar=document.getElementById('magicBottomNav');
   if(!bar)return;
   const items=[...bar.querySelectorAll('.magic-nav-item')];
   const setActive=index=>{
-    const safe=Math.max(0,Math.min(4,index));
+    const safe=Math.max(0,Math.min(items.length-1,index));
     bar.style.setProperty('--active-index',safe);
-    bar.style.setProperty('--notch-x',((safe+.5)*20)+'%');
+    bar.style.setProperty('--notch-x',(((safe+.5)/items.length)*100)+'%');
     items.forEach((item,i)=>{
       const active=i===safe;
       item.classList.toggle('is-active',active);
@@ -286,11 +288,12 @@ if(menu&&nav){
     });
   };
   const path=location.pathname;
-  if(path.endsWith('/work.html')){setActive(1);return;}
-  if(path.endsWith('/assets.html')){setActive(2);return;}
-  const sectionMap={home:0,services:2,portfolio:1,assets:2,faq:2,about:4,contact:3};
+  if(path.endsWith('/work.html')){setActive(2);return;}
+  if(path.endsWith('/assets.html')){setActive(3);return;}
+  const sectionMap={home:0,services:1,faq:4,about:5,contact:6};
   const sections=Object.keys(sectionMap).map(id=>document.getElementById(id)).filter(Boolean);
   const update=()=>{
+    if(!sections.length)return;
     const marker=(document.querySelector('.nav')?.getBoundingClientRect().bottom||64)+Math.min(145,window.innerHeight*.2);
     let current=sections[0];
     sections.forEach(section=>{if(section.getBoundingClientRect().top<=marker)current=section;});
