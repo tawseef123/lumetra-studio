@@ -268,3 +268,38 @@ if(menu&&nav){
   if('IntersectionObserver'in window){new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;if(visible)start();else stop()},{threshold:0}).observe(hero)}
   window.addEventListener('resize',resize,{passive:true});resize();start();
 })();
+
+
+// V7.7 — mobile magic navigation: synced active item and sliding cutout.
+(()=>{
+  const bar=document.getElementById('magicBottomNav');
+  if(!bar)return;
+  const items=[...bar.querySelectorAll('.magic-nav-item')];
+  const setActive=index=>{
+    const safe=Math.max(0,Math.min(4,index));
+    bar.style.setProperty('--active-index',safe);
+    bar.style.setProperty('--notch-x',((safe+.5)*20)+'%');
+    items.forEach((item,i)=>{
+      const active=i===safe;
+      item.classList.toggle('is-active',active);
+      if(active)item.setAttribute('aria-current','page');else item.removeAttribute('aria-current');
+    });
+  };
+  const path=location.pathname;
+  if(/(^|\\/)work\\.html$/.test(path)){setActive(1);return;}
+  if(/(^|\\/)assets\\.html$/.test(path)){setActive(2);return;}
+  const sectionMap={home:0,services:2,portfolio:1,assets:2,faq:2,about:4,contact:3};
+  const sections=Object.keys(sectionMap).map(id=>document.getElementById(id)).filter(Boolean);
+  const update=()=>{
+    const marker=(document.querySelector('.nav')?.getBoundingClientRect().bottom||64)+Math.min(145,window.innerHeight*.2);
+    let current=sections[0];
+    sections.forEach(section=>{if(section.getBoundingClientRect().top<=marker)current=section;});
+    if(window.innerHeight+window.scrollY>=document.documentElement.scrollHeight-4)current=sections[sections.length-1];
+    if(current)setActive(sectionMap[current.id]??0);
+  };
+  items.forEach(item=>item.addEventListener('click',()=>setActive(Number(item.dataset.navIndex))));
+  let queued=false;
+  const schedule=()=>{if(!queued){queued=true;requestAnimationFrame(()=>{queued=false;update();});}};
+  window.addEventListener('scroll',schedule,{passive:true});window.addEventListener('resize',schedule,{passive:true});
+  window.addEventListener('hashchange',schedule);schedule();
+})();
