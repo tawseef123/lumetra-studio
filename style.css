@@ -2530,3 +2530,45 @@ header.nav #magicBottomNav.nav-pill-pop .magic-nav-indicator {
 /* No cross-page sliding or transfer animation. */
 @view-transition { navigation:none; }
 header.nav #magicBottomNav .magic-nav-indicator { view-transition-name:none; }
+
+
+/* V9.4 — remove all active-selection motion; selection changes are instant. */
+header.nav #magicBottomNav .magic-nav-indicator,
+header.nav #magicBottomNav .magic-nav-item,
+header.nav #magicBottomNav .magic-nav-item svg,
+header.nav #magicBottomNav .magic-nav-item span,
+header.nav #magicBottomNav .magic-nav-item::after {
+  animation:none!important;
+  transition:none!important;
+  will-change:auto!important;
+}
+header.nav #magicBottomNav .magic-nav-indicator {
+  transform:translate(-50%,-50%)!important;
+  opacity:1!important;
+  filter:none!important;
+}
+header.nav #magicBottomNav .magic-nav-item.is-active {
+  transform:none!important;
+}
+header.nav #magicBottomNav .magic-nav-item.is-active svg {
+  transform:none!important;
+  filter:none!important;
+}
+header.nav #magicBottomNav .magic-nav-item.is-active span {
+  transform:none!important;
+}
+@media (min-width:761px) {
+  header.nav #magicBottomNav .magic-nav-item.is-active svg {
+    width:17px!important;height:17px!important;
+  }
+}
+@media (max-width:760px) {
+  header.nav #magicBottomNav .magic-nav-item.is-active svg {
+    width:19px!important;height:19px!important;
+  }
+}
+header.nav #magicBottomNav .magic-nav-item.is-active::after {
+  transition:none!important;
+}
+@view-transition { navigation:none; }
+header.nav #magicBottomNav .magic-nav-indicator {view-transition-name:none!important;}
