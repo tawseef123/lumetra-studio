@@ -6,7 +6,16 @@ const models={categories:{title:'Portfolio Categories',desc:'Create categories w
 function notify(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2800)}
 function showApp(user){currentUser=user;$('loginView').classList.add('hidden');$('appView').classList.remove('hidden');const displayName=user.user_metadata?.full_name||user.user_metadata?.name||user.email||'Account';$('userAvatar').textContent=(displayName.trim().slice(0,2)||'LS').toUpperCase();$('profileDisplayName').textContent=displayName;$('profileEmail').textContent=user.email||'';$('profileRole').textContent=(currentRole||'editor').toUpperCase();$('profileNameInput').value=user.user_metadata?.full_name||user.user_metadata?.name||'';document.querySelectorAll('[data-owner-only]').forEach(el=>el.classList.toggle('hidden',currentRole!=='owner'))}
 async function loadCurrentRole(){const {data:{user},error:userError}=await client.auth.getUser();if(userError||!user)throw new Error('Please sign in again.');const {data,error}=await client.from('admin_users').select('role').eq('user_id',user.id).maybeSingle();if(error)throw error;if(!data?.role)throw new Error('Your account has no CMS role. Ask the owner to grant access.');currentRole=data.role;}
-function showLogin(){$('appView').classList.add('hidden');$('loginView').classList.remove('hidden')}
+function showLogin(){
+ $('appView').classList.add('hidden');
+ $('loginView').classList.remove('hidden');
+ const cta=$('loginCta');
+ cta.classList.remove('loading');
+ cta.disabled=true;
+ $('loginError').textContent='';
+ $('loginForm').reset();
+ cta.classList.remove('unlocked');
+}
 function setConnection(ok,msg){$('connectionStatus').textContent=msg;$('connectionStatus').className='status '+(ok?'ok':'bad')}
 async function init(){if(!client){setConnection(false,'Supabase not configured');return}try{const {data:{session},error}=await client.auth.getSession();if(error)throw error;if(session){await loadCurrentRole();showApp(session.user);await loadCategories();await loadOverview()}setConnection(true,'Supabase connected');client.auth.onAuthStateChange(async(_event,session)=>{if(session){await loadCurrentRole();showApp(session.user);await loadCategories();if(current==='overview')loadOverview()}else showLogin()})}catch(e){setConnection(false,'Connection error');console.error(e)}}
 const loginCta=$('loginCta'),loginEmail=$('email'),loginPassword=$('password');
