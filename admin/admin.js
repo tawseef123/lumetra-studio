@@ -24,7 +24,7 @@ let loginReady=false,ctaOffset={x:0,y:0};
 function validEmail(value){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim())}
 function validateLoginButton(){
  loginReady=validEmail(loginEmail.value)&&loginPassword.value.length>=6;
- loginCta.disabled=!loginReady;
+ loginCta.disabled=false;
  loginCta.classList.toggle('unlocked',loginReady);
  if(loginReady){ctaOffset={x:0,y:0};loginCta.style.transform='translate(0,0)';}
 }
