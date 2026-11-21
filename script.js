@@ -272,23 +272,22 @@ if(menu&&nav){
 
 
 
-// V9.1 — pop the active background into place; no sliding or cross-page travel.
+// V9.2 — active background pops out from directly behind the selected item.
 (()=>{
   const bar=document.getElementById('magicBottomNav');
   if(!bar)return;
   const items=[...bar.querySelectorAll('.magic-nav-item')];
   const indicator=bar.querySelector('.magic-nav-indicator');
-  if(!items.length)return;
+  if(!items.length||!indicator)return;
   const sectionMap={home:0,services:1,portfolio:2,assets:3,faq:4,about:5,contact:6};
   const path=location.pathname;
   const pageTarget=path.endsWith('/work.html')?2:path.endsWith('/assets.html')?3:null;
   let activeIndex=items.findIndex(item=>item.classList.contains('is-active'));
   if(activeIndex<0)activeIndex=0;
   const popBackground=()=>{
-    if(!indicator)return;
     bar.classList.remove('nav-pill-pop');
     void indicator.offsetWidth;
-    bar.classList.add('nav-pill-pop');
+    requestAnimationFrame(()=>bar.classList.add('nav-pill-pop'));
   };
   const setActive=(index,force=false)=>{
     const safe=Math.max(0,Math.min(items.length-1,index));
@@ -304,7 +303,12 @@ if(menu&&nav){
     });
     popBackground();
   };
-  if(pageTarget!==null){setActive(pageTarget,true);return;}
+  if(pageTarget!==null){
+    setActive(pageTarget,true);
+    return;
+  }
+  // Pop once on initial load so Home/section pages behave like subpages.
+  requestAnimationFrame(()=>requestAnimationFrame(()=>popBackground()));
   let pendingTarget=null;
   let settleTimer=null;
   const marker=()=> (document.querySelector('.nav')?.getBoundingClientRect().bottom||64)+Math.min(145,window.innerHeight*.2);
