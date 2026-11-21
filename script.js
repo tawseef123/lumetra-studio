@@ -272,20 +272,28 @@ if(menu&&nav){
 
 
 
-// V9.0 — shared active state for same-page navigation; cross-document motion is handled by the View Transitions API.
+// V9.1 — pop the active background into place; no sliding or cross-page travel.
 (()=>{
   const bar=document.getElementById('magicBottomNav');
   if(!bar)return;
   const items=[...bar.querySelectorAll('.magic-nav-item')];
+  const indicator=bar.querySelector('.magic-nav-indicator');
   if(!items.length)return;
   const sectionMap={home:0,services:1,portfolio:2,assets:3,faq:4,about:5,contact:6};
   const path=location.pathname;
   const pageTarget=path.endsWith('/work.html')?2:path.endsWith('/assets.html')?3:null;
   let activeIndex=items.findIndex(item=>item.classList.contains('is-active'));
   if(activeIndex<0)activeIndex=0;
-  const setActive=index=>{
+  const popBackground=()=>{
+    if(!indicator)return;
+    bar.classList.remove('nav-pill-pop');
+    void indicator.offsetWidth;
+    bar.classList.add('nav-pill-pop');
+  };
+  const setActive=(index,force=false)=>{
     const safe=Math.max(0,Math.min(items.length-1,index));
-    if(safe===activeIndex && items[safe]?.classList.contains('is-active'))return;
+    const changed=safe!==activeIndex || !items[safe]?.classList.contains('is-active');
+    if(!changed&&!force)return;
     activeIndex=safe;
     bar.style.setProperty('--active-index',String(safe));
     items.forEach((item,i)=>{
@@ -294,9 +302,9 @@ if(menu&&nav){
       if(active)item.setAttribute('aria-current','page');
       else item.removeAttribute('aria-current');
     });
+    popBackground();
   };
-  if(pageTarget!==null)setActive(pageTarget);
-  if(pageTarget!==null)return;
+  if(pageTarget!==null){setActive(pageTarget,true);return;}
   let pendingTarget=null;
   let settleTimer=null;
   const marker=()=> (document.querySelector('.nav')?.getBoundingClientRect().bottom||64)+Math.min(145,window.innerHeight*.2);
@@ -306,8 +314,7 @@ if(menu&&nav){
     if(pendingTarget){
       const target=document.getElementById(pendingTarget);
       if(target && target.getBoundingClientRect().top<=marker()+10){
-        const idx=sectionMap[pendingTarget];
-        pendingTarget=null;
+        const idx=sectionMap[pendingTarget];pendingTarget=null;
         if(Number.isFinite(idx))setActive(idx);
       }
       if(pendingTarget)return;
@@ -322,7 +329,7 @@ if(menu&&nav){
     const targetHash=href.includes('#')?href.split('#').pop():'';
     if(targetHash && document.getElementById(targetHash)){
       pendingTarget=targetHash;
-      setActive(Number(item.dataset.navIndex));
+      setActive(Number(item.dataset.navIndex),true);
       clearTimeout(settleTimer);
       settleTimer=setTimeout(()=>{pendingTarget=null;update();},2200);
     }
@@ -340,9 +347,7 @@ if(menu&&nav){
     if(pendingTarget){
       const target=document.getElementById(pendingTarget);
       if(target && Math.abs(target.getBoundingClientRect().top-marker())<100){
-        const idx=sectionMap[pendingTarget];
-        pendingTarget=null;
-        clearTimeout(settleTimer);
+        const idx=sectionMap[pendingTarget];pendingTarget=null;clearTimeout(settleTimer);
         if(Number.isFinite(idx))setActive(idx);
       }
     }
