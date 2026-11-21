@@ -128,3 +128,28 @@ body{font-size:14px;line-height:1.6}.login-wrap{padding:18px}.login-card{padding
 .login-tether line{stroke:#60a5fa}.login-tether circle{fill:#60a5fa}
 .login-back{color:#60a5fa}
 .login-footer span{color:#c4d5ff}
+
+
+/* V1.7 — continuously rotating violet neon outline on login card */
+.login-card{
+  position:relative;
+  isolation:isolate;
+  border:1px solid rgba(123,31,162,.55) !important;
+}
+.login-card:before{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  z-index:-1;
+  border-radius:inherit;
+  padding:2px;
+  background:conic-gradient(from 0deg,transparent 0deg,transparent 245deg,#7B1FA2 285deg,#d78cff 315deg,#7B1FA2 340deg,transparent 360deg);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  animation:loginNeonOrbit 3.8s linear infinite;
+  filter:drop-shadow(0 0 5px rgba(123,31,162,.95)) drop-shadow(0 0 12px rgba(123,31,162,.65));
+  pointer-events:none;
+}
+@keyframes loginNeonOrbit{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.login-card:before{animation:none}}
