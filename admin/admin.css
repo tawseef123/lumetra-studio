@@ -210,3 +210,40 @@ body{font-size:14px;line-height:1.6}.login-wrap{padding:18px}.login-card{padding
 @media(prefers-reduced-motion:reduce){
   .login-card:before{animation:none !important}
 }
+
+/* V2.0 — runner follows the rectangular login card perimeter */
+.login-card{
+  position:relative;
+  isolation:isolate;
+  overflow:visible;
+  border:1px solid rgba(123,31,162,.32) !important;
+}
+.login-card:before{
+  content:"";
+  position:absolute;
+  z-index:6;
+  left:0;
+  top:0;
+  width:64px;
+  height:2px;
+  padding:0 !important;
+  border:0;
+  border-radius:999px;
+  background:linear-gradient(90deg,transparent 0%,#7B1FA2 25%,#e8c4ff 75%,#ffffff 100%);
+  box-shadow:0 0 4px #7B1FA2,0 0 9px rgba(123,31,162,.95),0 0 16px rgba(123,31,162,.55);
+  offset-path:inset(0 round 18px);
+  offset-anchor:50% 50%;
+  offset-rotate:auto;
+  offset-distance:0%;
+  animation:loginRectTrack 4.2s linear infinite !important;
+  -webkit-mask:none;
+  mask:none;
+  filter:none !important;
+  pointer-events:none;
+}
+@keyframes loginRectTrack{
+  to{offset-distance:100%}
+}
+@media(prefers-reduced-motion:reduce){
+  .login-card:before{animation:none !important}
+}
