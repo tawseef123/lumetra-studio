@@ -1726,3 +1726,112 @@ body {
   .hero h1 { font-size: 39px; }
   .page-hero h1 { font-size: 33px; }
 }
+
+
+/* V7.3 — dedicated refined typography for Portfolio and Assets subpages */
+body.subpage { font-size: 13px; line-height: 1.6; }
+body.subpage .links { font-size: 12px; }
+body.subpage .page-hero { padding: 66px 0 48px; }
+body.subpage .page-hero .eyebrow { font-size: 10px; letter-spacing: 2px; }
+body.subpage .page-hero h1 {
+  font-size: clamp(36px, 4.4vw, 56px);
+  line-height: 1.08;
+  letter-spacing: -1.5px;
+  margin-bottom: 12px;
+}
+body.subpage .page-hero p {
+  max-width: 560px;
+  font-size: 13px;
+  line-height: 1.7;
+}
+body.subpage .section { padding: 38px 0; }
+body.subpage .section-head { margin-bottom: 20px; }
+body.subpage .section-head h2 {
+  font-size: clamp(25px, 2.5vw, 32px);
+  line-height: 1.2;
+  letter-spacing: -.6px;
+}
+body.subpage .portfolio-category-segment { padding: 8px 0 28px; }
+body.subpage .portfolio-segment-heading {
+  margin-bottom: 16px;
+  padding-bottom: 11px;
+}
+body.subpage .portfolio-segment-heading .eyebrow {
+  font-size: 9px;
+  letter-spacing: 1.8px;
+  margin-bottom: 5px;
+}
+body.subpage .portfolio-segment-heading h2 {
+  font-size: clamp(23px, 2.4vw, 30px);
+  line-height: 1.2;
+  letter-spacing: -.5px;
+}
+body.subpage .portfolio-video-info { gap: 2px; padding: 11px 13px; }
+body.subpage .portfolio-video-info strong {
+  font-size: 14px;
+  line-height: 1.4;
+  font-weight: 700;
+}
+body.subpage .portfolio-video-info small {
+  font-size: 10px;
+  line-height: 1.45;
+}
+body.subpage .asset-segment-grid { gap: 14px; }
+body.subpage .asset-segment-grid .asset-info { padding: 10px 12px; }
+body.subpage .asset-segment-grid .asset-info h3 {
+  font-size: 12px;
+  line-height: 1.4;
+  font-weight: 700;
+}
+body.subpage .asset-segment-grid .asset-info p {
+  font-size: 10px;
+  line-height: 1.55;
+  margin-top: 3px;
+}
+body.subpage .asset-segment-grid .asset-download {
+  margin-top: 8px;
+  padding: 6px 11px;
+  font-size: 10px;
+}
+body.subpage .empty-note { font-size: 12px; line-height: 1.6; }
+body.subpage .cta h2 { font-size: 22px; line-height: 1.25; }
+body.subpage .cta p { font-size: 12px; line-height: 1.6; }
+body.subpage .cta .btn { font-size: 11px; padding: 10px 18px; }
+body.subpage .footer-column h3 { font-size: 13px; }
+body.subpage .footer-detail,
+body.subpage .footer-service-link,
+body.subpage .social-row { font-size: 11px; line-height: 1.6; }
+body.subpage .footer-bottom,
+body.subpage .footer-legal { font-size: 10px; line-height: 1.6; }
+@media (max-width: 900px) {
+  body.subpage .page-hero { padding: 56px 0 42px; }
+}
+@media (max-width: 640px) {
+  body.subpage .page-hero { padding: 46px 0 34px; }
+  body.subpage .page-hero h1 {
+    font-size: clamp(32px, 9vw, 40px);
+    line-height: 1.1;
+    letter-spacing: -.9px;
+  }
+  body.subpage .page-hero p { font-size: 12px; line-height: 1.65; }
+  body.subpage .section { padding: 30px 0; }
+  body.subpage .section-head h2 { font-size: 23px; }
+  body.subpage .portfolio-segment-heading h2 { font-size: 21px; }
+  body.subpage .portfolio-segment-heading .eyebrow { font-size: 8px; }
+  body.subpage .portfolio-video-info { padding: 9px 10px; }
+  body.subpage .portfolio-video-info strong { font-size: 12px; line-height: 1.4; }
+  body.subpage .portfolio-video-info small { font-size: 9px; }
+  body.subpage .asset-segment-grid { gap: 11px; }
+  body.subpage .asset-segment-grid .asset-info { padding: 8px 9px; }
+  body.subpage .asset-segment-grid .asset-info h3 { font-size: 11px; }
+  body.subpage .asset-segment-grid .asset-info p { font-size: 9.5px; line-height: 1.5; }
+  body.subpage .asset-segment-grid .asset-download { font-size: 9px; padding: 5px 9px; }
+  body.subpage .cta h2 { font-size: 20px; }
+  body.subpage .cta p { font-size: 11px; }
+  body.subpage .footer-column h3 { font-size: 12px; }
+  body.subpage .footer-detail,
+  body.subpage .footer-service-link,
+  body.subpage .social-row { font-size: 10.5px; }
+  body.subpage .footer-bottom,
+  body.subpage .footer-legal { font-size: 9px; }
+}
