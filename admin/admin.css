@@ -16,3 +16,40 @@ body{font-size:14px;line-height:1.6}.login-wrap{padding:18px}.login-card{padding
 .modal{padding:12px;align-items:end}.modal-card{width:100%;max-height:88svh;padding:18px 14px;border-radius:16px 16px 10px 10px}.modal-head h2{font-size:28px}.modal-actions{flex-wrap:wrap}.modal-actions button{flex:1 1 120px;min-height:42px}.media-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.media-item{min-width:0}.toast{left:14px;right:14px;bottom:14px;text-align:center}
 }
 @media(max-width:380px){.main{padding-left:11px;padding-right:11px}.topbar{align-items:flex-start}.top-actions{max-width:145px}.quick-actions{grid-template-columns:minmax(0,1fr)}.stats-grid{gap:8px}.stat-card strong{font-size:27px}}
+
+
+/* V1.1 — glassmorphism treatment for the CMS sidebar */
+.sidebar {
+  background: linear-gradient(145deg, rgba(17, 31, 61, .70), rgba(7, 16, 38, .58)) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(145%);
+  backdrop-filter: blur(24px) saturate(145%);
+  border-right: 1px solid rgba(178, 198, 255, .20) !important;
+  box-shadow: 12px 0 40px rgba(0, 0, 0, .20), inset -1px 0 0 rgba(255, 255, 255, .035);
+}
+.sidebar .brand-mark {
+  text-shadow: 0 2px 18px rgba(75, 130, 255, .18);
+}
+.sidebar .nav-item {
+  transition: background .22s ease, border-color .22s ease, color .22s ease, transform .22s ease, box-shadow .22s ease;
+}
+.sidebar .nav-item:hover {
+  background: linear-gradient(105deg, rgba(59, 130, 246, .22), rgba(168, 85, 247, .16)) !important;
+  border-color: rgba(160, 160, 255, .28) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .07), 0 5px 18px rgba(55, 75, 160, .13);
+  transform: translateX(3px);
+}
+.sidebar .nav-item.active {
+  background: linear-gradient(105deg, rgba(59, 130, 246, .28), rgba(168, 85, 247, .22)) !important;
+  border-color: rgba(160, 160, 255, .34) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .09), 0 6px 22px rgba(55, 75, 160, .16);
+}
+@media(max-width:700px) {
+  .sidebar {
+    background: linear-gradient(120deg, rgba(17, 31, 61, .82), rgba(7, 16, 38, .76)) !important;
+    -webkit-backdrop-filter: blur(22px) saturate(145%);
+    backdrop-filter: blur(22px) saturate(145%);
+    border-bottom: 1px solid rgba(178, 198, 255, .20) !important;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, .18), inset 0 1px 0 rgba(255, 255, 255, .045);
+  }
+  .sidebar .nav-item:hover { transform: translateY(-2px); }
+}
