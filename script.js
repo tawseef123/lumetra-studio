@@ -272,7 +272,7 @@ if(menu&&nav){
 
 
 
-// V10.0 — hover pop + smooth active-pill travel, including cross-page navigation.
+// V10.1 — reliable same-page glide and native cross-document shared-pill travel.
 (()=>{
   const bar=document.getElementById('magicBottomNav');
   if(!bar)return;
@@ -282,10 +282,12 @@ if(menu&&nav){
   const path=location.pathname;
   const pageTarget=path.endsWith('/work.html')?2:path.endsWith('/assets.html')?3:null;
   let activeIndex=items.findIndex(item=>item.classList.contains('is-active'));
-  if(activeIndex<0)activeIndex=0;
-  const markActive=(index)=>{
+  if(activeIndex<0)activeIndex=pageTarget??0;
+  const setActive=index=>{
     const safe=Math.max(0,Math.min(items.length-1,index));
+    if(safe===activeIndex && items[safe]?.classList.contains('is-active'))return;
     activeIndex=safe;
+    bar.style.setProperty('--active-index',String(safe));
     items.forEach((item,i)=>{
       const active=i===safe;
       item.classList.toggle('is-active',active);
@@ -293,27 +295,16 @@ if(menu&&nav){
       else item.removeAttribute('aria-current');
     });
   };
-  const setActive=(index)=>{
-    const safe=Math.max(0,Math.min(items.length-1,index));
-    if(safe===activeIndex && items[safe]?.classList.contains('is-active'))return;
-    bar.style.setProperty('--active-index',String(safe));
-    markActive(safe);
-  };
-  // Consume a one-time route transition saved by the page being left.
-  let routeMove=null;
-  try{
-    const raw=sessionStorage.getItem('lumetra-nav-route');
-    if(raw){routeMove=JSON.parse(raw);sessionStorage.removeItem('lumetra-nav-route');}
-  }catch(e){}
-  if(routeMove && Number.isInteger(routeMove.from) && Number.isInteger(routeMove.to) &&
-     routeMove.from>=0 && routeMove.from<items.length && routeMove.to>=0 && routeMove.to<items.length){
-    bar.style.setProperty('--active-index',String(routeMove.from));
-    markActive(routeMove.to);
-    void bar.offsetWidth;
-    requestAnimationFrame(()=>bar.style.setProperty('--active-index',String(routeMove.to)));
-  }else if(pageTarget!==null){
+  // Dedicated Portfolio / Assets pages begin at their own active item.
+  if(pageTarget!==null){
+    activeIndex=pageTarget;
     bar.style.setProperty('--active-index',String(pageTarget));
-    markActive(pageTarget);
+    items.forEach((item,i)=>{
+      const active=i===pageTarget;
+      item.classList.toggle('is-active',active);
+      if(active)item.setAttribute('aria-current','page');
+      else item.removeAttribute('aria-current');
+    });
   }
   let pendingTarget=null;
   let settleTimer=null;
@@ -339,10 +330,8 @@ if(menu&&nav){
     const targetIndex=Number(item.dataset.navIndex);
     let destination;
     try{destination=new URL(href,location.href);}catch(e){}
-    if(destination && destination.pathname!==location.pathname){
-      try{sessionStorage.setItem('lumetra-nav-route',JSON.stringify({from:activeIndex,to:targetIndex}));}catch(e){}
-      return;
-    }
+    // Cross-page movement is handled by the browser's shared-element View Transition.
+    if(destination && destination.pathname!==location.pathname)return;
     const targetHash=href.includes('#')?href.split('#').pop():'';
     if(targetHash && document.getElementById(targetHash)){
       pendingTarget=targetHash;
@@ -370,5 +359,5 @@ if(menu&&nav){
     }
     schedule();
   },{passive:true});
-  if(!routeMove && pageTarget===null)schedule();
+  if(pageTarget===null)schedule();
 })();
