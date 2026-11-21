@@ -128,3 +128,20 @@ body{font-size:14px;line-height:1.6}.login-wrap{padding:18px}.login-card{padding
 .login-tether line{stroke:#60a5fa}.login-tether circle{fill:#60a5fa}
 .login-back{color:#60a5fa}
 .login-footer span{color:#c4d5ff}
+
+
+/* V1.6 — Requested blue background and violet login tile */
+.login-wrap{background:#2563EB !important}
+.login-card{background:linear-gradient(145deg,#7B1FA2,#68158e) !important;border-color:rgba(255,255,255,.24) !important;box-shadow:0 28px 70px rgba(18,7,44,.40),0 0 36px rgba(123,31,162,.24) !important}
+.login-header h1{color:#fff !important}
+.login-header p:last-child{color:rgba(255,255,255,.78) !important}
+.login-kicker{color:#e9d5ff !important}
+.login-field label{color:rgba(255,255,255,.88) !important}
+.login-input-wrap input{background:rgba(44,8,68,.35) !important;border-color:rgba(255,255,255,.25) !important}
+.login-input-wrap input::placeholder{color:rgba(255,255,255,.58) !important}
+.login-input-wrap input:focus{border-color:#fff !important;box-shadow:0 0 0 3px rgba(255,255,255,.18) !important}
+.login-socket{border-color:rgba(255,255,255,.38) !important}
+.login-cta.unlocked{background:linear-gradient(120deg,#2563EB,#1746bd) !important;box-shadow:0 0 26px rgba(37,99,235,.35) !important}
+.login-tether line{stroke:#bfdbfe !important}.login-tether circle{fill:#bfdbfe !important}
+.login-back{color:#dbeafe !important}
+.login-footer{color:rgba(255,255,255,.68) !important}.login-footer span{color:#fff !important}
