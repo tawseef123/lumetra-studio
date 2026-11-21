@@ -290,7 +290,7 @@ if(menu&&nav){
   const path=location.pathname;
   if(path.endsWith('/work.html')){setActive(2);return;}
   if(path.endsWith('/assets.html')){setActive(3);return;}
-  const sectionMap={home:0,services:1,faq:4,about:5,contact:6};
+  const sectionMap={home:0,services:1,portfolio:2,assets:3,faq:4,about:5,contact:6};
   const sections=Object.keys(sectionMap).map(id=>document.getElementById(id)).filter(Boolean);
   const update=()=>{
     if(!sections.length)return;
