@@ -272,7 +272,7 @@ if(menu&&nav){
 
 
 
-// V9.4 — instant active-state updates; all selection animations removed.
+// V10.0 — hover pop + smooth active-pill travel, including cross-page navigation.
 (()=>{
   const bar=document.getElementById('magicBottomNav');
   if(!bar)return;
@@ -283,11 +283,9 @@ if(menu&&nav){
   const pageTarget=path.endsWith('/work.html')?2:path.endsWith('/assets.html')?3:null;
   let activeIndex=items.findIndex(item=>item.classList.contains('is-active'));
   if(activeIndex<0)activeIndex=0;
-  const setActive=(index)=>{
+  const markActive=(index)=>{
     const safe=Math.max(0,Math.min(items.length-1,index));
-    if(safe===activeIndex && items[safe]?.classList.contains('is-active'))return;
     activeIndex=safe;
-    bar.style.setProperty('--active-index',String(safe));
     items.forEach((item,i)=>{
       const active=i===safe;
       item.classList.toggle('is-active',active);
@@ -295,32 +293,60 @@ if(menu&&nav){
       else item.removeAttribute('aria-current');
     });
   };
-  if(pageTarget!==null){setActive(pageTarget);return;}
+  const setActive=(index)=>{
+    const safe=Math.max(0,Math.min(items.length-1,index));
+    if(safe===activeIndex && items[safe]?.classList.contains('is-active'))return;
+    bar.style.setProperty('--active-index',String(safe));
+    markActive(safe);
+  };
+  // Consume a one-time route transition saved by the page being left.
+  let routeMove=null;
+  try{
+    const raw=sessionStorage.getItem('lumetra-nav-route');
+    if(raw){routeMove=JSON.parse(raw);sessionStorage.removeItem('lumetra-nav-route');}
+  }catch(e){}
+  if(routeMove && Number.isInteger(routeMove.from) && Number.isInteger(routeMove.to) &&
+     routeMove.from>=0 && routeMove.from<items.length && routeMove.to>=0 && routeMove.to<items.length){
+    bar.style.setProperty('--active-index',String(routeMove.from));
+    markActive(routeMove.to);
+    void bar.offsetWidth;
+    requestAnimationFrame(()=>bar.style.setProperty('--active-index',String(routeMove.to)));
+  }else if(pageTarget!==null){
+    bar.style.setProperty('--active-index',String(pageTarget));
+    markActive(pageTarget);
+  }
   let pendingTarget=null;
   let settleTimer=null;
-  const marker=()=> (document.querySelector('.nav')?.getBoundingClientRect().bottom||64)+Math.min(145,window.innerHeight*.2);
+  const markerY=()=> (document.querySelector('.nav')?.getBoundingClientRect().bottom||64)+Math.min(145,window.innerHeight*.2);
   const sections=Object.keys(sectionMap).map(id=>document.getElementById(id)).filter(Boolean);
   const update=()=>{
     if(!sections.length)return;
     if(pendingTarget){
       const target=document.getElementById(pendingTarget);
-      if(target && target.getBoundingClientRect().top<=marker()+10){
+      if(target && target.getBoundingClientRect().top<=markerY()+10){
         const idx=sectionMap[pendingTarget];pendingTarget=null;
         if(Number.isFinite(idx))setActive(idx);
       }
       if(pendingTarget)return;
     }
     let current=sections[0];
-    sections.forEach(section=>{if(section.getBoundingClientRect().top<=marker())current=section;});
+    sections.forEach(section=>{if(section.getBoundingClientRect().top<=markerY())current=section;});
     if(window.innerHeight+window.scrollY>=document.documentElement.scrollHeight-4)current=sections[sections.length-1];
     if(current)setActive(sectionMap[current.id]??0);
   };
   items.forEach(item=>item.addEventListener('click',()=>{
     const href=item.getAttribute('href')||'';
+    const targetIndex=Number(item.dataset.navIndex);
+    let destination;
+    try{destination=new URL(href,location.href);}catch(e){}
+    if(destination && destination.pathname!==location.pathname){
+      try{sessionStorage.setItem('lumetra-nav-route',JSON.stringify({from:activeIndex,to:targetIndex}));}catch(e){}
+      return;
+    }
     const targetHash=href.includes('#')?href.split('#').pop():'';
     if(targetHash && document.getElementById(targetHash)){
       pendingTarget=targetHash;
-      setActive(Number(item.dataset.navIndex));
+      setActive(targetIndex);
       clearTimeout(settleTimer);
       settleTimer=setTimeout(()=>{pendingTarget=null;update();},2200);
     }
@@ -337,12 +363,12 @@ if(menu&&nav){
   if('onscrollend' in window)window.addEventListener('scrollend',()=>{
     if(pendingTarget){
       const target=document.getElementById(pendingTarget);
-      if(target && Math.abs(target.getBoundingClientRect().top-marker())<100){
+      if(target && Math.abs(target.getBoundingClientRect().top-markerY())<100){
         const idx=sectionMap[pendingTarget];pendingTarget=null;clearTimeout(settleTimer);
         if(Number.isFinite(idx))setActive(idx);
       }
     }
     schedule();
   },{passive:true});
-  schedule();
-})();
+  if(!routeMove && pageTarget===null)schedule();
+})();\n
