@@ -15,12 +15,13 @@ function showLogin(){
  $('loginError').textContent='';
  $('loginForm').reset();
  cta.classList.remove('unlocked');
+ validateLoginButton();
 }
 function setConnection(ok,msg){$('connectionStatus').textContent=msg;$('connectionStatus').className='status '+(ok?'ok':'bad')}
 async function init(){if(!client){setConnection(false,'Supabase not configured');return}try{const {data:{session},error}=await client.auth.getSession();if(error)throw error;if(session){await loadCurrentRole();showApp(session.user);await loadCategories();await loadOverview()}setConnection(true,'Supabase connected');client.auth.onAuthStateChange(async(_event,session)=>{if(session){await loadCurrentRole();showApp(session.user);await loadCategories();if(current==='overview')loadOverview()}else showLogin()})}catch(e){setConnection(false,'Connection error');console.error(e)}}
 const loginCta=$('loginCta'),loginEmail=$('email'),loginPassword=$('password'),loginDock=$('loginDock');
 let loginReady=false,ctaOffset={x:0,y:0};
-function validEmail(value){return /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(value.trim())}
+function validEmail(value){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim())}
 function validateLoginButton(){
  loginReady=validEmail(loginEmail.value)&&loginPassword.value.length>=6;
  loginCta.disabled=!loginReady;
