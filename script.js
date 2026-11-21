@@ -272,12 +272,17 @@ if(menu&&nav){
 
 
 
-// V8.8 — keep the active navigation pill moving smoothly and prevent scroll-state flicker.
+// V8.9 — carry the active-pill position across full-page Portfolio / Assets navigation.
 (()=>{
   const bar=document.getElementById('magicBottomNav');
   if(!bar)return;
   const items=[...bar.querySelectorAll('.magic-nav-item')];
   if(!items.length)return;
+  const sectionMap={home:0,services:1,portfolio:2,assets:3,faq:4,about:5,contact:6};
+  const path=location.pathname;
+  const hash=location.hash.replace(/^#/,'');
+  const pageTarget=path.endsWith('/work.html')?2:path.endsWith('/assets.html')?3:(hash && Number.isFinite(sectionMap[hash])?sectionMap[hash]:null);
+  const storageKey='lumetra-nav-transition-v1';
   let activeIndex=items.findIndex(item=>item.classList.contains('is-active'));
   if(activeIndex<0)activeIndex=0;
   let pendingTarget=null;
@@ -295,12 +300,23 @@ if(menu&&nav){
       else item.removeAttribute('aria-current');
     });
   };
-  const path=location.pathname;
-  if(path.endsWith('/work.html')){setActive(2);return;}
-  if(path.endsWith('/assets.html')){setActive(3);return;}
-  const sectionMap={home:0,services:1,portfolio:2,assets:3,faq:4,about:5,contact:6};
-  const sections=Object.keys(sectionMap).map(id=>document.getElementById(id)).filter(Boolean);
+  // On a full page load, begin at the previous page's active item, then glide to this page's item.
+  let carried=null;
+  try{carried=JSON.parse(sessionStorage.getItem(storageKey)||'null');sessionStorage.removeItem(storageKey);}catch(e){}
+  if(carried && Number.isInteger(carried.from) && Number.isInteger(pageTarget)){
+    activeIndex=Math.max(0,Math.min(items.length-1,carried.from));
+    bar.style.setProperty('--active-index',String(activeIndex));
+    items.forEach((item,i)=>{
+      const active=i===activeIndex;
+      item.classList.toggle('is-active',active);
+      if(active)item.setAttribute('aria-current','page');else item.removeAttribute('aria-current');
+    });
+    requestAnimationFrame(()=>requestAnimationFrame(()=>setActive(pageTarget)));
+  }else if(Number.isInteger(pageTarget)){
+    setActive(pageTarget);
+  }
   const marker=()=> (document.querySelector('.nav')?.getBoundingClientRect().bottom||64)+Math.min(145,window.innerHeight*.2);
+  const sections=Object.keys(sectionMap).map(id=>document.getElementById(id)).filter(Boolean);
   const update=()=>{
     if(!sections.length)return;
     if(pendingTarget){
@@ -320,20 +336,22 @@ if(menu&&nav){
   items.forEach(item=>item.addEventListener('click',()=>{
     const idx=Number(item.dataset.navIndex);
     const href=item.getAttribute('href')||'';
-    const hash=href.includes('#')?href.split('#').pop():'';
-    if(hash && document.getElementById(hash)){
-      pendingTarget=hash;
+    const isExternalPage=/^(https?:)?\/\//.test(href) || (href && !href.startsWith('#') && !href.startsWith('javascript:') && href.split('#')[0] && href.split('#')[0]!==location.pathname.split('/').pop());
+    if(isExternalPage){
+      try{sessionStorage.setItem(storageKey,JSON.stringify({from:activeIndex,to:idx}));}catch(e){}
+    }
+    const targetHash=href.includes('#')?href.split('#').pop():'';
+    if(targetHash && document.getElementById(targetHash)){
+      pendingTarget=targetHash;
       setActive(idx);
       clearTimeout(settleTimer);
-      settleTimer=setTimeout(()=>{
-        pendingTarget=null;
-        update();
-      },2200);
-    }else{
+      settleTimer=setTimeout(()=>{pendingTarget=null;update();},2200);
+    }else if(!isExternalPage){
       pendingTarget=null;
       setActive(idx);
     }
   }));
+  if(path.endsWith('/work.html') || path.endsWith('/assets.html'))return;
   let queued=false;
   const schedule=()=>{
     if(queued)return;
