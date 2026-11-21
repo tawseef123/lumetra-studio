@@ -2484,3 +2484,25 @@ body[data-theme="light"] .section:after{
     will-change:left;
   }
 }
+
+
+/* V9.0 — native cross-document View Transition for the shared navbar pill.
+   This animates the same indicator from its old page coordinates to its new ones. */
+@view-transition {
+  navigation: auto;
+}
+header.nav #magicBottomNav .magic-nav-indicator {
+  view-transition-name: lumetra-nav-active-pill;
+}
+::view-transition-group(lumetra-nav-active-pill) {
+  animation-duration: 820ms;
+  animation-timing-function: cubic-bezier(.22,1,.36,1);
+}
+::view-transition-old(lumetra-nav-active-pill),
+::view-transition-new(lumetra-nav-active-pill) {
+  animation-duration: 820ms;
+  animation-timing-function: cubic-bezier(.22,1,.36,1);
+}
+@media (prefers-reduced-motion: reduce) {
+  @view-transition { navigation: none; }
+}
