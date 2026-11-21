@@ -272,27 +272,20 @@ if(menu&&nav){
 
 
 
-// V9.2 — active background pops out from directly behind the selected item.
+// V9.4 — instant active-state updates; all selection animations removed.
 (()=>{
   const bar=document.getElementById('magicBottomNav');
   if(!bar)return;
   const items=[...bar.querySelectorAll('.magic-nav-item')];
-  const indicator=bar.querySelector('.magic-nav-indicator');
-  if(!items.length||!indicator)return;
+  if(!items.length)return;
   const sectionMap={home:0,services:1,portfolio:2,assets:3,faq:4,about:5,contact:6};
   const path=location.pathname;
   const pageTarget=path.endsWith('/work.html')?2:path.endsWith('/assets.html')?3:null;
   let activeIndex=items.findIndex(item=>item.classList.contains('is-active'));
   if(activeIndex<0)activeIndex=0;
-  const popBackground=()=>{
-    bar.classList.remove('nav-pill-pop');
-    void indicator.offsetWidth;
-    requestAnimationFrame(()=>bar.classList.add('nav-pill-pop'));
-  };
-  const setActive=(index,force=false)=>{
+  const setActive=(index)=>{
     const safe=Math.max(0,Math.min(items.length-1,index));
-    const changed=safe!==activeIndex || !items[safe]?.classList.contains('is-active');
-    if(!changed&&!force)return;
+    if(safe===activeIndex && items[safe]?.classList.contains('is-active'))return;
     activeIndex=safe;
     bar.style.setProperty('--active-index',String(safe));
     items.forEach((item,i)=>{
@@ -301,14 +294,8 @@ if(menu&&nav){
       if(active)item.setAttribute('aria-current','page');
       else item.removeAttribute('aria-current');
     });
-    popBackground();
   };
-  if(pageTarget!==null){
-    setActive(pageTarget,true);
-    return;
-  }
-  // Pop once on initial load so Home/section pages behave like subpages.
-  requestAnimationFrame(()=>requestAnimationFrame(()=>popBackground()));
+  if(pageTarget!==null){setActive(pageTarget);return;}
   let pendingTarget=null;
   let settleTimer=null;
   const marker=()=> (document.querySelector('.nav')?.getBoundingClientRect().bottom||64)+Math.min(145,window.innerHeight*.2);
@@ -333,7 +320,7 @@ if(menu&&nav){
     const targetHash=href.includes('#')?href.split('#').pop():'';
     if(targetHash && document.getElementById(targetHash)){
       pendingTarget=targetHash;
-      setActive(Number(item.dataset.navIndex),true);
+      setActive(Number(item.dataset.navIndex));
       clearTimeout(settleTimer);
       settleTimer=setTimeout(()=>{pendingTarget=null;update();},2200);
     }
