@@ -2367,3 +2367,69 @@ body[data-theme="light"] .section::after{background:radial-gradient(ellipse,rgba
   .section::before,.section::after{width:190px;height:160px;filter:blur(18px);opacity:.55}
 }
 @media(prefers-reduced-motion:reduce){.section::before,.section::after{filter:none}}
+
+
+/* V8.6 — clean section backdrop. Replace oversized decorative blobs with
+   restrained corner glows, a fine grid, and consistent section rhythm. */
+.section{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  background-color:var(--bg)!important;
+  background-image:
+    radial-gradient(ellipse 620px 360px at 0% 0%,rgba(37,99,235,.105),transparent 72%),
+    radial-gradient(ellipse 560px 340px at 100% 100%,rgba(123,31,162,.095),transparent 72%),
+    linear-gradient(rgba(120,151,205,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(120,151,205,.025) 1px,transparent 1px)!important;
+  background-size:auto,auto,44px 44px,44px 44px!important;
+  background-repeat:no-repeat,no-repeat,repeat,repeat!important;
+  border-bottom:1px solid rgba(112,139,190,.13);
+}
+.section:before{
+  content:"";
+  position:absolute;
+  z-index:0;
+  left:auto;
+  right:-190px;
+  top:50%;
+  width:360px;
+  height:360px;
+  transform:translateY(-50%);
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(37,99,235,.075),rgba(123,31,162,.035) 42%,transparent 70%);
+  filter:blur(12px);
+  opacity:.8;
+  pointer-events:none;
+}
+.section:after{
+  content:"";
+  position:absolute;
+  z-index:0;
+  left:0;
+  right:0;
+  bottom:0;
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(37,99,235,.28) 28%,rgba(123,31,162,.28) 72%,transparent);
+  pointer-events:none;
+}
+.section>.wrap{position:relative;z-index:1}
+body[data-theme="light"] .section{
+  background-color:#E1E4EA!important;
+  background-image:
+    radial-gradient(ellipse 620px 360px at 0% 0%,rgba(37,99,235,.075),transparent 72%),
+    radial-gradient(ellipse 560px 340px at 100% 100%,rgba(123,31,162,.065),transparent 72%),
+    linear-gradient(rgba(65,85,125,.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(65,85,125,.035) 1px,transparent 1px)!important;
+  border-bottom-color:rgba(75,94,130,.14);
+}
+body[data-theme="light"] .section:before{
+  background:radial-gradient(circle,rgba(37,99,235,.065),rgba(123,31,162,.025) 42%,transparent 70%);
+}
+body[data-theme="light"] .section:after{
+  background:linear-gradient(90deg,transparent,rgba(37,99,235,.2) 28%,rgba(123,31,162,.2) 72%,transparent);
+}
+@media(max-width:760px){
+  .section{background-size:auto,auto,34px 34px,34px 34px!important}
+  .section:before{right:-230px;width:300px;height:300px;opacity:.55}
+}
+@media(prefers-reduced-motion:reduce){.section:before{filter:none}}
