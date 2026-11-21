@@ -189,3 +189,33 @@ body{font-size:14px;line-height:1.6}.login-wrap{padding:18px}.login-card{padding
   #loginView .login-card::before,
   #loginView .login-card::after{animation:none}
 }
+
+
+/* V1.6 — compact, consistent CMS typography */
+body { font-size: 13px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+.topbar h1 { font-size: 33px; }
+.welcome h2 { font-size: 37px; line-height: 1.08; }
+.welcome p, .muted { font-size: 12px; line-height: 1.65; }
+.panel h3 { font-size: 15px; line-height: 1.4; }
+.stat-card span, .stat-card small { font-size: 11px; }
+.stat-card strong { font-size: 34px; }
+.nav-item { font-size: 12px; }
+.nav-item span { font-size: 12px; }
+label { font-size: 11px; }
+input, select, textarea { font-size: 12px; }
+.primary, .secondary { font-size: 12px; }
+.quick-actions button { font-size: 10px; }
+td { font-size: 12px; line-height: 1.55; }
+th { font-size: 9px; }
+.checklist { font-size: 12px; line-height: 2; }
+.login-header h1 { font-size: 22px; }
+.login-header p:last-child { font-size: 12px; }
+.login-field label { font-size: 11px; }
+.login-input-wrap input { font-size: 13px; }
+@media (max-width: 700px) {
+  .main { padding-left: 20px; padding-right: 20px; }
+  .topbar h1 { font-size: 29px; }
+  .welcome h2 { font-size: 32px; }
+  .panel h3 { font-size: 14px; }
+  .stat-card strong { font-size: 30px; }
+}
