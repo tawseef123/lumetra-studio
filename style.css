@@ -2284,3 +2284,25 @@ body.subpage .portfolio-segment-heading h2 {
   header.nav #magicBottomNav .magic-nav-item svg{width:21px;height:21px}
   header.nav #magicBottomNav .magic-nav-item span{font-size:9px}
 }
+
+
+/* V8.4 — centered desktop header navigation with larger labels and icons */
+@media (min-width:761px){
+  header.nav .navin{position:relative;justify-content:space-between}
+  header.nav #magicBottomNav.magic-header-nav{
+    position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    flex:none;width:clamp(440px,54vw,780px);max-width:calc(100% - 320px);
+    height:62px;padding:5px 8px;
+  }
+  header.nav #magicBottomNav .magic-nav-item{height:50px;gap:5px;font-size:14px}
+  header.nav #magicBottomNav .magic-nav-item svg{width:26px;height:26px}
+  header.nav #magicBottomNav .magic-nav-item span{font-size:13px}
+  header.nav #magicBottomNav .magic-nav-indicator{width:54px;height:54px;border-radius:17px}
+  header.nav #magicBottomNav .magic-nav-item.is-active svg{width:27px;height:27px;transform:translateY(-5px) scale(1.1)}
+}
+@media (min-width:761px) and (max-width:1000px){
+  header.nav .brand{flex-basis:110px}
+  header.nav .brand img{width:110px}
+  header.nav .nav-cta{display:none}
+  header.nav #magicBottomNav.magic-header-nav{max-width:calc(100% - 190px);width:clamp(440px,58vw,560px)}
+}
