@@ -131,33 +131,37 @@ body{font-size:14px;line-height:1.6}.login-wrap{padding:18px}.login-card{padding
 
 
 
-/* V4.0 — animated violet tracing border around the login card */
-#loginView .login-card{
-  position:relative;
-  isolation:isolate;
-}
+
+/* V4.1 — longer, slower tracing runner with a softly fading tail */
+#loginView .login-card{position:relative;isolation:isolate}
 #loginView .login-border-track{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  z-index:10;
-  overflow:visible;
-  pointer-events:none;
+  position:absolute;inset:0;width:100%;height:100%;
+  z-index:10;overflow:visible;pointer-events:none;
 }
 #loginView .login-border-track rect{
   fill:none;
   stroke:url(#loginBorderGradient);
   stroke-width:1.35;
   stroke-linecap:round;
-  stroke-dasharray:95 905;
   stroke-dashoffset:0;
-  filter:drop-shadow(0 0 2px #7B1FA2) drop-shadow(0 0 5px rgba(123,31,162,.9));
-  animation:loginBorderTrace 4.5s linear infinite;
+  animation:loginBorderTrace 8s linear infinite;
 }
-@keyframes loginBorderTrace{
-  to{stroke-dashoffset:-1000}
+#loginView .login-border-track .trail-long{
+  stroke-dasharray:190 810;
+  opacity:.14;
+  filter:drop-shadow(0 0 2px rgba(123,31,162,.55));
 }
+#loginView .login-border-track .trail-mid{
+  stroke-dasharray:135 865;
+  opacity:.34;
+  filter:drop-shadow(0 0 3px rgba(123,31,162,.7));
+}
+#loginView .login-border-track .trail-head{
+  stroke-dasharray:72 928;
+  opacity:1;
+  filter:drop-shadow(0 0 3px #7B1FA2) drop-shadow(0 0 7px rgba(123,31,162,.9));
+}
+@keyframes loginBorderTrace{to{stroke-dashoffset:-1000}}
 @media(prefers-reduced-motion:reduce){
   #loginView .login-border-track rect{animation:none}
 }
