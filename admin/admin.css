@@ -129,3 +129,17 @@ body{font-size:14px;line-height:1.6}.login-wrap{padding:18px}.login-card{padding
 .login-back{color:#60a5fa}
 .login-footer span{color:#c4d5ff}
 
+
+/* V3.0 — force-disable all login card perimeter effects */
+#loginView .login-card::before,
+#loginView .login-card::after{
+  content:none !important;
+  display:none !important;
+  animation:none !important;
+  background:none !important;
+  filter:none !important;
+  box-shadow:none !important;
+}
+#loginView .login-card{
+  outline:none !important;
+}
