@@ -18,16 +18,29 @@ function showLogin(){
 }
 function setConnection(ok,msg){$('connectionStatus').textContent=msg;$('connectionStatus').className='status '+(ok?'ok':'bad')}
 async function init(){if(!client){setConnection(false,'Supabase not configured');return}try{const {data:{session},error}=await client.auth.getSession();if(error)throw error;if(session){await loadCurrentRole();showApp(session.user);await loadCategories();await loadOverview()}setConnection(true,'Supabase connected');client.auth.onAuthStateChange(async(_event,session)=>{if(session){await loadCurrentRole();showApp(session.user);await loadCategories();if(current==='overview')loadOverview()}else showLogin()})}catch(e){setConnection(false,'Connection error');console.error(e)}}
-const loginCta=$('loginCta'),loginEmail=$('email'),loginPassword=$('password');
+const loginCta=$('loginCta'),loginEmail=$('email'),loginPassword=$('password'),loginDock=$('loginDock');
+let loginReady=false,ctaOffset={x:0,y:0};
+function validEmail(value){return /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(value.trim())}
 function validateLoginButton(){
- const ready=loginEmail.value.trim().length>0&&loginPassword.value.length>0;
- loginCta.disabled=!ready;
- loginCta.classList.toggle('unlocked',ready);
+ loginReady=validEmail(loginEmail.value)&&loginPassword.value.length>=6;
+ loginCta.disabled=!loginReady;
+ loginCta.classList.toggle('unlocked',loginReady);
+ if(loginReady){ctaOffset={x:0,y:0};loginCta.style.transform='translate(0,0)';}
 }
-['input','change','keyup'].forEach(type=>{
- loginEmail.addEventListener(type,validateLoginButton);
- loginPassword.addEventListener(type,validateLoginButton);
-});
+function dodgeLoginButton(event){
+ if(loginReady||event.pointerType==='touch')return;
+ const rect=loginCta.getBoundingClientRect(),dockRect=loginDock.getBoundingClientRect();
+ const dx=event.clientX-(rect.left+rect.width/2),dy=event.clientY-(rect.top+rect.height/2);
+ if(Math.hypot(dx,dy)>100)return;
+ const maxX=Math.max(0,(dockRect.width-loginCta.offsetWidth)/2-8),maxY=24;
+ let x=ctaOffset.x+(dx>=0?-1:1)*(Math.random()*70+45),y=ctaOffset.y+(dy>=0?-1:1)*(Math.random()*24+12);
+ x=Math.max(-maxX,Math.min(maxX,x));y=Math.max(-maxY,Math.min(maxY,y));
+ if(Math.abs(x-ctaOffset.x)<25)x=Math.max(-maxX,Math.min(maxX,x+(x>=0?-35:35)));
+ ctaOffset={x,y};loginCta.style.transform='translate('+x+'px,'+y+'px)';
+}
+['input','change','keyup'].forEach(type=>{loginEmail.addEventListener(type,validateLoginButton);loginPassword.addEventListener(type,validateLoginButton)});
+loginDock.addEventListener('pointermove',dodgeLoginButton);
+loginDock.addEventListener('pointerenter',dodgeLoginButton);
 validateLoginButton();
 $('loginForm').addEventListener('submit',async e=>{
  e.preventDefault();
