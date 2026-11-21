@@ -286,8 +286,8 @@ if(menu&&nav){
     });
   };
   const path=location.pathname;
-  if(/(^|\\/)work\\.html$/.test(path)){setActive(1);return;}
-  if(/(^|\\/)assets\\.html$/.test(path)){setActive(2);return;}
+  if(path.endsWith('/work.html')){setActive(1);return;}
+  if(path.endsWith('/assets.html')){setActive(2);return;}
   const sectionMap={home:0,services:2,portfolio:1,assets:2,faq:2,about:4,contact:3};
   const sections=Object.keys(sectionMap).map(id=>document.getElementById(id)).filter(Boolean);
   const update=()=>{
