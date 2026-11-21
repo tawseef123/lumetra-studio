@@ -2626,3 +2626,25 @@ header.nav #magicBottomNav .magic-nav-item.is-active:hover svg{
   header.nav #magicBottomNav .magic-nav-item svg,
   header.nav #magicBottomNav .magic-nav-item span{transition:none!important}
 }
+
+
+/* V10.1 — shared-element transition carries the active pill between pages. */
+@view-transition {
+  navigation: auto;
+}
+header.nav #magicBottomNav .magic-nav-indicator {
+  view-transition-name: lumetra-nav-active-pill !important;
+  transition: left .68s cubic-bezier(.22,1,.36,1) !important;
+}
+::view-transition-group(lumetra-nav-active-pill) {
+  animation-duration: .68s;
+  animation-timing-function: cubic-bezier(.22,1,.36,1);
+}
+::view-transition-old(lumetra-nav-active-pill),
+::view-transition-new(lumetra-nav-active-pill) {
+  animation: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  @view-transition { navigation: none; }
+  header.nav #magicBottomNav .magic-nav-indicator { transition: none !important; }
+}
