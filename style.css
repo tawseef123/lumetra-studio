@@ -2306,3 +2306,64 @@ body.subpage .portfolio-segment-heading h2 {
   header.nav .nav-cta{display:none}
   header.nav #magicBottomNav.magic-header-nav{max-width:calc(100% - 190px);width:clamp(440px,58vw,560px)}
 }
+
+
+/* V8.5 — refined section background geometry: soft asymmetric ambient forms,
+   a quieter honeycomb grid, and clean section separation without changing layout. */
+.section{
+  isolation:isolate;
+  border-bottom:1px solid rgba(93,122,177,.16);
+  background-color:transparent;
+  background-image:
+    radial-gradient(ellipse 44% 72% at 4% 18%,rgba(37,99,235,.105),transparent 76%),
+    radial-gradient(ellipse 38% 66% at 96% 82%,rgba(123,31,162,.095),transparent 74%),
+    url('assets/honeycomb-dark.svg');
+  background-repeat:no-repeat,no-repeat,repeat;
+  background-size:100% 100%,100% 100%,52px 45px;
+  background-position:center;
+}
+.section::before{
+  left:-5%;top:12%;
+  width:clamp(180px,25vw,360px);
+  height:clamp(150px,22vw,290px);
+  background:radial-gradient(ellipse,rgba(37,99,235,.14) 0%,rgba(37,99,235,.045) 42%,transparent 74%);
+  filter:blur(16px);opacity:.72;
+}
+.section::after{
+  content:"";position:absolute;z-index:0;right:-7%;top:18%;
+  width:clamp(220px,30vw,440px);height:clamp(180px,24vw,340px);
+  border-radius:50%;
+  background:radial-gradient(ellipse,rgba(123,31,162,.12) 0%,rgba(123,31,162,.035) 48%,transparent 74%);
+  filter:blur(22px);pointer-events:none;
+}
+.section:nth-of-type(even){
+  background-image:
+    radial-gradient(ellipse 42% 68% at 94% 16%,rgba(37,99,235,.09),transparent 76%),
+    radial-gradient(ellipse 40% 68% at 5% 86%,rgba(123,31,162,.085),transparent 74%),
+    url('assets/honeycomb-dark.svg');
+}
+.section:nth-of-type(even)::before{left:auto;right:-5%;background:radial-gradient(ellipse,rgba(123,31,162,.13),rgba(123,31,162,.035) 46%,transparent 74%)}
+.section:nth-of-type(even)::after{right:auto;left:-8%;background:radial-gradient(ellipse,rgba(37,99,235,.11),rgba(37,99,235,.03) 48%,transparent 74%)}
+.section>.wrap{z-index:1}
+body[data-theme="light"] .section{
+  border-bottom-color:rgba(88,106,143,.16);
+  background-image:
+    radial-gradient(ellipse 44% 72% at 4% 18%,rgba(37,99,235,.09),transparent 76%),
+    radial-gradient(ellipse 38% 66% at 96% 82%,rgba(123,31,162,.075),transparent 74%),
+    url('assets/honeycomb-light.svg');
+  background-repeat:no-repeat,no-repeat,repeat;
+  background-size:100% 100%,100% 100%,52px 45px;
+}
+body[data-theme="light"] .section:nth-of-type(even){
+  background-image:
+    radial-gradient(ellipse 42% 68% at 94% 16%,rgba(37,99,235,.075),transparent 76%),
+    radial-gradient(ellipse 40% 68% at 5% 86%,rgba(123,31,162,.07),transparent 74%),
+    url('assets/honeycomb-light.svg');
+}
+body[data-theme="light"] .section::before{background:radial-gradient(ellipse,rgba(37,99,235,.09),rgba(37,99,235,.025) 46%,transparent 74%)}
+body[data-theme="light"] .section::after{background:radial-gradient(ellipse,rgba(123,31,162,.075),rgba(123,31,162,.02) 48%,transparent 74%)}
+@media(max-width:760px){
+  .section{background-size:100% 100%,100% 100%,44px 38px}
+  .section::before,.section::after{width:190px;height:160px;filter:blur(18px);opacity:.55}
+}
+@media(prefers-reduced-motion:reduce){.section::before,.section::after{filter:none}}
