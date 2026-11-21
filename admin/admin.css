@@ -115,3 +115,16 @@ body{font-size:14px;line-height:1.6}.login-wrap{padding:18px}.login-card{padding
 .login-dock{position:relative;touch-action:manipulation}
 .login-cta{position:absolute;left:50%;top:50%;transform:translate(0,0);margin-left:-56px;margin-top:-20px;will-change:transform}
 .login-socket{left:50%;top:50%;transform:translate(-50%,-50%)}
+
+
+/* V1.5 — Lumetra brand colors for login screen */
+.login-wrap{background:radial-gradient(ellipse at 50% 5%,rgba(37,99,235,.20),transparent 45%),radial-gradient(ellipse at 80% 90%,rgba(123,31,162,.16),transparent 40%),#070b16}
+.login-card{background:linear-gradient(145deg,rgba(14,24,48,.97),rgba(9,12,25,.98));border-color:rgba(37,99,235,.24);box-shadow:0 28px 70px rgba(0,0,0,.58),0 0 40px rgba(37,99,235,.08)}
+.login-brand span{background:linear-gradient(90deg,#2563EB,#7B1FA2);background-clip:text;-webkit-background-clip:text;color:transparent}
+.login-kicker{color:#60a5fa!important}
+.login-input-wrap input:focus{border-color:#2563EB;box-shadow:0 0 0 3px rgba(37,99,235,.20)}
+.login-cta.unlocked{background:linear-gradient(120deg,#2563EB,#7B1FA2);box-shadow:0 0 26px rgba(37,99,235,.30),0 0 24px rgba(123,31,162,.24)}
+.login-socket{border-color:rgba(37,99,235,.28)}
+.login-tether line{stroke:#60a5fa}.login-tether circle{fill:#60a5fa}
+.login-back{color:#60a5fa}
+.login-footer span{color:#c4d5ff}
