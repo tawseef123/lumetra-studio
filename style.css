@@ -1583,3 +1583,59 @@ body[data-theme="light"] #about .benefits > .benefit {
     background-repeat: no-repeat, no-repeat !important;
   }
 }
+
+
+/* V7.1 — reusable CSS-only purple comet glow border */
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.glow-card {
+  --radius: 20px;
+  --border: 1.5px;
+  --glow-color: #c9bdff;
+  --base-color: rgba(139, 120, 255, .28);
+  --speed: 4s;
+
+  position: relative;
+  border-radius: var(--radius);
+}
+
+.glow-card::before,
+.glow-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: var(--border);
+  pointer-events: none;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+}
+
+.glow-card::before {
+  background: var(--base-color);
+}
+
+.glow-card::after {
+  background: conic-gradient(
+    from var(--angle),
+    transparent 0deg,
+    transparent 280deg,
+    var(--glow-color) 340deg,
+    #fff 360deg
+  );
+  animation: glow-card-spin var(--speed) linear infinite;
+  filter: drop-shadow(0 0 4px var(--glow-color));
+}
+
+@keyframes glow-card-spin {
+  to { --angle: 360deg; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glow-card::after { animation: none; }
+}
