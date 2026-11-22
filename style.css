@@ -2534,3 +2534,25 @@ body[data-theme="light"] .nav.lum-nav .menu{
     background:linear-gradient(115deg,#2563EB,#7B1FA2)!important;
   }
 }
+
+
+/* V14.1 — WhatsApp-first Contact section */
+.contact-whatsapp-card{position:relative;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;min-height:300px;padding:clamp(26px,4vw,42px);border:1px solid rgba(37,99,235,.2);border-radius:24px;overflow:hidden;background:linear-gradient(145deg,rgba(17,31,61,.92),rgba(25,20,54,.88));box-shadow:0 20px 55px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.08)}
+.contact-whatsapp-card:before{content:"";position:absolute;width:260px;height:260px;right:-90px;top:-110px;border-radius:50%;background:radial-gradient(circle,rgba(37,99,235,.25),rgba(123,31,162,.12) 48%,transparent 72%);pointer-events:none}
+.contact-whatsapp-top{display:flex;align-items:center;gap:13px;margin-bottom:25px;position:relative;z-index:1}
+.contact-whatsapp-icon{display:grid;place-items:center;width:54px;height:54px;border-radius:17px;background:linear-gradient(145deg,#20c96b,#0b9f55);box-shadow:0 8px 24px rgba(37,211,102,.24)}
+.contact-whatsapp-icon svg{width:29px;height:29px;fill:#fff}
+.contact-online{display:inline-flex;align-items:center;gap:8px;color:#b7c6df;font:600 12px 'Space Grotesk',sans-serif;letter-spacing:.4px}
+.contact-online i{width:7px;height:7px;border-radius:50%;background:#25D366;box-shadow:0 0 10px rgba(37,211,102,.75)}
+.contact-whatsapp-card h3{position:relative;z-index:1;margin:0 0 10px;color:#fff;font:700 clamp(23px,2.4vw,30px)/1.2 'Space Grotesk',sans-serif}
+.contact-whatsapp-card>p:not(.contact-note){position:relative;z-index:1;max-width:440px;margin:0 0 25px;color:#b7c5dc;font-size:14px;line-height:1.8}
+.contact-whatsapp-btn{position:relative;z-index:1;display:inline-flex!important;align-items:center;justify-content:space-between;gap:24px;min-height:52px;padding:0 22px!important;border:1px solid rgba(255,255,255,.2)!important;border-radius:14px!important;background:linear-gradient(110deg,#159d55,#25D366)!important;color:#fff!important;box-shadow:0 9px 24px rgba(37,211,102,.2),inset 0 1px 0 rgba(255,255,255,.2)!important;font-weight:700!important}
+.contact-whatsapp-btn:hover{transform:translateY(-2px);filter:brightness(1.08);box-shadow:0 13px 30px rgba(37,211,102,.28)!important}
+.contact-whatsapp-btn[hidden]{display:none!important}
+.contact-whatsapp-card .contact-note{position:relative;z-index:1;margin:14px 0 0;color:#8fa2c0;font-size:11px;line-height:1.5}
+body[data-theme="light"] .contact-whatsapp-card{background:linear-gradient(145deg,#f9fbff,#e8effb);border-color:rgba(37,99,235,.2);box-shadow:0 18px 45px rgba(35,58,105,.12),inset 0 1px 0 #fff}
+body[data-theme="light"] .contact-online{color:#50617f}
+body[data-theme="light"] .contact-whatsapp-card h3{color:#172b4d}
+body[data-theme="light"] .contact-whatsapp-card>p:not(.contact-note){color:#536581}
+body[data-theme="light"] .contact-whatsapp-card .contact-note{color:#73829b}
+@media(max-width:760px){.contact-whatsapp-card{min-height:260px;padding:25px 22px}.contact-whatsapp-btn{width:100%;gap:12px}}
