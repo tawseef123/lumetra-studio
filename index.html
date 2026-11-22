@@ -72,7 +72,6 @@
   stage.dataset.orbitReady='true';
   const cards=[...stage.querySelectorAll('.service-card')];
   const tracks=[...stage.querySelectorAll('.orbit-paths ellipse')];
-  const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const count=cards.length;
   const laneTemplates=[
     {rx:.345,ry:.355,tilt:-34},
@@ -89,7 +88,7 @@
     [lanes[i],lanes[j]]=[lanes[j],lanes[i]];
   }
   const phaseOffset=Math.random()*Math.PI*2;
-  const baseSpeed=.13;
+  const baseSpeed=.42;
   // Individual speed profiles: randomized per service, with a small spread so
   // the motion feels natural while spacing stays smooth and coordinated.
   const speedProfiles=cards.map(()=>baseSpeed*(.78+Math.random()*.44));
@@ -130,12 +129,12 @@
     const delta=Math.min((time-lastTime)/1000,.05);
     lastTime=time;
     if(visible && !document.hidden){
-      if(!reducedMotion) masterPhase+=baseSpeed*delta;
+      masterPhase+=baseSpeed*delta;
       const width=stage.clientWidth,height=stage.clientHeight;
       // Each orbit has its own continuous phase and speed. A hover freezes
       // only that service; the remaining services never wait for it.
       services.forEach(service=>{
-        if(!service.hovered && !service.focused && !reducedMotion){
+        if(!service.hovered && !service.focused){
           service.phase+=speedProfiles[service.index]*delta;
         }
         // Ease temporary spacing adjustments back toward the service's natural
