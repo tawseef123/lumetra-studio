@@ -2169,3 +2169,24 @@ body[data-theme="light"] .section:after{
   .section:before{right:-230px;width:300px;height:300px;opacity:.55}
 }
 @media(prefers-reduced-motion:reduce){.section:before{filter:none}}
+
+/* V10.9 — exact navbar sizing parity on Home, Portfolio and Assets */
+body.subpage .nav{height:76px!important}
+body.subpage .navin{height:100%!important;gap:24px!important}
+body.subpage .brand img{width:150px!important;height:52px!important}
+body.subpage .links{font-size:13px!important;gap:clamp(17px,3vw,42px)!important}
+body.subpage .links a{font-size:13px!important}
+body.subpage .nav-actions{gap:12px!important}
+@media(max-width:900px) and (min-width:641px){
+  body.subpage .navin{gap:14px!important}
+  body.subpage .links{gap:14px!important}
+  body.subpage .links a{font-size:12px!important}
+}
+@media(max-width:640px){
+  body.subpage .nav{height:66px!important}
+  body.subpage .brand img{width:124px!important;height:auto!important}
+  body.subpage .navin{gap:10px!important}
+  body.subpage .nav-actions{gap:8px!important}
+  body.subpage .links{font-size:14px!important}
+  body.subpage .links a{font-size:14px!important}
+}
