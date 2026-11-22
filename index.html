@@ -81,31 +81,24 @@
     {rx:.453,ry:.463,tilt:38},
     {rx:.480,ry:.490,tilt:-51}
   ];
-  // Keep the original wide, random orbit character.
   const lanes=laneTemplates.slice();
   for(let i=lanes.length-1;i>0;i--){
     const j=Math.floor(Math.random()*(i+1));
     [lanes[i],lanes[j]]=[lanes[j],lanes[i]];
   }
   const phaseOffset=Math.random()*Math.PI*2;
-  const baseSpeed=.42;
-  // Individual speed profiles: randomized per service, with a small spread so
-  // the motion feels natural while spacing stays smooth and coordinated.
+  // Restore the original service speed; only the orbit geometry will animate.
+  const baseSpeed=.13;
   const speedProfiles=cards.map(()=>baseSpeed*(.78+Math.random()*.44));
-    const services=cards.map((element,index)=>{
-    const lane=lanes[index];
-    const track=tracks[index];
-    if(track){
-      track.setAttribute('rx',String(lane.rx*1000));
-      track.setAttribute('ry',String(lane.ry*700));
-      track.setAttribute('transform','rotate('+lane.tilt+' 500 350)');
-    }
+  const services=cards.map((element,index)=>{
+    const lane=lanes[index],track=tracks[index];
     const service={
-      element,index,...lane,
+      element,index,baseRx:lane.rx,baseRy:lane.ry,baseTilt:lane.tilt,
+      rx:lane.rx,ry:lane.ry,tilt:lane.tilt,
       angle:phaseOffset+index*(Math.PI*2/count),
       phase:phaseOffset+index*(Math.PI*2/count),
-      avoidanceOffset:0,
-      hovered:false,focused:false
+      shapePhase:Math.random()*Math.PI*2,
+      avoidanceOffset:0,hovered:false,focused:false,track
     };
     element.addEventListener('mouseenter',()=>service.hovered=true);
     element.addEventListener('mouseleave',()=>service.hovered=false);
@@ -113,12 +106,11 @@
     element.addEventListener('focusout',()=>service.focused=false);
     return service;
   });
-  let masterPhase=phaseOffset,lastTime=0,frame=0,visible=true;
+  let lastTime=0,frame=0,visible=true,elapsed=0;
   const observer=('IntersectionObserver' in window)?new IntersectionObserver(entries=>{
     visible=entries[0].isIntersecting;
   },{threshold:.05}):null;
   if(observer) observer.observe(stage);
-  const wrapAngle=value=>Math.atan2(Math.sin(value),Math.cos(value));
   function getPosition(service,width,height,angle){
     const lx=Math.cos(angle)*width*service.rx,ly=Math.sin(angle)*height*service.ry;
     const t=service.tilt*Math.PI/180;
@@ -129,23 +121,24 @@
     const delta=Math.min((time-lastTime)/1000,.05);
     lastTime=time;
     if(visible && !document.hidden){
-      masterPhase+=baseSpeed*delta;
+      elapsed+=delta;
       const width=stage.clientWidth,height=stage.clientHeight;
-      // Each orbit has its own continuous phase and speed. A hover freezes
-      // only that service; the remaining services never wait for it.
       services.forEach(service=>{
-        if(!service.hovered && !service.focused){
-          service.phase+=speedProfiles[service.index]*delta;
+        // Slowly breathe each ellipse independently. Cards use these exact
+        // live dimensions/tilt, so they remain attached to their changing path.
+        const t=elapsed*.34+service.shapePhase;
+        service.rx=service.baseRx*(1+Math.sin(t)*.045);
+        service.ry=service.baseRy*(1+Math.sin(t*1.13+1.1)*.045);
+        service.tilt=service.baseTilt+Math.sin(t*.72+.8)*3.2;
+        if(service.track){
+          service.track.setAttribute('rx',String(service.rx*1000));
+          service.track.setAttribute('ry',String(service.ry*700));
+          service.track.setAttribute('transform','rotate('+service.tilt+' 500 350)');
         }
-        // Ease temporary spacing adjustments back toward the service's natural
-        // orbit phase, rather than letting collision correction cancel rotation.
-        if(!service.hovered && !service.focused){
-          service.avoidanceOffset*=Math.exp(-1.8*delta);
-        }
+        if(!service.hovered&&!service.focused) service.phase+=speedProfiles[service.index]*delta;
+        if(!service.hovered&&!service.focused) service.avoidanceOffset*=Math.exp(-1.8*delta);
         service.angle=service.phase+service.avoidanceOffset;
       });
-      // Collision avoidance is a gentle steering force, never a brake.
-      // Each service keeps advancing at its own speed even while another is held.
       const steering=services.map(()=>0);
       for(let pass=0;pass<3;pass++){
         for(let i=0;i<services.length;i++) for(let j=i+1;j<services.length;j++){
@@ -167,17 +160,12 @@
             const wa=Math.max(.15,Math.abs(ca)),wb=Math.max(.15,Math.abs(cb)),sum=wa+wb;
             steering[i]-=Math.sign(ca||1)*overlap*.00045*(wa/sum);
             steering[j]+=Math.sign(cb||1)*overlap*.00045*(wb/sum);
-          }else if(movableA){
-            steering[i]-=Math.sign(ca||1)*overlap*.00065;
-          }else if(movableB){
-            steering[j]+=Math.sign(cb||1)*overlap*.00065;
-          }
+          }else if(movableA) steering[i]-=Math.sign(ca||1)*overlap*.00065;
+          else if(movableB) steering[j]+=Math.sign(cb||1)*overlap*.00065;
         }
       }
       services.forEach((service,index)=>{
         if(service.hovered||service.focused) return;
-        // Limit steering to a fraction of the service's forward angular speed.
-        // This guarantees that collision handling can never cancel its rotation.
         const maxSteer=speedProfiles[index]*delta*.42;
         const correction=Math.max(-maxSteer,Math.min(maxSteer,steering[index]));
         service.avoidanceOffset+=correction;
