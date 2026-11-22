@@ -2616,3 +2616,21 @@ body[data-theme="light"] .contact-whatsapp-card .contact-note{color:#73829b}
   align-self:stretch!important;
   width:100%!important;
 }
+
+
+/* V14.5 — Right-align all WhatsApp contact content */
+.contact-whatsapp-card,
+.contact-whatsapp-card .contact-whatsapp-top,
+.contact-whatsapp-card h3,
+.contact-whatsapp-card>p,
+.contact-whatsapp-card .contact-note{
+  text-align:right!important;
+}
+.contact-whatsapp-card .contact-whatsapp-top{
+  justify-content:flex-end!important;
+}
+.contact-whatsapp-card .contact-whatsapp-btn{
+  align-self:flex-end!important;
+  margin-left:auto!important;
+  margin-right:0!important;
+}
