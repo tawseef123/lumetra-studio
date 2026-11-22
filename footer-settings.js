@@ -27,6 +27,13 @@ async function apply(){
    if(d.href&&/^https?:/i.test(d.href)){a.target='_blank';a.rel='noopener noreferrer'}else{a.removeAttribute('target');a.removeAttribute('rel')}
   });
  });
+ const contactLink=document.getElementById('contactWhatsAppLink');
+ const contactNote=document.getElementById('contactWhatsAppNote');
+ if(contactLink){
+  const wa=v.whatsapp||'';
+  if(wa){contactLink.href=wa;contactLink.hidden=false;if(contactNote)contactNote.textContent='Opens a direct WhatsApp conversation with Lumetra Studio.';}
+  else{contactLink.hidden=true;if(contactNote)contactNote.textContent='WhatsApp contact is being configured. Please check back soon.';}
+ }
  document.querySelectorAll('.footer-social-column .social-row').forEach(a=>{
   const key=(a.getAttribute('aria-label')||'').toLowerCase();
   if(!socials.includes(key))return;
