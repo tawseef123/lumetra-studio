@@ -2709,3 +2709,24 @@ header.nav #magicBottomNav .magic-nav-indicator {
   .subpage header.nav .nav-cta{display:none!important}
   .subpage header.nav .menu{display:flex!important}
 }
+
+/* V10.6 — one shared header/navbar system on Home, Portfolio and Assets */
+header.nav{height:64px!important;position:sticky!important;top:0!important;z-index:20!important;background:rgba(2,10,27,.94)!important;backdrop-filter:blur(16px)!important;border-bottom:1px solid rgba(116,150,210,.2)!important}
+header.nav .navin{height:100%!important;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:24px!important}
+header.nav .brand img{width:150px!important;height:52px!important;object-fit:contain!important;object-position:left center!important}
+header.nav #mainNav{display:flex!important;position:static!important;visibility:visible!important;opacity:1!important;max-height:none!important;overflow:visible!important;flex-direction:row!important;align-items:center!important;gap:clamp(17px,2vw,30px)!important;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important;backdrop-filter:none!important;width:auto!important;font-size:13px!important}
+header.nav #mainNav a{display:inline-block!important;color:#e9edfa!important;font-size:13px!important;padding:0!important;border:0!important;white-space:nowrap!important;transition:color .2s ease!important}
+header.nav #mainNav a:hover,header.nav #mainNav a.active{color:#fff!important}
+header.nav .nav-actions{display:flex!important;align-items:center!important;gap:12px!important}
+header.nav .nav-cta{display:inline-flex!important}
+header.nav .theme-toggle{display:flex!important}
+header.nav .menu{display:none!important}
+@media(max-width:900px) and (min-width:761px){header.nav .navin{gap:14px!important}header.nav #mainNav{gap:14px!important}header.nav #mainNav a{font-size:12px!important}header.nav .nav-cta{display:none!important}}
+@media(max-width:760px){
+header.nav{height:66px!important}header.nav .brand img{width:132px!important}
+header.nav .menu{display:flex!important;flex-direction:column!important;justify-content:center!important;gap:5px!important;align-items:center!important;width:42px!important;height:42px!important;border:1px solid rgba(255,255,255,.18)!important;border-radius:12px!important;background:rgba(37,99,235,.12)!important;cursor:pointer!important}
+header.nav .menu span{display:block!important;width:19px!important;height:2px!important;border-radius:2px!important;background:currentColor!important;transition:transform .2s,opacity .2s!important}
+header.nav .menu.open span:first-child{transform:translateY(7px) rotate(45deg)!important}header.nav .menu.open span:nth-child(2){opacity:0!important}header.nav .menu.open span:last-child{transform:translateY(-7px) rotate(-45deg)!important}
+header.nav #mainNav{display:none!important;position:absolute!important;top:65px!important;left:0!important;right:0!important;padding:18px 22px 22px!important;background:#030d21!important;border-bottom:1px solid #263957!important;flex-direction:column!important;align-items:stretch!important;gap:0!important;width:auto!important}
+header.nav #mainNav.open{display:flex!important}header.nav #mainNav a{padding:12px 4px!important;border-bottom:1px solid #182a45!important;font-size:14px!important}header.nav .nav-cta{display:none!important}
+}
