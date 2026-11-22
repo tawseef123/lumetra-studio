@@ -2728,3 +2728,60 @@ html body .contact-section .contact-whatsapp-card .contact-whatsapp-btn{
   margin-left:auto!important;
   margin-right:auto!important;
 }
+
+
+/* V14.9 — definitive centered WhatsApp contact card */
+html body #contact.contact-section .contact-panel #contactWhatsAppCard{
+  width:100%!important;
+  min-width:0!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+}
+html body #contact.contact-section .contact-panel #contactWhatsAppCard > *{
+  position:relative!important;
+  left:auto!important;
+  right:auto!important;
+  float:none!important;
+  text-align:center!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+html body #contact.contact-section .contact-panel #contactWhatsAppCard .contact-whatsapp-top{
+  width:100%!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:12px!important;
+  margin:0 auto 24px!important;
+}
+html body #contact.contact-section .contact-panel #contactWhatsAppCard h3,
+html body #contact.contact-section .contact-panel #contactWhatsAppCard > p,
+html body #contact.contact-section .contact-panel #contactWhatsAppCard .contact-note{
+  width:100%!important;
+  max-width:560px!important;
+  text-align:center!important;
+  direction:ltr!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+html body #contact.contact-section .contact-panel #contactWhatsAppCard .contact-whatsapp-btn{
+  display:inline-flex!important;
+  width:auto!important;
+  min-width:280px!important;
+  max-width:100%!important;
+  align-self:center!important;
+  align-items:center!important;
+  justify-content:center!important;
+  margin:0 auto!important;
+  text-align:center!important;
+}
+@media(max-width:760px){
+  html body #contact.contact-section .contact-panel #contactWhatsAppCard .contact-whatsapp-btn{
+    width:100%!important;
+    min-width:0!important;
+  }
+}
