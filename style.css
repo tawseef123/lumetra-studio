@@ -3268,3 +3268,63 @@ body[data-theme="light"] #about .service-card{
     line-height:1.35!important;
   }
 }
+
+
+/* V16.0 — service icons and collision-safe synchronized orbit lanes */
+#about .service-card{
+  flex-direction:row!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:9px!important;
+  width:clamp(150px,14vw,174px)!important;
+  min-height:68px!important;
+  padding:12px 13px!important;
+  text-align:left!important;
+}
+#about .service-card .service-icon{
+  display:block!important;
+  flex:0 0 23px!important;
+  width:23px!important;
+  height:23px!important;
+  fill:none!important;
+  stroke:#8eafff!important;
+  stroke-width:1.7!important;
+  stroke-linecap:round!important;
+  stroke-linejoin:round!important;
+  filter:drop-shadow(0 0 5px rgba(76,119,255,.28));
+}
+#about .service-card > span{
+  display:block!important;
+  min-width:0!important;
+  text-align:left!important;
+}
+body[data-theme="light"] #about .service-card .service-icon{
+  stroke:#6337b8!important;
+}
+@media(max-width:900px){
+  #about .service-card{
+    width:clamp(138px,18vw,158px)!important;
+    min-height:62px!important;
+    gap:7px!important;
+    padding:10px 10px!important;
+  }
+  #about .service-card .service-icon{
+    flex-basis:20px!important;
+    width:20px!important;
+    height:20px!important;
+  }
+}
+@media(max-width:640px){
+  #about .service-card{
+    width:132px!important;
+    min-height:56px!important;
+    gap:6px!important;
+    padding:8px 9px!important;
+    font-size:10px!important;
+  }
+  #about .service-card .service-icon{
+    flex-basis:18px!important;
+    width:18px!important;
+    height:18px!important;
+  }
+}
