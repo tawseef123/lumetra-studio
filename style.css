@@ -2608,3 +2608,11 @@ body[data-theme="light"] .contact-whatsapp-card .contact-note{color:#73829b}
 @media(max-width:760px){
   .contact-whatsapp-card .contact-whatsapp-btn{width:auto!important;min-width:min(100%,280px)}
 }
+
+
+/* V14.4 — Keep WhatsApp description left-aligned */
+.contact-whatsapp-card>p:not(.contact-note){
+  text-align:left!important;
+  align-self:stretch!important;
+  width:100%!important;
+}
