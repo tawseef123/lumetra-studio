@@ -3094,9 +3094,9 @@ html body #about .about-visual-space{
 #about .orbit-paths ellipse{
   fill:none;
   stroke:url(#orbitGradient);
-  stroke-width:1.5;
-  stroke-opacity:.38;
-  stroke-dasharray:5 9;
+  stroke-width:1.7;
+  stroke-opacity:.62;
+  stroke-dasharray:6 7;
   vector-effect:non-scaling-stroke;
 }
 #about .orbit-glow{
@@ -3207,3 +3207,4 @@ body[data-theme="light"] #about .service-card{
 @media(prefers-reduced-motion:reduce){
   #about .service-card{will-change:auto;}
 }
+\n/* V15.7 — clearer individual service orbit tracks */\n#about .orbit-paths{opacity:1!important;}\n#about .orbit-paths ellipse{stroke-opacity:.62!important;stroke-width:1.7!important;}\n
