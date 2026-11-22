@@ -90,7 +90,10 @@
   }
   const phaseOffset=Math.random()*Math.PI*2;
   const baseSpeed=.13;
-  const services=cards.map((element,index)=>{
+  // Individual speed profiles: randomized per service, with a small spread so
+  // the motion feels natural while spacing stays smooth and coordinated.
+  const speedProfiles=cards.map(()=>baseSpeed*(.78+Math.random()*.44));
+    const services=cards.map((element,index)=>{
     const lane=lanes[index];
     const track=tracks[index];
     if(track){
@@ -127,12 +130,11 @@
     if(visible && !document.hidden){
       if(!reducedMotion) masterPhase+=baseSpeed*delta;
       const width=stage.clientWidth,height=stage.clientHeight;
-      // First, each card moves at its own orbit speed; hovered cards hold still.
+      // Individual orbit speeds; phase targets drift at each card's own rate.
       services.forEach(service=>{
         if(!service.hovered && !service.focused && !reducedMotion){
-          const target=masterPhase+service.index*(Math.PI*2/count);
-          const diff=wrapAngle(target-service.angle);
-          service.angle+=baseSpeed*delta+diff*Math.min(1,delta*1.65);
+          const speed=speedProfiles[service.index];
+          service.angle+=speed*delta;
         }
       });
       // Collision-aware angular nudges: preserve randomized ellipses while opening
