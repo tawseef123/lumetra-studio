@@ -2389,45 +2389,30 @@ body[data-theme="light"] .nav.lum-nav .rocker__symbol--moon{color:#9aa8c1!import
 @media(max-width:640px){.nav.lum-nav .theme-toggle.rocker{flex-basis:86px!important;width:86px!important;height:46px!important}.nav.lum-nav .rocker[aria-checked="true"] .rocker__cast{transform:translateX(40px)!important}}
 
 
-/* V13.1 — theme-specific Lumetra brand outline */
-.nav.lum-nav .theme-toggle.rocker{
-  border:1.5px solid #7B1FA2!important;
-  box-shadow:0 0 0 1px rgba(123,31,162,.22),0 0 10px rgba(123,31,162,.28),0 1px 2px rgba(0,0,0,.48) inset,0 3px 5px rgba(0,0,0,.42) inset!important;
-}
-.nav.lum-nav .theme-toggle.rocker:hover{
-  border-color:#7B1FA2!important;
-  box-shadow:0 0 0 1px rgba(123,31,162,.35),0 0 15px rgba(123,31,162,.42),0 1px 2px rgba(0,0,0,.48) inset,0 3px 5px rgba(0,0,0,.42) inset!important;
-}
-body[data-theme="light"] .nav.lum-nav .theme-toggle.rocker{
-  border:1.5px solid #2563EB!important;
-  box-shadow:0 0 0 1px rgba(37,99,235,.2),0 0 10px rgba(37,99,235,.22),0 1px 2px rgba(73,91,129,.28) inset,0 3px 5px rgba(69,86,125,.25) inset!important;
-}
-body[data-theme="light"] .nav.lum-nav .theme-toggle.rocker:hover{
-  border-color:#2563EB!important;
-  box-shadow:0 0 0 1px rgba(37,99,235,.32),0 0 15px rgba(37,99,235,.34),0 1px 2px rgba(73,91,129,.28) inset,0 3px 5px rgba(69,86,125,.25) inset!important;
-}
 
 
-/* V13.2 — force visible theme-specific outline above rocker styling */
+/* V13.3 — brand-gradient rocker, no outline */
 .nav.lum-nav .theme-toggle.rocker{
-  border:2px solid #7B1FA2!important;
-  outline:2px solid #7B1FA2!important;
-  outline-offset:1px!important;
-  box-shadow:0 0 0 2px rgba(123,31,162,.22),0 0 14px rgba(123,31,162,.38),0 1px 2px rgba(0,0,0,.48) inset,0 3px 5px rgba(0,0,0,.42) inset!important;
+  border:0!important;
+  outline:0!important;
+  background:linear-gradient(135deg,#54218f 0%,#7B1FA2 48%,#a855f7 100%)!important;
+  box-shadow:0 5px 14px rgba(123,31,162,.34),0 2px 4px rgba(0,0,0,.28),inset 0 1px 1px rgba(255,255,255,.24)!important;
 }
 .nav.lum-nav .theme-toggle.rocker:hover{
-  border-color:#7B1FA2!important;
-  outline-color:#7B1FA2!important;
-  box-shadow:0 0 0 2px rgba(123,31,162,.32),0 0 18px rgba(123,31,162,.5),0 1px 2px rgba(0,0,0,.48) inset,0 3px 5px rgba(0,0,0,.42) inset!important;
+  border:0!important;
+  outline:0!important;
+  background:linear-gradient(135deg,#6426a8 0%,#8730b4 48%,#b56af8 100%)!important;
+  box-shadow:0 7px 18px rgba(123,31,162,.46),0 2px 4px rgba(0,0,0,.24),inset 0 1px 1px rgba(255,255,255,.3)!important;
 }
 body[data-theme="light"] .nav.lum-nav .theme-toggle.rocker{
-  border:2px solid #2563EB!important;
-  outline:2px solid #2563EB!important;
-  outline-offset:1px!important;
-  box-shadow:0 0 0 2px rgba(37,99,235,.2),0 0 14px rgba(37,99,235,.32),0 1px 2px rgba(73,91,129,.28) inset,0 3px 5px rgba(69,86,125,.25) inset!important;
+  border:0!important;
+  outline:0!important;
+  background:linear-gradient(135deg,#1d4ed8 0%,#2563EB 52%,#60a5fa 100%)!important;
+  box-shadow:0 5px 14px rgba(37,99,235,.3),0 2px 4px rgba(30,64,175,.18),inset 0 1px 1px rgba(255,255,255,.42)!important;
 }
 body[data-theme="light"] .nav.lum-nav .theme-toggle.rocker:hover{
-  border-color:#2563EB!important;
-  outline-color:#2563EB!important;
-  box-shadow:0 0 0 2px rgba(37,99,235,.3),0 0 18px rgba(37,99,235,.42),0 1px 2px rgba(73,91,129,.28) inset,0 3px 5px rgba(69,86,125,.25) inset!important;
+  border:0!important;
+  outline:0!important;
+  background:linear-gradient(135deg,#1e40af 0%,#2563EB 52%,#7ab8ff 100%)!important;
+  box-shadow:0 7px 18px rgba(37,99,235,.4),0 2px 4px rgba(30,64,175,.16),inset 0 1px 1px rgba(255,255,255,.48)!important;
 }
