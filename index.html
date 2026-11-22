@@ -133,11 +133,11 @@
           service.angle+=baseSpeed*delta+difference*correction;
         }
         const a=service.angle;
-        const localX=Math.cos(a)*width*service.rx;
-        const localY=Math.sin(a)*height*service.ry;
-        const tilt=service.tilt*Math.PI/180;
-        const x=localX*Math.cos(tilt)-localY*Math.sin(tilt);
-        const y=localX*Math.sin(tilt)+localY*Math.cos(tilt);
+        // Shared orbit geometry makes the six cards evenly spaced.
+        const localX=Math.cos(a)*width*.405;
+        const localY=Math.sin(a)*height*.415;
+        const x=localX;
+        const y=localY;
         service.element.style.transform='translate(-50%,-50%) translate('+x+'px,'+y+'px)';
       });
     }
