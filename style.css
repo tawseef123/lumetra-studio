@@ -2367,3 +2367,7 @@ body[data-theme="light"] .nav.lum-nav .rocker__paddle{background:linear-gradient
 body[data-theme="light"] .nav.lum-nav .rocker[aria-checked="true"] .rocker__paddle{background:linear-gradient(90deg,#dce5f5 0%,#edf2fb 48%,#f8faff 100%)!important;box-shadow:inset -2px 2px 3px rgba(255,255,255,.98),inset 2px -2px 4px rgba(87,108,149,.22),2px 2px 4px rgba(73,91,129,.2),0 1px 2px rgba(73,91,129,.15)!important}
 @media(max-width:1120px){.nav.lum-nav .theme-toggle.rocker{flex-basis:78px!important;width:78px!important;height:40px!important}}
 @media(max-width:640px){.nav.lum-nav .theme-toggle.rocker{flex-basis:72px!important;width:72px!important;height:38px!important}}
+
+/* V12.0 — preserve rocker geometry on hover */
+.nav.lum-nav .theme-toggle.rocker:hover{transform:none!important;filter:brightness(1.08)!important;background:linear-gradient(180deg,#0b1730,#14264a)!important}
+body[data-theme="light"] .nav.lum-nav .theme-toggle.rocker:hover{background:linear-gradient(180deg,#cbd5e8,#e7edf8)!important}
