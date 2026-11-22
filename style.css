@@ -2687,3 +2687,10 @@ html body .contact-section .contact-panel .contact-whatsapp-card .contact-note{
   width:100%!important;
   text-align:right!important;
 }
+
+
+/* Keep normal left-to-right text flow while aligning the description to the right */
+html body .contact-section .contact-panel .contact-whatsapp-card p:not(.contact-note){
+  direction:ltr!important;
+  text-align:right!important;
+}
