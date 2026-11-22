@@ -2670,3 +2670,20 @@ body[data-theme="light"] .contact-whatsapp-card .contact-note{color:#73829b}
   margin-left:auto!important;
   margin-right:0!important;
 }
+
+
+/* V14.7 — Explicitly right-align WhatsApp description and bust cached styles */
+html body .contact-section .contact-panel .contact-whatsapp-card p:not(.contact-note),
+html body .contact-section .contact-panel .contact-whatsapp-card > p:not(.contact-note){
+  display:block!important;
+  width:100%!important;
+  max-width:none!important;
+  margin-left:auto!important;
+  margin-right:0!important;
+  text-align:right!important;
+  direction:rtl!important;
+}
+html body .contact-section .contact-panel .contact-whatsapp-card .contact-note{
+  width:100%!important;
+  text-align:right!important;
+}
