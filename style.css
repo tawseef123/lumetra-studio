@@ -2371,3 +2371,19 @@ body[data-theme="light"] .nav.lum-nav .rocker[aria-checked="true"] .rocker__padd
 /* V12.0 — preserve rocker geometry on hover */
 .nav.lum-nav .theme-toggle.rocker:hover{transform:none!important;filter:brightness(1.08)!important;background:linear-gradient(180deg,#0b1730,#14264a)!important}
 body[data-theme="light"] .nav.lum-nav .theme-toggle.rocker:hover{background:linear-gradient(180deg,#cbd5e8,#e7edf8)!important}
+
+
+/* V13.0 — larger rocker with clear sun / moon indicators */
+.nav.lum-nav .theme-toggle.rocker{flex-basis:96px!important;width:96px!important;height:50px!important;padding:5px!important}
+.nav.lum-nav .rocker__cast{top:7px!important;left:7px!important;width:38px!important;height:34px!important}
+.nav.lum-nav .rocker[aria-checked="true"] .rocker__cast{transform:translateX(46px)!important}
+.nav.lum-nav .rocker__symbol{width:20px!important;height:20px!important;color:var(--rocker-icon-inactive)!important;opacity:.58!important;transform:scale(.92)!important}
+.nav.lum-nav .rocker__symbol svg{display:block!important;width:20px!important;height:20px!important;stroke:currentColor!important;fill:none!important;stroke-width:1.9!important;stroke-linecap:round!important;stroke-linejoin:round!important}
+.nav.lum-nav .rocker__symbol--sun{color:var(--rocker-icon-inactive)!important}
+.nav.lum-nav .rocker__symbol--moon{color:var(--rocker-icon-active)!important;opacity:1!important;transform:scale(1.04)!important}
+.nav.lum-nav .rocker[aria-checked="true"] .rocker__symbol--sun{color:var(--rocker-icon-active)!important;opacity:1!important;transform:scale(1.04)!important}
+.nav.lum-nav .rocker[aria-checked="true"] .rocker__symbol--moon{color:var(--rocker-icon-inactive)!important;opacity:.58!important;transform:scale(.92)!important}
+body[data-theme="light"] .nav.lum-nav .rocker__symbol--sun{color:#2563EB!important}
+body[data-theme="light"] .nav.lum-nav .rocker__symbol--moon{color:#9aa8c1!important}
+@media(max-width:1120px){.nav.lum-nav .theme-toggle.rocker{flex-basis:96px!important;width:96px!important;height:50px!important}}
+@media(max-width:640px){.nav.lum-nav .theme-toggle.rocker{flex-basis:86px!important;width:86px!important;height:46px!important}.nav.lum-nav .rocker[aria-checked="true"] .rocker__cast{transform:translateX(40px)!important}}
