@@ -2556,3 +2556,29 @@ body[data-theme="light"] .contact-whatsapp-card h3{color:#172b4d}
 body[data-theme="light"] .contact-whatsapp-card>p:not(.contact-note){color:#536581}
 body[data-theme="light"] .contact-whatsapp-card .contact-note{color:#73829b}
 @media(max-width:760px){.contact-whatsapp-card{min-height:260px;padding:25px 22px}.contact-whatsapp-btn{width:100%;gap:12px}}
+
+
+/* V14.2 — Left-align WhatsApp contact option */
+.contact-whatsapp-card{
+  align-items:flex-start!important;
+  text-align:left!important;
+}
+.contact-whatsapp-card .contact-whatsapp-top,
+.contact-whatsapp-card h3,
+.contact-whatsapp-card>p,
+.contact-whatsapp-card .contact-note{
+  align-self:flex-start;
+  width:100%;
+  text-align:left!important;
+}
+.contact-whatsapp-card .contact-whatsapp-top{
+  justify-content:flex-start!important;
+}
+.contact-whatsapp-card .contact-whatsapp-btn{
+  align-self:flex-start!important;
+  margin-left:0!important;
+  margin-right:auto!important;
+}
+@media(max-width:760px){
+  .contact-whatsapp-card .contact-whatsapp-btn{width:auto!important;min-width:min(100%,280px)}
+}
