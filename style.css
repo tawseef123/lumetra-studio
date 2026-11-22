@@ -2970,3 +2970,65 @@ html body .footer-services-column .footer-service-link{
   html body .footer-services-column h3{font-size:20px!important;}
   html body .footer-services-column .footer-service-link{font-size:17px!important;line-height:1.75!important;}
 }
+
+
+/* V15.4 — About section: left-aligned copy, 2x2 benefits, reserved 3D space */
+html body #about .about{
+  display:grid!important;
+  grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr)!important;
+  align-items:center!important;
+  gap:clamp(36px,5vw,88px)!important;
+}
+html body #about .about-copy{
+  min-width:0!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  text-align:left!important;
+}
+html body #about .about-copy .eyebrow,
+html body #about .about-copy h2,
+html body #about .about-copy p{
+  width:100%!important;
+  text-align:left!important;
+  margin-left:0!important;
+  margin-right:0!important;
+}
+html body #about .about-copy p{
+  max-width:680px!important;
+  margin-top:16px!important;
+  margin-bottom:28px!important;
+}
+html body #about .about-copy .benefits{
+  width:100%!important;
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  grid-auto-flow:row!important;
+  gap:20px 24px!important;
+  margin-top:4px!important;
+}
+html body #about .about-copy .benefit{
+  min-width:0!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  text-align:left!important;
+  gap:12px!important;
+  line-height:1.5!important;
+}
+html body #about .about-visual-space{
+  display:block!important;
+  width:100%!important;
+  min-height:clamp(340px,38vw,560px)!important;
+}
+@media(max-width:900px){
+  html body #about .about{grid-template-columns:minmax(0,1fr) minmax(0,.85fr)!important;gap:28px!important;}
+  html body #about .about-visual-space{min-height:300px!important;}
+  html body #about .about-copy .benefits{gap:16px!important;}
+}
+@media(max-width:640px){
+  html body #about .about{grid-template-columns:minmax(0,1fr)!important;gap:0!important;}
+  html body #about .about-visual-space{display:none!important;}
+  html body #about .about-copy .benefits{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:16px 12px!important;}
+  html body #about .about-copy .benefit{font-size:14px!important;gap:8px!important;}
+}
