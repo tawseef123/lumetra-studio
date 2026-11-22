@@ -2955,3 +2955,18 @@ html body .footer-bottom{font-size:14px!important}
   html body .all-grid .project-info p{font-size:14px!important}
   html body .links a{font-size:16px!important}
 }
+
+
+/* V15.3 — enlarge only the Services column typography in the footer */
+html body .footer-services-column h3{
+  font-size:18px!important;
+  line-height:1.35!important;
+}
+html body .footer-services-column .footer-service-link{
+  font-size:16px!important;
+  line-height:1.75!important;
+}
+@media(max-width:760px){
+  html body .footer-services-column h3{font-size:20px!important;}
+  html body .footer-services-column .footer-service-link{font-size:17px!important;line-height:1.75!important;}
+}
