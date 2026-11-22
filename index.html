@@ -156,15 +156,15 @@
           if(dist<minGap){
             const overlap=minGap-dist,ux=dx/dist,uy=dy/dist;
             const angleA=a.phase+a.avoidanceOffset,angleB=b.phase+b.avoidanceOffset;\n            const ta={x:-Math.sin(angleA)*width*a.rx*Math.cos(a.tilt*Math.PI/180)-Math.cos(angleA)*height*a.ry*Math.sin(a.tilt*Math.PI/180),
-                      y:-Math.sin(angleA)*width*a.rx*Math.sin(a.tilt*Math.PI/180)+Math.cos(a.angle)*height*a.ry*Math.cos(a.tilt*Math.PI/180)};
+                      y:-Math.sin(angleA)*width*a.rx*Math.sin(a.tilt*Math.PI/180)+Math.cos(angleA)*height*a.ry*Math.cos(a.tilt*Math.PI/180)};
             const tb={x:-Math.sin(angleB)*width*b.rx*Math.cos(b.tilt*Math.PI/180)-Math.cos(angleB)*height*b.ry*Math.sin(b.tilt*Math.PI/180),
-                      y:-Math.sin(angleB)*width*b.rx*Math.sin(b.tilt*Math.PI/180)+Math.cos(b.angle)*height*b.ry*Math.cos(b.tilt*Math.PI/180)};
+                      y:-Math.sin(angleB)*width*b.rx*Math.sin(b.tilt*Math.PI/180)+Math.cos(angleB)*height*b.ry*Math.cos(b.tilt*Math.PI/180)};
             const ca=ta.x*ux+ta.y*uy,cb=tb.x*ux+tb.y*uy;
             const movableA=!(a.hovered||a.focused),movableB=!(b.hovered||b.focused);
             if(movableA&&movableB){
               const wa=Math.max(.15,Math.abs(ca)),wb=Math.max(.15,Math.abs(cb)),sum=wa+wb;
-              a.angle-=Math.sign(ca||1)*(overlap*.0035)*(wa/sum);
-              b.angle+=Math.sign(cb||1)*(overlap*.0035)*(wb/sum);
+              a.avoidanceOffset-=Math.sign(ca||1)*(overlap*.0035)*(wa/sum);
+              b.avoidanceOffset+=Math.sign(cb||1)*(overlap*.0035)*(wb/sum);
             }else if(movableA){
               a.avoidanceOffset-=Math.sign(ca||1)*overlap*.0045;
             }else if(movableB){
