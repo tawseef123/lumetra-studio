@@ -3328,3 +3328,47 @@ body[data-theme="light"] #about .service-card .service-icon{
     height:18px!important;
   }
 }
+
+
+/* V16.0 — larger interactive center logo with a soft brand glow */
+#about .center-core{
+  width:clamp(94px,10.5vw,132px)!important;
+  pointer-events:auto!important;
+  cursor:pointer;
+  transform:translate(-50%,-50%) scale(1);
+  transform-origin:center;
+  transition:transform .38s cubic-bezier(.2,.8,.2,1),box-shadow .38s ease,border-color .38s ease;
+  box-shadow:0 0 0 10px rgba(37,99,235,.07),0 18px 48px rgba(0,0,0,.3),0 0 38px rgba(83,68,219,.3),inset 0 1px 0 rgba(255,255,255,.16);
+}
+#about .center-core::before{
+  content:"";
+  position:absolute;
+  inset:-17px;
+  border-radius:inherit;
+  background:radial-gradient(circle,rgba(37,99,235,.25) 0%,rgba(123,31,162,.19) 42%,transparent 72%);
+  filter:blur(13px);
+  opacity:.45;
+  z-index:-1;
+  pointer-events:none;
+  transition:opacity .38s ease,transform .38s ease;
+}
+#about .center-core img{
+  width:76%!important;
+  height:76%!important;
+  transition:transform .38s cubic-bezier(.2,.8,.2,1),filter .38s ease;
+}
+@media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+  #about .center-core:hover{
+    transform:translate(-50%,-50%) scale(1.09);
+    border-color:rgba(112,150,255,.9);
+    box-shadow:0 0 0 12px rgba(37,99,235,.12),0 20px 52px rgba(0,0,0,.32),0 0 48px rgba(37,99,235,.4),0 0 72px rgba(123,31,162,.28),inset 0 1px 0 rgba(255,255,255,.2);
+  }
+  #about .center-core:hover::before{opacity:1;transform:scale(1.16);}
+  #about .center-core:hover img{transform:scale(1.035);filter:drop-shadow(0 0 7px rgba(116,151,255,.55));}
+}
+@media(prefers-reduced-motion:reduce){
+  #about .center-core,#about .center-core::before,#about .center-core img{transition:none!important;}
+}
+@media(max-width:640px){
+  #about .center-core{width:82px!important;border-radius:23px!important;}
+}
