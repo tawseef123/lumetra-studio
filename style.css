@@ -3236,3 +3236,35 @@ body[data-theme="light"] #about .service-card{
     stroke-opacity:.72!important;
   }
 }
+
+
+/* V15.9 — larger service cards and typography; remove serial markers */
+#about .service-card{
+  width:clamp(150px,15vw,184px)!important;
+  min-height:68px!important;
+  padding:13px 16px!important;
+  justify-content:center!important;
+  gap:0!important;
+  font-size:13px!important;
+  line-height:1.45!important;
+  letter-spacing:.15px!important;
+  text-align:center!important;
+}
+#about .orbit-card-mark{display:none!important;}
+@media(max-width:900px){
+  #about .service-card{
+    width:clamp(138px,19vw,164px)!important;
+    min-height:62px!important;
+    padding:11px 13px!important;
+    font-size:12px!important;
+  }
+}
+@media(max-width:640px){
+  #about .service-card{
+    width:132px!important;
+    min-height:56px!important;
+    padding:9px 10px!important;
+    font-size:11px!important;
+    line-height:1.35!important;
+  }
+}
