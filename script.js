@@ -91,18 +91,17 @@ if(menu&&nav){
 })();
 
 
-// Persistent dark/light theme toggle
+// Persistent dark/light theme rocker switch
 (()=>{
   const body=document.body;
   const toggle=document.getElementById('themeToggle');
   if(!toggle)return;
-  const icon=toggle.querySelector('.theme-icon');
   const apply=theme=>{
-    body.dataset.theme=theme;
     const light=theme==='light';
-    toggle.setAttribute('aria-label',light?'Switch to dark theme':'Switch to light theme');
+    body.dataset.theme=light?'light':'dark';
+    toggle.setAttribute('aria-checked',String(light));
+    toggle.setAttribute('aria-label',light?'Light theme active. Switch to dark theme':'Dark theme active. Switch to light theme');
     toggle.setAttribute('title',light?'Switch to dark theme':'Switch to light theme');
-    if(icon){icon.textContent=light?'☾':'☼';icon.classList.remove('spin');void icon.offsetWidth;icon.classList.add('spin');}
     const meta=document.querySelector('meta[name="theme-color"]');
     if(meta)meta.content=light?'#E1E4EA':'#020b1d';
   };
@@ -115,7 +114,7 @@ if(menu&&nav){
     try{localStorage.setItem('lumetra-theme',next)}catch(e){}
   });
 })();
-
+ 
 
 // V4.0 — Keep the navigation item selected for the visible homepage segment
 // and keep Portfolio / Assets selected on their dedicated pages.
