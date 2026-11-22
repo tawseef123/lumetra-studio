@@ -3378,13 +3378,13 @@ body[data-theme="light"] #about .service-card .service-icon{
 #about .orbit-paths{
   transform-origin:50% 50%;
   transform-box:border-box;
-  animation:lumetraOrbitDrift 22s ease-in-out infinite alternate;
+  animation:lumetraOrbitDrift 9s ease-in-out infinite alternate!important;
   will-change:transform;
 }
 @keyframes lumetraOrbitDrift{
-  0%{transform:rotate(-.55deg) scale(.998);}
-  50%{transform:rotate(.18deg) scale(1.001);}
-  100%{transform:rotate(.62deg) scale(1.003);}
+  0%{transform:rotate(-2.8deg) scale(.985);}
+  50%{transform:rotate(0deg) scale(1.008);}
+  100%{transform:rotate(2.8deg) scale(.985);}
 }
 @media(prefers-reduced-motion:reduce){
   #about .orbit-paths{animation:none!important;will-change:auto;}
