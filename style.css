@@ -2694,3 +2694,37 @@ html body .contact-section .contact-panel .contact-whatsapp-card p:not(.contact-
   direction:ltr!important;
   text-align:right!important;
 }
+
+
+/* V14.8 — Center-align all WhatsApp contact card content */
+html body .contact-section .contact-whatsapp-card{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+}
+html body .contact-section .contact-whatsapp-card .contact-whatsapp-top{
+  width:100%!important;
+  display:flex!important;
+  justify-content:center!important;
+  align-items:center!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+html body .contact-section .contact-whatsapp-card h3,
+html body .contact-section .contact-whatsapp-card > p,
+html body .contact-section .contact-whatsapp-card .contact-note{
+  width:100%!important;
+  max-width:560px!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+  text-align:center!important;
+  direction:ltr!important;
+}
+html body .contact-section .contact-whatsapp-card .contact-whatsapp-btn{
+  align-self:center!important;
+  justify-content:center!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
