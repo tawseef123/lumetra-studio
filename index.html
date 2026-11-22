@@ -75,15 +75,14 @@
   const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const count=cards.length;
   const laneTemplates=[
-    {rx:.365,ry:.372,tilt:-12},
-    {rx:.375,ry:.382,tilt:8},
-    {rx:.385,ry:.392,tilt:-7},
-    {rx:.395,ry:.402,tilt:12},
-    {rx:.405,ry:.412,tilt:-10},
-    {rx:.415,ry:.422,tilt:5}
+    {rx:.345,ry:.355,tilt:-34},
+    {rx:.372,ry:.382,tilt:19},
+    {rx:.399,ry:.409,tilt:53},
+    {rx:.426,ry:.436,tilt:-12},
+    {rx:.453,ry:.463,tilt:38},
+    {rx:.480,ry:.490,tilt:-51}
   ];
-  // Shuffle the distinct lanes on each load: every service gets its own
-  // non-parallel elliptical path, while all paths stay centered on the logo.
+  // Keep the original wide, random orbit character.
   const lanes=laneTemplates.slice();
   for(let i=lanes.length-1;i>0;i--){
     const j=Math.floor(Math.random()*(i+1));
@@ -116,6 +115,11 @@
   },{threshold:.05}):null;
   if(observer) observer.observe(stage);
   const wrapAngle=value=>Math.atan2(Math.sin(value),Math.cos(value));
+  function getPosition(service,width,height,angle){
+    const lx=Math.cos(angle)*width*service.rx,ly=Math.sin(angle)*height*service.ry;
+    const t=service.tilt*Math.PI/180;
+    return {x:lx*Math.cos(t)-ly*Math.sin(t),y:lx*Math.sin(t)+ly*Math.cos(t)};
+  }
   function animate(time){
     if(!lastTime) lastTime=time;
     const delta=Math.min((time-lastTime)/1000,.05);
@@ -123,23 +127,45 @@
     if(visible && !document.hidden){
       if(!reducedMotion) masterPhase+=baseSpeed*delta;
       const width=stage.clientWidth,height=stage.clientHeight;
+      // First, each card moves at its own orbit speed; hovered cards hold still.
       services.forEach(service=>{
         if(!service.hovered && !service.focused && !reducedMotion){
           const target=masterPhase+service.index*(Math.PI*2/count);
-          const difference=wrapAngle(target-service.angle);
-          // Catch up smoothly after hover; only this card accelerates.
-          // Other services never wait or change their speed.
-          const correction=Math.min(1,delta*1.65);
-          service.angle+=baseSpeed*delta+difference*correction;
+          const diff=wrapAngle(target-service.angle);
+          service.angle+=baseSpeed*delta+diff*Math.min(1,delta*1.65);
         }
-        const a=service.angle;
-        // Each service follows its own assigned elliptical orbit lane.
-        const localX=Math.cos(a)*width*service.rx;
-        const localY=Math.sin(a)*height*service.ry;
-        const tilt=service.tilt*Math.PI/180;
-        const x=localX*Math.cos(tilt)-localY*Math.sin(tilt);
-        const y=localX*Math.sin(tilt)+localY*Math.cos(tilt);
-        service.element.style.transform='translate(-50%,-50%) translate('+x+'px,'+y+'px)';
+      });
+      // Collision-aware angular nudges: preserve randomized ellipses while opening
+      // gaps. The held card stays fixed; its neighbors gently make room and recover.
+      for(let pass=0;pass<3;pass++){
+        for(let i=0;i<services.length;i++) for(let j=i+1;j<services.length;j++){
+          const a=services[i],b=services[j],pa=getPosition(a,width,height,a.angle),pb=getPosition(b,width,height,b.angle);
+          const dx=pb.x-pa.x,dy=pb.y-pa.y,dist=Math.hypot(dx,dy)||.001;
+          const ar=a.element.getBoundingClientRect(),br=b.element.getBoundingClientRect();
+          const minGap=Math.max(70,Math.min(150,(ar.width+br.width)*.38));
+          if(dist<minGap){
+            const overlap=minGap-dist,ux=dx/dist,uy=dy/dist;
+            const ta={x:-Math.sin(a.angle)*width*a.rx*Math.cos(a.tilt*Math.PI/180)-Math.cos(a.angle)*height*a.ry*Math.sin(a.tilt*Math.PI/180),
+                      y:-Math.sin(a.angle)*width*a.rx*Math.sin(a.tilt*Math.PI/180)+Math.cos(a.angle)*height*a.ry*Math.cos(a.tilt*Math.PI/180)};
+            const tb={x:-Math.sin(b.angle)*width*b.rx*Math.cos(b.tilt*Math.PI/180)-Math.cos(b.angle)*height*b.ry*Math.sin(b.tilt*Math.PI/180),
+                      y:-Math.sin(b.angle)*width*b.rx*Math.sin(b.tilt*Math.PI/180)+Math.cos(b.angle)*height*b.ry*Math.cos(b.tilt*Math.PI/180)};
+            const ca=ta.x*ux+ta.y*uy,cb=tb.x*ux+tb.y*uy;
+            const movableA=!(a.hovered||a.focused),movableB=!(b.hovered||b.focused);
+            if(movableA&&movableB){
+              const wa=Math.max(.15,Math.abs(ca)),wb=Math.max(.15,Math.abs(cb)),sum=wa+wb;
+              a.angle-=Math.sign(ca||1)*(overlap*.0035)*(wa/sum);
+              b.angle+=Math.sign(cb||1)*(overlap*.0035)*(wb/sum);
+            }else if(movableA){
+              a.angle-=Math.sign(ca||1)*overlap*.0045;
+            }else if(movableB){
+              b.angle+=Math.sign(cb||1)*overlap*.0045;
+            }
+          }
+        }
+      }
+      services.forEach(service=>{
+        const p=getPosition(service,width,height,service.angle);
+        service.element.style.transform='translate(-50%,-50%) translate('+p.x+'px,'+p.y+'px)';
       });
     }
     frame=requestAnimationFrame(animate);
