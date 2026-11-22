@@ -2839,3 +2839,36 @@ html body #contact #contactWhatsAppCard .contact-whatsapp-btn{
 @media(max-width:760px){
   html body #contact #contactWhatsAppCard .contact-whatsapp-btn{width:100%!important}
 }
+
+
+/* V15.1 — official WhatsApp brand mark and centered status label */
+html body #contact #contactWhatsAppCard .contact-whatsapp-top{
+  width:100%!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+}
+html body #contact #contactWhatsAppCard .contact-whatsapp-icon{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  align-self:center!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+html body #contact #contactWhatsAppCard .contact-whatsapp-icon img{
+  display:block!important;
+  width:30px!important;
+  height:30px!important;
+  object-fit:contain!important;
+}
+html body #contact #contactWhatsAppCard .contact-online{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  align-self:center!important;
+  width:100%!important;
+  text-align:center!important;
+}
