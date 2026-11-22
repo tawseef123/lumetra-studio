@@ -2660,3 +2660,12 @@ header.nav #magicBottomNav .magic-nav-indicator {
   header.nav .menu.open span:last-child{transform:translateY(-7px) rotate(-45deg)}
 }
 @media (min-width:761px){header.nav .navin>.links{display:flex!important;position:static!important;flex-direction:row!important;align-items:center!important;max-height:none!important;overflow:visible!important;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important;backdrop-filter:none!important;gap:clamp(17px,2vw,30px)!important;width:auto!important}header.nav .menu{display:none!important}}
+
+/* V10.4 — FORCE original navbar links visible; overrides the stale V8 hide rule */
+@media (min-width:761px){
+  header.nav #mainNav{display:flex!important;position:static!important;flex-direction:row!important;align-items:center!important;visibility:visible!important;opacity:1!important}
+}
+@media (max-width:760px){
+  header.nav #mainNav{display:none!important}
+  header.nav #mainNav.open{display:flex!important}
+}
