@@ -27,6 +27,16 @@ async function apply(){
    if(d.href&&/^https?:/i.test(d.href)){a.target='_blank';a.rel='noopener noreferrer'}else{a.removeAttribute('target');a.removeAttribute('rel')}
   });
  });
+ const emailButton=document.getElementById('contactEmailLink');
+ if(emailButton){
+  const officialEmail=(v.email||'').trim();
+  if(officialEmail){
+   const subject='Project Enquiry — Lumetra Studio';
+   const body='Hello Lumetra Studio,\\n\\nI would like to discuss a project.\\n\\nProject details:\\n\\nThank you.';
+   emailButton.href='https://mail.google.com/mail/?view=cm&fs=1&to='+encodeURIComponent(officialEmail)+'&su='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+   emailButton.target='_blank';emailButton.rel='noopener noreferrer';emailButton.hidden=false;
+  }else{emailButton.hidden=true;emailButton.removeAttribute('href');}
+ }
  const contactLink=document.getElementById('contactWhatsAppLink');
  const contactNote=document.getElementById('contactWhatsAppNote');
  if(contactLink){
