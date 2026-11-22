@@ -2334,3 +2334,13 @@ body[data-theme="light"] .nav.lum-nav .theme-toggle{background:rgba(255,255,255,
   .nav.lum-nav .theme-toggle{width:40px!important;height:40px!important;flex-basis:40px!important}
   .nav.lum-nav .menu{width:40px!important;height:40px!important}
 }
+
+
+/* V11.2 — Keep homepage and subpage header dimensions identical */
+body.subpage .nav.lum-nav{height:90px!important}
+@media(max-width:1120px){
+  body.subpage .nav.lum-nav{height:82px!important}
+}
+@media(max-width:640px){
+  body.subpage .nav.lum-nav{height:72px!important}
+}
