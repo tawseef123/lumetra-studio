@@ -2310,3 +2310,27 @@ body[data-theme="light"] .nav.lum-nav .theme-toggle{background:rgba(255,255,255,
 }
 @keyframes lumNavDrop{from{opacity:0;transform:translateY(-8px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
 @media(prefers-reduced-motion:reduce){.nav.lum-nav *, .nav.lum-nav *:before,.nav.lum-nav *:after{transition:none!important;animation:none!important}}
+
+
+/* V11.1 — Slightly larger navigation scale */
+.nav.lum-nav{height:90px!important}
+.nav.lum-nav .navin{gap:30px!important}
+.nav.lum-nav .brand img{width:168px!important;height:62px!important}
+.nav.lum-nav .links{gap:4px!important;padding:7px!important}
+.nav.lum-nav .links a{min-height:42px!important;padding:0 15px!important;font-size:13px!important}
+.nav.lum-nav .nav-cta{min-height:46px!important;padding:0 22px!important;font-size:13px!important}
+.nav.lum-nav .theme-toggle{flex-basis:46px!important;width:46px!important;height:46px!important}
+.nav.lum-nav .theme-icon{font-size:21px!important}
+@media(max-width:1120px){
+  .nav.lum-nav{height:82px!important}
+  .nav.lum-nav .brand img{width:160px!important;height:58px!important}
+  .nav.lum-nav .nav-cta{min-height:44px!important}
+  .nav.lum-nav .theme-toggle{flex-basis:44px!important;width:44px!important;height:44px!important}
+  .nav.lum-nav .menu{width:44px!important;height:44px!important}
+}
+@media(max-width:640px){
+  .nav.lum-nav{height:72px!important}
+  .nav.lum-nav .brand img{width:138px!important;height:50px!important;max-width:44vw!important}
+  .nav.lum-nav .theme-toggle{width:40px!important;height:40px!important;flex-basis:40px!important}
+  .nav.lum-nav .menu{width:40px!important;height:40px!important}
+}
