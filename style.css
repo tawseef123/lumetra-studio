@@ -3372,3 +3372,20 @@ body[data-theme="light"] #about .service-card .service-icon{
 @media(max-width:640px){
   #about .center-core{width:82px!important;border-radius:23px!important;}
 }
+
+
+/* V16.1 — subtle independent ambient motion for the orbit-track layer */
+#about .orbit-paths{
+  transform-origin:50% 50%;
+  transform-box:border-box;
+  animation:lumetraOrbitDrift 22s ease-in-out infinite alternate;
+  will-change:transform;
+}
+@keyframes lumetraOrbitDrift{
+  0%{transform:rotate(-.55deg) scale(.998);}
+  50%{transform:rotate(.18deg) scale(1.001);}
+  100%{transform:rotate(.62deg) scale(1.003);}
+}
+@media(prefers-reduced-motion:reduce){
+  #about .orbit-paths{animation:none!important;will-change:auto;}
+}
