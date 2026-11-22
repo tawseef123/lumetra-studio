@@ -2634,3 +2634,39 @@ body[data-theme="light"] .contact-whatsapp-card .contact-note{color:#73829b}
   margin-left:auto!important;
   margin-right:0!important;
 }
+
+
+/* V14.6 — Force every WhatsApp card element to the right edge */
+.contact-whatsapp-card{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:stretch!important;
+  text-align:right!important;
+}
+.contact-whatsapp-card > *{
+  margin-left:auto!important;
+  margin-right:0!important;
+  text-align:right!important;
+}
+.contact-whatsapp-card .contact-whatsapp-top{
+  display:flex!important;
+  width:100%!important;
+  justify-content:flex-end!important;
+  align-items:center!important;
+}
+.contact-whatsapp-card h3,
+.contact-whatsapp-card > p,
+.contact-whatsapp-card .contact-note{
+  display:block!important;
+  width:100%!important;
+  max-width:none!important;
+  text-align:right!important;
+}
+.contact-whatsapp-card .contact-whatsapp-btn{
+  display:inline-flex!important;
+  width:max-content!important;
+  align-self:flex-end!important;
+  justify-content:space-between!important;
+  margin-left:auto!important;
+  margin-right:0!important;
+}
