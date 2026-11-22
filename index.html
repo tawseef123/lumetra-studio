@@ -104,6 +104,8 @@
     const service={
       element,index,...lane,
       angle:phaseOffset+index*(Math.PI*2/count),
+      phase:phaseOffset+index*(Math.PI*2/count),
+      avoidanceOffset:0,
       hovered:false,focused:false
     };
     element.addEventListener('mouseenter',()=>service.hovered=true);
@@ -130,27 +132,33 @@
     if(visible && !document.hidden){
       if(!reducedMotion) masterPhase+=baseSpeed*delta;
       const width=stage.clientWidth,height=stage.clientHeight;
-      // Individual orbit speeds; phase targets drift at each card's own rate.
+      // Each orbit has its own continuous phase and speed. A hover freezes
+      // only that service; the remaining services never wait for it.
       services.forEach(service=>{
         if(!service.hovered && !service.focused && !reducedMotion){
-          const speed=speedProfiles[service.index];
-          service.angle+=speed*delta;
+          service.phase+=speedProfiles[service.index]*delta;
         }
+        // Ease temporary spacing adjustments back toward the service's natural
+        // orbit phase, rather than letting collision correction cancel rotation.
+        if(!service.hovered && !service.focused){
+          service.avoidanceOffset*=Math.exp(-1.8*delta);
+        }
+        service.angle=service.phase+service.avoidanceOffset;
       });
       // Collision-aware angular nudges: preserve randomized ellipses while opening
       // gaps. The held card stays fixed; its neighbors gently make room and recover.
       for(let pass=0;pass<3;pass++){
         for(let i=0;i<services.length;i++) for(let j=i+1;j<services.length;j++){
-          const a=services[i],b=services[j],pa=getPosition(a,width,height,a.angle),pb=getPosition(b,width,height,b.angle);
+          const a=services[i],b=services[j],pa=getPosition(a,width,height,a.phase+a.avoidanceOffset),pb=getPosition(b,width,height,b.phase+b.avoidanceOffset);
           const dx=pb.x-pa.x,dy=pb.y-pa.y,dist=Math.hypot(dx,dy)||.001;
           const ar=a.element.getBoundingClientRect(),br=b.element.getBoundingClientRect();
           const minGap=Math.max(70,Math.min(150,(ar.width+br.width)*.38));
           if(dist<minGap){
             const overlap=minGap-dist,ux=dx/dist,uy=dy/dist;
-            const ta={x:-Math.sin(a.angle)*width*a.rx*Math.cos(a.tilt*Math.PI/180)-Math.cos(a.angle)*height*a.ry*Math.sin(a.tilt*Math.PI/180),
-                      y:-Math.sin(a.angle)*width*a.rx*Math.sin(a.tilt*Math.PI/180)+Math.cos(a.angle)*height*a.ry*Math.cos(a.tilt*Math.PI/180)};
-            const tb={x:-Math.sin(b.angle)*width*b.rx*Math.cos(b.tilt*Math.PI/180)-Math.cos(b.angle)*height*b.ry*Math.sin(b.tilt*Math.PI/180),
-                      y:-Math.sin(b.angle)*width*b.rx*Math.sin(b.tilt*Math.PI/180)+Math.cos(b.angle)*height*b.ry*Math.cos(b.tilt*Math.PI/180)};
+            const angleA=a.phase+a.avoidanceOffset,angleB=b.phase+b.avoidanceOffset;\n            const ta={x:-Math.sin(angleA)*width*a.rx*Math.cos(a.tilt*Math.PI/180)-Math.cos(angleA)*height*a.ry*Math.sin(a.tilt*Math.PI/180),
+                      y:-Math.sin(angleA)*width*a.rx*Math.sin(a.tilt*Math.PI/180)+Math.cos(a.angle)*height*a.ry*Math.cos(a.tilt*Math.PI/180)};
+            const tb={x:-Math.sin(angleB)*width*b.rx*Math.cos(b.tilt*Math.PI/180)-Math.cos(angleB)*height*b.ry*Math.sin(b.tilt*Math.PI/180),
+                      y:-Math.sin(angleB)*width*b.rx*Math.sin(b.tilt*Math.PI/180)+Math.cos(b.angle)*height*b.ry*Math.cos(b.tilt*Math.PI/180)};
             const ca=ta.x*ux+ta.y*uy,cb=tb.x*ux+tb.y*uy;
             const movableA=!(a.hovered||a.focused),movableB=!(b.hovered||b.focused);
             if(movableA&&movableB){
@@ -158,15 +166,15 @@
               a.angle-=Math.sign(ca||1)*(overlap*.0035)*(wa/sum);
               b.angle+=Math.sign(cb||1)*(overlap*.0035)*(wb/sum);
             }else if(movableA){
-              a.angle-=Math.sign(ca||1)*overlap*.0045;
+              a.avoidanceOffset-=Math.sign(ca||1)*overlap*.0045;
             }else if(movableB){
-              b.angle+=Math.sign(cb||1)*overlap*.0045;
+              b.avoidanceOffset+=Math.sign(cb||1)*overlap*.0045;
             }
           }
         }
       }
       services.forEach(service=>{
-        const p=getPosition(service,width,height,service.angle);
+        const p=getPosition(service,width,height,service.phase+service.avoidanceOffset);
         service.element.style.transform='translate(-50%,-50%) translate('+p.x+'px,'+p.y+'px)';
       });
     }
