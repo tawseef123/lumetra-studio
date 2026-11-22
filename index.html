@@ -155,7 +155,8 @@
           const minGap=Math.max(70,Math.min(150,(ar.width+br.width)*.38));
           if(dist<minGap){
             const overlap=minGap-dist,ux=dx/dist,uy=dy/dist;
-            const angleA=a.phase+a.avoidanceOffset,angleB=b.phase+b.avoidanceOffset;\n            const ta={x:-Math.sin(angleA)*width*a.rx*Math.cos(a.tilt*Math.PI/180)-Math.cos(angleA)*height*a.ry*Math.sin(a.tilt*Math.PI/180),
+            const angleA=a.phase+a.avoidanceOffset,angleB=b.phase+b.avoidanceOffset;
+            const ta={x:-Math.sin(angleA)*width*a.rx*Math.cos(a.tilt*Math.PI/180)-Math.cos(angleA)*height*a.ry*Math.sin(a.tilt*Math.PI/180),
                       y:-Math.sin(angleA)*width*a.rx*Math.sin(a.tilt*Math.PI/180)+Math.cos(angleA)*height*a.ry*Math.cos(a.tilt*Math.PI/180)};
             const tb={x:-Math.sin(angleB)*width*b.rx*Math.cos(b.tilt*Math.PI/180)-Math.cos(angleB)*height*b.ry*Math.sin(b.tilt*Math.PI/180),
                       y:-Math.sin(angleB)*width*b.rx*Math.sin(b.tilt*Math.PI/180)+Math.cos(angleB)*height*b.ry*Math.cos(b.tilt*Math.PI/180)};
