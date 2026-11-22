@@ -3375,16 +3375,12 @@ body[data-theme="light"] #about .service-card .service-icon{
 
 
 /* V16.1 — subtle independent ambient motion for the orbit-track layer */
+/* Orbit geometry is animated in sync with the service cards by the orbit script. */
 #about .orbit-paths{
   transform-origin:50% 50%;
   transform-box:border-box;
-  animation:lumetraOrbitDrift 9s ease-in-out infinite alternate!important;
-  will-change:transform;
-}
-@keyframes lumetraOrbitDrift{
-  0%{transform:rotate(-2.8deg) scale(.985);}
-  50%{transform:rotate(0deg) scale(1.008);}
-  100%{transform:rotate(2.8deg) scale(.985);}
+  animation:none!important;
+  will-change:auto;
 }
 @media(prefers-reduced-motion:reduce){
   #about .orbit-paths{animation:none!important;will-change:auto;}
