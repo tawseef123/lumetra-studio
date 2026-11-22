@@ -2648,3 +2648,15 @@ header.nav #magicBottomNav .magic-nav-indicator {
   @view-transition { navigation: none; }
   header.nav #magicBottomNav .magic-nav-indicator { transition: none !important; }
 }
+
+/* V10.2 fix — restore original header navigation visibility at tablet/compact widths. */
+@media (max-width:760px){
+  header.nav .navin>.links{display:none!important}
+  header.nav .navin>.links.open{display:flex!important}
+  header.nav .menu{display:flex!important;flex-direction:column;justify-content:center;gap:5px;align-items:center;width:42px;height:42px;border:1px solid rgba(255,255,255,.18);border-radius:12px;background:rgba(37,99,235,.12);cursor:pointer}
+  header.nav .menu span{display:block;width:19px;height:2px;border-radius:2px;background:currentColor;transition:transform .2s,opacity .2s}
+  header.nav .menu.open span:first-child{transform:translateY(7px) rotate(45deg)}
+  header.nav .menu.open span:nth-child(2){opacity:0}
+  header.nav .menu.open span:last-child{transform:translateY(-7px) rotate(-45deg)}
+}
+@media (min-width:761px){header.nav .navin>.links{display:flex!important;position:static!important;flex-direction:row!important;align-items:center!important;max-height:none!important;overflow:visible!important;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important;backdrop-filter:none!important;gap:clamp(17px,2vw,30px)!important;width:auto!important}header.nav .menu{display:none!important}}
