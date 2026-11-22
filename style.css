@@ -3208,3 +3208,31 @@ body[data-theme="light"] #about .service-card{
   #about .service-card{will-change:auto;}
 }
 \n/* V15.7 — clearer individual service orbit tracks */\n#about .orbit-paths{opacity:1!important;}\n#about .orbit-paths ellipse{stroke-opacity:.62!important;stroke-width:1.7!important;}\n
+
+/* V15.8 — solid atomic-style individual orbit tracks */
+#about .orbit-paths{
+  opacity:1!important;
+  overflow:visible!important;
+}
+#about .orbit-paths ellipse{
+  fill:none!important;
+  stroke:url(#orbitGradient)!important;
+  stroke-width:2.1!important;
+  stroke-opacity:.78!important;
+  stroke-dasharray:none!important;
+  stroke-linecap:round!important;
+  vector-effect:non-scaling-stroke;
+  filter:drop-shadow(0 0 3px rgba(66,112,255,.28));
+}
+#about .orbit-paths .orbit-track-2,
+#about .orbit-paths .orbit-track-4,
+#about .orbit-paths .orbit-track-6{
+  stroke-opacity:.62!important;
+  stroke-width:1.8!important;
+}
+@media(max-width:640px){
+  #about .orbit-paths ellipse{
+    stroke-width:1.55!important;
+    stroke-opacity:.72!important;
+  }
+}
