@@ -145,35 +145,44 @@
         }
         service.angle=service.phase+service.avoidanceOffset;
       });
-      // Collision-aware angular nudges: preserve randomized ellipses while opening
-      // gaps. The held card stays fixed; its neighbors gently make room and recover.
+      // Collision avoidance is a gentle steering force, never a brake.
+      // Each service keeps advancing at its own speed even while another is held.
+      const steering=services.map(()=>0);
       for(let pass=0;pass<3;pass++){
         for(let i=0;i<services.length;i++) for(let j=i+1;j<services.length;j++){
-          const a=services[i],b=services[j],pa=getPosition(a,width,height,a.phase+a.avoidanceOffset),pb=getPosition(b,width,height,b.phase+b.avoidanceOffset);
+          const a=services[i],b=services[j];
+          const angleA=a.phase+a.avoidanceOffset,angleB=b.phase+b.avoidanceOffset;
+          const pa=getPosition(a,width,height,angleA),pb=getPosition(b,width,height,angleB);
           const dx=pb.x-pa.x,dy=pb.y-pa.y,dist=Math.hypot(dx,dy)||.001;
           const ar=a.element.getBoundingClientRect(),br=b.element.getBoundingClientRect();
           const minGap=Math.max(70,Math.min(150,(ar.width+br.width)*.38));
-          if(dist<minGap){
-            const overlap=minGap-dist,ux=dx/dist,uy=dy/dist;
-            const angleA=a.phase+a.avoidanceOffset,angleB=b.phase+b.avoidanceOffset;
-            const ta={x:-Math.sin(angleA)*width*a.rx*Math.cos(a.tilt*Math.PI/180)-Math.cos(angleA)*height*a.ry*Math.sin(a.tilt*Math.PI/180),
-                      y:-Math.sin(angleA)*width*a.rx*Math.sin(a.tilt*Math.PI/180)+Math.cos(angleA)*height*a.ry*Math.cos(a.tilt*Math.PI/180)};
-            const tb={x:-Math.sin(angleB)*width*b.rx*Math.cos(b.tilt*Math.PI/180)-Math.cos(angleB)*height*b.ry*Math.sin(b.tilt*Math.PI/180),
-                      y:-Math.sin(angleB)*width*b.rx*Math.sin(b.tilt*Math.PI/180)+Math.cos(angleB)*height*b.ry*Math.cos(b.tilt*Math.PI/180)};
-            const ca=ta.x*ux+ta.y*uy,cb=tb.x*ux+tb.y*uy;
-            const movableA=!(a.hovered||a.focused),movableB=!(b.hovered||b.focused);
-            if(movableA&&movableB){
-              const wa=Math.max(.15,Math.abs(ca)),wb=Math.max(.15,Math.abs(cb)),sum=wa+wb;
-              a.avoidanceOffset-=Math.sign(ca||1)*(overlap*.0035)*(wa/sum);
-              b.avoidanceOffset+=Math.sign(cb||1)*(overlap*.0035)*(wb/sum);
-            }else if(movableA){
-              a.avoidanceOffset-=Math.sign(ca||1)*overlap*.0045;
-            }else if(movableB){
-              b.avoidanceOffset+=Math.sign(cb||1)*overlap*.0045;
-            }
+          if(dist>=minGap) continue;
+          const overlap=minGap-dist,ux=dx/dist,uy=dy/dist;
+          const ta={x:-Math.sin(angleA)*width*a.rx*Math.cos(a.tilt*Math.PI/180)-Math.cos(angleA)*height*a.ry*Math.sin(a.tilt*Math.PI/180),
+                    y:-Math.sin(angleA)*width*a.rx*Math.sin(a.tilt*Math.PI/180)+Math.cos(angleA)*height*a.ry*Math.cos(a.tilt*Math.PI/180)};
+          const tb={x:-Math.sin(angleB)*width*b.rx*Math.cos(b.tilt*Math.PI/180)-Math.cos(angleB)*height*b.ry*Math.sin(b.tilt*Math.PI/180),
+                    y:-Math.sin(angleB)*width*b.rx*Math.sin(b.tilt*Math.PI/180)+Math.cos(angleB)*height*b.ry*Math.cos(b.tilt*Math.PI/180)};
+          const ca=ta.x*ux+ta.y*uy,cb=tb.x*ux+tb.y*uy;
+          const movableA=!(a.hovered||a.focused),movableB=!(b.hovered||b.focused);
+          if(movableA&&movableB){
+            const wa=Math.max(.15,Math.abs(ca)),wb=Math.max(.15,Math.abs(cb)),sum=wa+wb;
+            steering[i]-=Math.sign(ca||1)*overlap*.00045*(wa/sum);
+            steering[j]+=Math.sign(cb||1)*overlap*.00045*(wb/sum);
+          }else if(movableA){
+            steering[i]-=Math.sign(ca||1)*overlap*.00065;
+          }else if(movableB){
+            steering[j]+=Math.sign(cb||1)*overlap*.00065;
           }
         }
       }
+      services.forEach((service,index)=>{
+        if(service.hovered||service.focused) return;
+        // Limit steering to a fraction of the service's forward angular speed.
+        // This guarantees that collision handling can never cancel its rotation.
+        const maxSteer=speedProfiles[index]*delta*.42;
+        const correction=Math.max(-maxSteer,Math.min(maxSteer,steering[index]));
+        service.avoidanceOffset+=correction;
+      });
       services.forEach(service=>{
         const p=getPosition(service,width,height,service.phase+service.avoidanceOffset);
         service.element.style.transform='translate(-50%,-50%) translate('+p.x+'px,'+p.y+'px)';
