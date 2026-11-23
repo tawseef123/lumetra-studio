@@ -3530,3 +3530,40 @@ html body #about .orbit-stage{
 @media(max-width:640px){
   html body #about .orbit-stage{transform:scale(.90)!important;}
 }
+
+
+/* V16.6 — slightly enlarge About service cards while keeping orbit alignment */
+html body #about .service-card{
+  width:clamp(178px,18vw,204px)!important;
+  min-height:66px!important;
+  padding:11px 15px!important;
+  gap:11px!important;
+}
+html body #about .orbit-dot{
+  flex-basis:10px!important;
+  width:10px!important;
+  height:10px!important;
+}
+html body #about .orbit-card-copy strong{font-size:16px!important;}
+html body #about .orbit-card-copy small{font-size:9.5px!important;}
+@media(max-width:900px){
+  html body #about .service-card{
+    width:clamp(154px,20vw,178px)!important;
+    min-height:60px!important;
+    padding:9px 11px!important;
+    gap:8px!important;
+  }
+  html body #about .orbit-card-copy strong{font-size:13px!important;}
+  html body #about .orbit-card-copy small{font-size:8px!important;}
+}
+@media(max-width:640px){
+  html body #about .service-card{
+    width:clamp(140px,41vw,166px)!important;
+    min-height:53px!important;
+    padding:8px 9px!important;
+    gap:7px!important;
+  }
+  html body #about .orbit-dot{flex-basis:8px!important;width:8px!important;height:8px!important;}
+  html body #about .orbit-card-copy strong{font-size:10.5px!important;}
+  html body #about .orbit-card-copy small{font-size:7.2px!important;}
+}
