@@ -3499,3 +3499,21 @@ body[data-theme="light"] #about .center-core{background:linear-gradient(145deg,#
  #about .orbit-paths ellipse{stroke-width:1.2!important;}
  #about .orbit-paths .orbit-sweep{stroke-width:3!important;}
 }
+
+
+/* V16.4 — slightly reduce the complete About orbit composition */
+html body #about .orbit-stage{
+  transform:scale(.90)!important;
+  transform-origin:center center!important;
+}
+html body #about .about-visual-space{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+@media(max-width:900px){
+  html body #about .orbit-stage{transform:scale(.92)!important;}
+}
+@media(max-width:640px){
+  html body #about .orbit-stage{transform:scale(.94)!important;}
+}
