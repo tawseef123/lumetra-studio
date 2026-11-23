@@ -73,6 +73,7 @@
   if(!stage || stage.dataset.orbitReady==='true') return;
   stage.dataset.orbitReady='true';
   const cards=[...stage.querySelectorAll('.service-card')];
+  const orbitSvg=stage.querySelector('.orbit-paths');
   const tracks=[...stage.querySelectorAll('.orbit-paths ellipse')];
   const count=cards.length;
   const laneTemplates=[
@@ -124,7 +125,16 @@
     lastTime=time;
     if(visible && !document.hidden){
       elapsed+=delta;
-      const width=stage.clientWidth,height=stage.clientHeight;
+      // Use the actual SVG viewport as the coordinate reference. This keeps
+      // each service card centered on its matching ellipse even when the
+      // orbit stage is visually scaled or its wrapper has a different size.
+      const svgRect=orbitSvg.getBoundingClientRect();
+      const stageRect=stage.getBoundingClientRect();
+      const scaleX=stageRect.width/(stage.clientWidth||1);
+      const scaleY=stageRect.height/(stage.clientHeight||1);
+      const width=orbitSvg.clientWidth,height=orbitSvg.clientHeight;
+      const centerOffsetX=(svgRect.left-stageRect.left+svgRect.width/2-stageRect.width/2)/scaleX;
+      const centerOffsetY=(svgRect.top-stageRect.top+svgRect.height/2-stageRect.height/2)/scaleY;
       services.forEach(service=>{
         // Slowly breathe each ellipse independently. Cards use these exact
         // live dimensions/tilt, so they remain attached to their changing path.
@@ -174,7 +184,7 @@
       });
       services.forEach(service=>{
         const p=getPosition(service,width,height,service.phase+service.avoidanceOffset);
-        service.element.style.transform='translate(-50%,-50%) translate('+p.x+'px,'+p.y+'px)';
+        service.element.style.transform='translate(-50%,-50%) translate('+(p.x+centerOffsetX)+'px,'+(p.y+centerOffsetY)+'px)';
       });
     }
     frame=requestAnimationFrame(animate);
