@@ -3517,3 +3517,16 @@ html body #about .about-visual-space{
 @media(max-width:640px){
   html body #about .orbit-stage{transform:scale(.94)!important;}
 }
+
+
+/* V16.5 — further compact the About orbit composition */
+html body #about .orbit-stage{
+  transform:scale(.82)!important;
+  transform-origin:center center!important;
+}
+@media(max-width:900px){
+  html body #about .orbit-stage{transform:scale(.86)!important;}
+}
+@media(max-width:640px){
+  html body #about .orbit-stage{transform:scale(.90)!important;}
+}
