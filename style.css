@@ -3385,3 +3385,35 @@ body[data-theme="light"] #about .service-card .service-icon{
 @media(prefers-reduced-motion:reduce){
   #about .orbit-paths{animation:none!important;will-change:auto;}
 }
+
+/* V16.2 — enlarge requested section eyebrow and footer labels */
+html body .hero .eyebrow,
+html body #services .eyebrow,
+html body #portfolio .eyebrow,
+html body #assets .eyebrow,
+html body #about .eyebrow,
+html body #faq .eyebrow,
+html body #contact .contact-copy .eyebrow{
+  font-size:clamp(18px,1.5vw,23px)!important;
+  letter-spacing:3.2px!important;
+  line-height:1.35!important;
+}
+html body .footer-contact-column h3,
+html body .footer-social-column h3,
+html body .footer-column h3{
+  font-size:clamp(19px,1.4vw,23px)!important;
+  letter-spacing:2.3px!important;
+  line-height:1.4!important;
+}
+@media(max-width:640px){
+  html body .hero .eyebrow,
+  html body #services .eyebrow,
+  html body #portfolio .eyebrow,
+  html body #assets .eyebrow,
+  html body #about .eyebrow,
+  html body #faq .eyebrow,
+  html body #contact .contact-copy .eyebrow{font-size:18px!important;letter-spacing:2.4px!important;}
+  html body .footer-contact-column h3,
+  html body .footer-social-column h3,
+  html body .footer-column h3{font-size:19px!important;letter-spacing:1.8px!important;}
+}
