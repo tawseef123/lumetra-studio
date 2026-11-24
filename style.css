@@ -3669,3 +3669,14 @@ body[data-theme="light"] #about .service-card.is-orbit-hovered{
   filter:brightness(1.03) drop-shadow(0 0 8px rgba(37,99,235,.36))!important;
   border-color:rgba(37,99,235,.72)!important;
 }
+
+
+/* V17.3 — keep the hovered orbit card above every passing card */
+#about .service-card{position:absolute!important;z-index:5!important;}
+#about .service-card.is-orbit-hovered{
+  z-index:30!important;
+  scale:1.065;
+  filter:brightness(1.16) drop-shadow(0 0 9px rgba(37,145,255,.62)) drop-shadow(0 0 19px rgba(123,31,162,.34))!important;
+  border-color:rgba(95,185,255,.95)!important;
+  box-shadow:0 0 0 1px rgba(67,151,255,.22),0 0 22px rgba(37,99,235,.42),0 0 34px rgba(123,31,162,.2),inset 0 1px 0 rgba(255,255,255,.14)!important;
+}
