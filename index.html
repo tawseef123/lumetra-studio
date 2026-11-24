@@ -76,11 +76,12 @@
   const cards=[...stage.querySelectorAll('.service-card')];
   const svg=stage.querySelector('.orbit-paths');
   const count=cards.length;
-  const step=Math.PI*2/count;
+  const orbitOffsets=[Math.PI/2,Math.PI/6,-Math.PI/2,-Math.PI/6,5*Math.PI/6,-5*Math.PI/6];
   const orbitSpeed=.105;
-  let groupAngle=-Math.PI/2, lastTime=0, frame=0, visible=true;
+  let groupAngle=0, lastTime=0, frame=0, visible=true;
   const services=cards.map((element,index)=>{
-    const service={element,index,offset:index*step,angle:groupAngle+index*step,hovered:false,focused:false};
+    const offset=orbitOffsets[index]??(index*Math.PI*2/count);
+    const service={element,index,offset,angle:groupAngle+offset,hovered:false,focused:false};
     element.addEventListener('mouseenter',()=>service.hovered=true);
     element.addEventListener('mouseleave',()=>service.hovered=false);
     element.addEventListener('focusin',()=>service.focused=true);
