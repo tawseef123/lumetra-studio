@@ -3639,3 +3639,13 @@ body[data-theme="light"] #about .center-core{background:linear-gradient(145deg,#
  #about .orbit-paths .orbit-sweep{stroke-width:3!important;}
 }
 @media(prefers-reduced-motion:reduce){#about .service-card{will-change:auto;}}
+
+
+/* V17.1 — true circular orbital paths with two additional rings */
+#about .orbit-paths{preserveAspectRatio:none!important;}
+#about .orbit-paths ellipse{fill:none!important;vector-effect:non-scaling-stroke!important;stroke-width:1.9!important;stroke-opacity:.68!important;}
+#about .orbit-paths .orbit-track-1{stroke:#147fc2!important;stroke-opacity:.78!important;}
+#about .orbit-paths .orbit-track-2{stroke:#6338bb!important;stroke-opacity:.72!important;}
+#about .orbit-paths .orbit-track-3{stroke:#087fae!important;stroke-opacity:.52!important;stroke-width:1.45!important;}
+#about .orbit-paths .orbit-track-4{stroke:#7538a9!important;stroke-opacity:.48!important;stroke-width:1.4!important;}
+@media(max-width:640px){#about .orbit-paths ellipse{stroke-width:1.25!important;}}
