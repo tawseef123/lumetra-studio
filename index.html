@@ -96,10 +96,10 @@
   const services=cards.map((element,index)=>{
     const offset=orbitOffsets[index]??(index*Math.PI*2/count);
     const service={element,index,offset,angle:groupAngle+offset,hovered:false,focused:false};
-    element.addEventListener('mouseenter',()=>service.hovered=true);
-    element.addEventListener('mouseleave',()=>service.hovered=false);
-    element.addEventListener('focusin',()=>service.focused=true);
-    element.addEventListener('focusout',()=>service.focused=false);
+    element.addEventListener('mouseenter',()=>{service.hovered=true;element.classList.add('is-orbit-hovered');});
+    element.addEventListener('mouseleave',()=>{service.hovered=false;element.classList.remove('is-orbit-hovered');});
+    element.addEventListener('focusin',()=>{service.focused=true;element.classList.add('is-orbit-hovered');});
+    element.addEventListener('focusout',()=>{service.focused=false;element.classList.remove('is-orbit-hovered');});
     return service;
   });
   const observer=('IntersectionObserver' in window)?new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;},{threshold:.05}):null;
