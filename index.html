@@ -86,7 +86,8 @@
     const radii=[.34,.43,.52,.61].map(f=>minSide*f);
     orbitRings.forEach((ring,index)=>{
       const radius=radii[index];
-      ring.setAttribute('rx',String(radius/width*1000));
+      // Slightly wider than tall: a horizontal oval, not a circle.
+      ring.setAttribute('rx',String(radius*1.16/width*1000));
       ring.setAttribute('ry',String(radius/height*700));
       ring.setAttribute('transform','rotate('+([-12,18,43,-28][index])+' 500 350)');
     });
@@ -123,7 +124,7 @@
           if(Math.abs(diff)<.001) service.angle=target;
         }
         const orbitRadius=Math.min(width,height)*.43;
-        const x=Math.cos(service.angle)*orbitRadius;
+        const x=Math.cos(service.angle)*orbitRadius*1.16;
         const y=Math.sin(service.angle)*orbitRadius;
         service.element.style.transform='translate(-50%,-50%) translate('+(x+ox)+'px,'+(y+oy)+'px)';
       });
