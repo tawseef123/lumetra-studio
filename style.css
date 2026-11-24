@@ -3714,3 +3714,52 @@ body[data-theme="light"] #about .service-card.is-orbit-hovered{
   html body #about .orbit-card-copy small{font-size:6.5px!important;letter-spacing:.45px!important;}
   html body #about .center-core{width:82px!important;}
 }
+
+
+/* V17.5 — restore the requested honeycomb texture across every page/section.
+   This overrides the later V8.6 grid backdrop that replaced the hex pattern. */
+html body{
+  background-color:var(--bg,#071126)!important;
+  background-image:url('assets/honeycomb-dark.svg')!important;
+  background-repeat:repeat!important;
+  background-size:52px 45px!important;
+  background-position:top left!important;
+}
+html body[data-theme="light"]{
+  background-color:#E1E4EA!important;
+  background-image:url('assets/honeycomb-light.svg')!important;
+}
+html body .section,
+html body main .section,
+html body.subpage .page-hero,
+html body.subpage main,
+html body.subpage .page-content{
+  background-color:var(--bg,#071126)!important;
+  background-image:
+    radial-gradient(ellipse 620px 360px at 0% 0%,rgba(37,99,235,.09),transparent 72%),
+    radial-gradient(ellipse 560px 340px at 100% 100%,rgba(123,31,162,.075),transparent 72%),
+    url('assets/honeycomb-dark.svg')!important;
+  background-repeat:no-repeat,no-repeat,repeat!important;
+  background-size: auto,auto,52px 45px!important;
+  background-position:center,center,top left!important;
+}
+html body[data-theme="light"] .section,
+html body[data-theme="light"].subpage .page-hero,
+html body[data-theme="light"].subpage main,
+html body[data-theme="light"].subpage .page-content{
+  background-color:#E1E4EA!important;
+  background-image:
+    radial-gradient(ellipse 620px 360px at 0% 0%,rgba(37,99,235,.07),transparent 72%),
+    radial-gradient(ellipse 560px 340px at 100% 100%,rgba(123,31,162,.06),transparent 72%),
+    url('assets/honeycomb-light.svg')!important;
+  background-repeat:no-repeat,no-repeat,repeat!important;
+  background-size:auto,auto,52px 45px!important;
+}
+@media(max-width:760px){
+  html body .section,
+  html body.subpage .page-hero,
+  html body.subpage main,
+  html body.subpage .page-content{
+    background-size:auto,auto,44px 38px!important;
+  }
+}
