@@ -17,17 +17,18 @@
     <svg class="orbit-paths" viewBox="0 0 1000 700" preserveAspectRatio="none" aria-hidden="true">
       <defs>
         <linearGradient id="orbitGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#2563EB"/>
-          <stop offset="100%" stop-color="#7B1FA2"/>
+          <stop offset="0%" stop-color="#087fbd"/>
+          <stop offset="52%" stop-color="#2563eb"/>
+          <stop offset="100%" stop-color="#8b2bc2"/>
         </linearGradient>
       </defs>
-      <ellipse class="orbit-track orbit-track-1" cx="500" cy="350" rx="350" ry="252" transform="rotate(20 500 350)"/>
-      <ellipse class="orbit-track orbit-track-2" cx="500" cy="350" rx="370" ry="266" transform="rotate(20 500 350)"/>
-      <ellipse class="orbit-track orbit-track-3" cx="500" cy="350" rx="390" ry="280" transform="rotate(20 500 350)"/>
-      <ellipse class="orbit-track orbit-track-4" cx="500" cy="350" rx="410" ry="294" transform="rotate(20 500 350)"/>
-      <ellipse class="orbit-track orbit-track-5" cx="500" cy="350" rx="430" ry="308" transform="rotate(20 500 350)"/>
-      <ellipse class="orbit-track orbit-track-6" cx="500" cy="350" rx="450" ry="322" transform="rotate(20 500 350)"/>
-      <path class="orbit-sweep" d="M70 515 C175 180 690 20 905 155 C1015 285 600 575 205 625 C70 640 28 585 70 515Z"/>
+      <ellipse class="orbit-track orbit-track-1" cx="500" cy="350" rx="322" ry="258" transform="rotate(-13 500 350)"/>
+      <ellipse class="orbit-track orbit-track-2" cx="500" cy="350" rx="272" ry="252" transform="rotate(17 500 350)"/>
+      <path class="orbit-sweep" d="M78 470 C205 260 525 100 750 105 C925 110 930 205 825 315 C690 455 420 565 225 590 C100 606 48 550 78 470Z"/>
+      <g class="orbit-points">
+        <circle cx="100" cy="350" r="3"/><circle cx="900" cy="347" r="3"/>
+        <circle cx="320" cy="590" r="3"/><circle cx="685" cy="115" r="3"/>
+      </g>
     </svg>
     <div class="orbit-glow" aria-hidden="true"></div>
     <div class="orbit-ground-shadow" aria-hidden="true"></div>
@@ -67,7 +68,55 @@
     </div></div>
   </div>
   <div class="footer-bottom"><span>© 2026 LUMETRA STUDIO. ALL RIGHTS RESERVED.</span><span class="footer-legal"><a class="footer-inert" href="#">PRIVACY POLICY</a><a class="footer-inert" href="#">TERMS &amp; CONDITIONS</a></span></div>
-</div></footer><script src="content.js"></script><script src="script.js?v=12.0"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="admin/config.js"></script><script src="portfolio.js"></script><script src="assets-categories.js"></script><script>document.querySelectorAll(".footer-inert:not(.footer-detail):not(.social-row)").forEach(function(link){link.addEventListener("click",function(event){event.preventDefault();});});</script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="admin/config.js"></script><script src="footer-settings.js"></script><script>
+</div></footer><script src="content.js"></script><script src="script.js?v=12.0"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="admin/config.js"></script><script src="portfolio.js"></script><script src="assets-categories.js"></script><script>
+(function(){
+  const stage=document.getElementById('orbitStage');
+  if(!stage || stage.dataset.orbitReady==='true') return;
+  stage.dataset.orbitReady='true';
+  const cards=[...stage.querySelectorAll('.service-card')];
+  const svg=stage.querySelector('.orbit-paths');
+  const count=cards.length;
+  const step=Math.PI*2/count;
+  const orbitSpeed=.105;
+  let groupAngle=-Math.PI/2, lastTime=0, frame=0, visible=true;
+  const services=cards.map((element,index)=>{
+    const service={element,index,offset:index*step,angle:groupAngle+index*step,hovered:false,focused:false};
+    element.addEventListener('mouseenter',()=>service.hovered=true);
+    element.addEventListener('mouseleave',()=>service.hovered=false);
+    element.addEventListener('focusin',()=>service.focused=true);
+    element.addEventListener('focusout',()=>service.focused=false);
+    return service;
+  });
+  const observer=('IntersectionObserver' in window)?new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;},{threshold:.05}):null;
+  if(observer) observer.observe(stage);
+  function angleDelta(from,to){return Math.atan2(Math.sin(to-from),Math.cos(to-from));}
+  function animate(time){
+    if(!lastTime) lastTime=time;
+    const delta=Math.min((time-lastTime)/1000,.05);lastTime=time;
+    if(visible&&!document.hidden){
+      groupAngle+=orbitSpeed*delta;
+      const rect=svg.getBoundingClientRect(), stageRect=stage.getBoundingClientRect();
+      const sx=stageRect.width/(stage.clientWidth||1),sy=stageRect.height/(stage.clientHeight||1);
+      const width=svg.clientWidth,height=svg.clientHeight;
+      const ox=(rect.left-stageRect.left+rect.width/2-stageRect.width/2)/sx;
+      const oy=(rect.top-stageRect.top+rect.height/2-stageRect.height/2)/sy;
+      services.forEach(service=>{
+        const target=groupAngle+service.offset;
+        if(!service.hovered&&!service.focused){
+          const diff=angleDelta(service.angle,target);
+          service.angle+=diff*(1-Math.exp(-5.2*delta));
+          if(Math.abs(diff)<.001) service.angle=target;
+        }
+        const x=Math.cos(service.angle)*width*.335;
+        const y=Math.sin(service.angle)*height*.355;
+        service.element.style.transform='translate(-50%,-50%) translate('+(x+ox)+'px,'+(y+oy)+'px)';
+      });
+    }
+    frame=requestAnimationFrame(animate);
+  }
+  frame=requestAnimationFrame(animate);
+  window.addEventListener('pagehide',()=>{cancelAnimationFrame(frame);if(observer)observer.disconnect();},{once:true});
+})();</script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="admin/config.js"></script><script src="footer-settings.js"></script><script>
 (function(){
   const stage=document.getElementById('orbitStage');
   if(!stage || stage.dataset.orbitReady==='true') return;
