@@ -3680,3 +3680,37 @@ body[data-theme="light"] #about .service-card.is-orbit-hovered{
   border-color:rgba(95,185,255,.95)!important;
   box-shadow:0 0 0 1px rgba(67,151,255,.22),0 0 22px rgba(37,99,235,.42),0 0 34px rgba(123,31,162,.2),inset 0 1px 0 rgba(255,255,255,.14)!important;
 }
+
+
+/* V17.4 — keep the About orbital composition inside the mobile frame */
+@media(max-width:640px){
+  html body #about .about-visual-space{
+    width:100%!important;
+    min-height:310px!important;
+    height:310px!important;
+    margin:8px auto 0!important;
+    overflow:hidden!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+  }
+  html body #about .orbit-stage{
+    width:100%!important;
+    max-width:390px!important;
+    min-height:390px!important;
+    height:390px!important;
+    flex:0 0 390px!important;
+    transform:scale(.76)!important;
+    transform-origin:center center!important;
+    margin:0 auto!important;
+  }
+  html body #about .service-card{
+    width:clamp(124px,36vw,146px)!important;
+    min-height:46px!important;
+    padding:6px 8px!important;
+    gap:6px!important;
+  }
+  html body #about .orbit-card-copy strong{font-size:9.5px!important;}
+  html body #about .orbit-card-copy small{font-size:6.5px!important;letter-spacing:.45px!important;}
+  html body #about .center-core{width:82px!important;}
+}
