@@ -3649,3 +3649,23 @@ body[data-theme="light"] #about .center-core{background:linear-gradient(145deg,#
 #about .orbit-paths .orbit-track-3{stroke:#087fae!important;stroke-opacity:.52!important;stroke-width:1.45!important;}
 #about .orbit-paths .orbit-track-4{stroke:#7538a9!important;stroke-opacity:.48!important;stroke-width:1.4!important;}
 @media(max-width:640px){#about .orbit-paths ellipse{stroke-width:1.25!important;}}
+
+
+/* V17.2 — hovered service lifts and glows while passing cards layer beneath */
+#about .service-card{
+  z-index:5!important;
+  transform-origin:center center;
+  scale:1;
+  transition:scale .24s cubic-bezier(.2,.8,.2,1),filter .24s ease,box-shadow .24s ease,border-color .24s ease!important;
+}
+#about .service-card.is-orbit-hovered{
+  z-index:4!important;
+  scale:1.065;
+  filter:brightness(1.16) drop-shadow(0 0 9px rgba(37,145,255,.62)) drop-shadow(0 0 19px rgba(123,31,162,.34))!important;
+  border-color:rgba(95,185,255,.95)!important;
+  box-shadow:0 0 0 1px rgba(67,151,255,.22),0 0 22px rgba(37,99,235,.42),0 0 34px rgba(123,31,162,.2),inset 0 1px 0 rgba(255,255,255,.14)!important;
+}
+body[data-theme="light"] #about .service-card.is-orbit-hovered{
+  filter:brightness(1.03) drop-shadow(0 0 8px rgba(37,99,235,.36))!important;
+  border-color:rgba(37,99,235,.72)!important;
+}
