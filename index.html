@@ -22,8 +22,10 @@
           <stop offset="100%" stop-color="#8b2bc2"/>
         </linearGradient>
       </defs>
-      <ellipse class="orbit-track orbit-track-1" cx="500" cy="350" rx="322" ry="258" transform="rotate(-13 500 350)"/>
-      <ellipse class="orbit-track orbit-track-2" cx="500" cy="350" rx="272" ry="252" transform="rotate(17 500 350)"/>
+      <ellipse class="orbit-track orbit-track-1" cx="500" cy="350" rx="300" ry="210"/>
+      <ellipse class="orbit-track orbit-track-2" cx="500" cy="350" rx="250" ry="175"/>
+      <ellipse class="orbit-track orbit-track-3" cx="500" cy="350" rx="350" ry="245"/>
+      <ellipse class="orbit-track orbit-track-4" cx="500" cy="350" rx="400" ry="280"/>
       <path class="orbit-sweep" d="M78 470 C205 260 525 100 750 105 C925 110 930 205 825 315 C690 455 420 565 225 590 C100 606 48 550 78 470Z"/>
       <g class="orbit-points">
         <circle cx="100" cy="350" r="3"/><circle cx="900" cy="347" r="3"/>
@@ -78,6 +80,17 @@
   const count=cards.length;
   const orbitOffsets=[Math.PI/2,Math.PI/6,-Math.PI/2,-Math.PI/6,5*Math.PI/6,-5*Math.PI/6];
   const orbitSpeed=.105;
+  const orbitRings=[...svg.querySelectorAll('.orbit-track')];
+  function sizeCircularOrbits(width,height){
+    const minSide=Math.min(width,height);
+    const radii=[.30,.38,.46,.54].map(f=>minSide*f);
+    orbitRings.forEach((ring,index)=>{
+      const radius=radii[index];
+      ring.setAttribute('rx',String(radius/width*1000));
+      ring.setAttribute('ry',String(radius/height*700));
+      ring.setAttribute('transform','rotate('+([-12,18,43,-28][index])+' 500 350)');
+    });
+  }
   let groupAngle=0, lastTime=0, frame=0, visible=true;
   const services=cards.map((element,index)=>{
     const offset=orbitOffsets[index]??(index*Math.PI*2/count);
@@ -99,6 +112,7 @@
       const rect=svg.getBoundingClientRect(), stageRect=stage.getBoundingClientRect();
       const sx=stageRect.width/(stage.clientWidth||1),sy=stageRect.height/(stage.clientHeight||1);
       const width=svg.clientWidth,height=svg.clientHeight;
+      sizeCircularOrbits(width,height);
       const ox=(rect.left-stageRect.left+rect.width/2-stageRect.width/2)/sx;
       const oy=(rect.top-stageRect.top+rect.height/2-stageRect.height/2)/sy;
       services.forEach(service=>{
@@ -108,8 +122,9 @@
           service.angle+=diff*(1-Math.exp(-5.2*delta));
           if(Math.abs(diff)<.001) service.angle=target;
         }
-        const x=Math.cos(service.angle)*width*.335;
-        const y=Math.sin(service.angle)*height*.355;
+        const orbitRadius=Math.min(width,height)*.38;
+        const x=Math.cos(service.angle)*orbitRadius;
+        const y=Math.sin(service.angle)*orbitRadius;
         service.element.style.transform='translate(-50%,-50%) translate('+(x+ox)+'px,'+(y+oy)+'px)';
       });
     }
