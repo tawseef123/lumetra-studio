@@ -83,7 +83,7 @@
   const orbitRings=[...svg.querySelectorAll('.orbit-track')];
   function sizeCircularOrbits(width,height){
     const minSide=Math.min(width,height);
-    const radii=[.30,.38,.46,.54].map(f=>minSide*f);
+    const radii=[.34,.43,.52,.61].map(f=>minSide*f);
     orbitRings.forEach((ring,index)=>{
       const radius=radii[index];
       ring.setAttribute('rx',String(radius/width*1000));
@@ -122,7 +122,7 @@
           service.angle+=diff*(1-Math.exp(-5.2*delta));
           if(Math.abs(diff)<.001) service.angle=target;
         }
-        const orbitRadius=Math.min(width,height)*.38;
+        const orbitRadius=Math.min(width,height)*.43;
         const x=Math.cos(service.angle)*orbitRadius;
         const y=Math.sin(service.angle)*orbitRadius;
         service.element.style.transform='translate(-50%,-50%) translate('+(x+ox)+'px,'+(y+oy)+'px)';
