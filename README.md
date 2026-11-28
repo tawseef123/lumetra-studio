@@ -9,3 +9,7 @@ Replaced the former Clients section with a Frequently Asked Questions section co
 - Homepage shows published Asset Category cards in an auto-resizing two-row grid.
 - Assets page groups published asset cards into separate category segments.
 - Run `supabase/asset_categories_migration.sql` once before using the new feature.
+
+## Deployment
+
+This site is published through GitHub Pages from the `main` branch.
