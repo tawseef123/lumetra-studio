@@ -3887,3 +3887,71 @@ html body[data-theme="light"].subpage .page-content{
     transform-origin:center center!important;
   }
 }
+
+
+/* V17.8 — desktop-only interactive About orbit; passive lightweight motion on touch/tablet */
+@media (max-width:1024px){
+  html body #about .about-visual-space{
+    width:100%!important;
+    max-width:100%!important;
+    overflow:hidden!important;
+    contain:layout paint!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+  }
+  html body #about .orbit-stage{
+    width:min(100%,760px)!important;
+    max-width:760px!important;
+    overflow:visible!important;
+    transform:scale(.82)!important;
+    transform-origin:center center!important;
+    pointer-events:none!important;
+    touch-action:pan-y!important;
+  }
+  html body #about .orbit-stage .service-card{
+    pointer-events:none!important;
+    cursor:default!important;
+    transition:none!important;
+    animation:none!important;
+  }
+  html body #about .orbit-stage .service-card.is-orbit-hovered{
+    scale:1!important;
+    filter:none!important;
+    box-shadow:0 9px 24px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.07)!important;
+  }
+  html body #about .orbit-stage .service-card:focus,
+  html body #about .orbit-stage .service-card:hover{
+    outline:none!important;
+    scale:1!important;
+    filter:none!important;
+  }
+}
+@media (max-width:640px){
+  html body #about .about-visual-space{
+    width:100%!important;
+    height:clamp(260px,76vw,340px)!important;
+    min-height:0!important;
+    margin:0 auto!important;
+  }
+  html body #about .orbit-stage{
+    width:390px!important;
+    min-width:390px!important;
+    max-width:390px!important;
+    height:390px!important;
+    min-height:390px!important;
+    flex:0 0 390px!important;
+    transform:scale(clamp(.66, calc((100vw - 28px)/390), .84))!important;
+  }
+}
+@media (min-width:641px) and (max-width:1024px){
+  html body #about .about-visual-space{
+    height:clamp(330px,48vw,470px)!important;
+    min-height:0!important;
+  }
+  html body #about .orbit-stage{
+    height:470px!important;
+    min-height:470px!important;
+    transform:scale(clamp(.70, calc((100vw - 64px)/820), .86))!important;
+  }
+}
