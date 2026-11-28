@@ -77,40 +77,64 @@
   stage.dataset.orbitReady='true';
   const cards=[...stage.querySelectorAll('.service-card')];
   const svg=stage.querySelector('.orbit-paths');
+  if(!svg || !cards.length) return;
   const count=cards.length;
   const orbitOffsets=[Math.PI/2,Math.PI/6,-Math.PI/2,-Math.PI/6,5*Math.PI/6,-5*Math.PI/6];
   const orbitSpeed=.105;
   const orbitRings=[...svg.querySelectorAll('.orbit-track')];
+  const passiveQuery=window.matchMedia('(max-width: 1024px)');
+  let passive=passiveQuery.matches;
+  function setMode(){
+    passive=passiveQuery.matches;
+    stage.classList.toggle('orbit-passive-mode',passive);
+    if(passive) cards.forEach(card=>card.classList.remove('is-orbit-hovered'));
+  }
+  setMode();
+  if(passiveQuery.addEventListener) passiveQuery.addEventListener('change',setMode);
+  else passiveQuery.addListener(setMode);
   function sizeCircularOrbits(width,height){
     const minSide=Math.min(width,height);
     const radii=[.34,.43,.52,.61].map(f=>minSide*f);
     orbitRings.forEach((ring,index)=>{
       const radius=radii[index];
-      // Slightly wider than tall: a horizontal oval, not a circle.
       ring.setAttribute('rx',String(radius*1.16/width*1000));
       ring.setAttribute('ry',String(radius/height*700));
       ring.setAttribute('transform','rotate('+([-12,18,43,-28][index])+' 500 350)');
     });
   }
-  let groupAngle=0, lastTime=0, frame=0, visible=true;
+  let groupAngle=0,lastTime=0,frame=0,visible=true,lastPassiveFrame=0;
   const services=cards.map((element,index)=>{
     const offset=orbitOffsets[index]??(index*Math.PI*2/count);
     const service={element,index,offset,angle:groupAngle+offset,hovered:false,focused:false};
-    element.addEventListener('mouseenter',()=>{service.hovered=true;element.classList.add('is-orbit-hovered');});
-    element.addEventListener('mouseleave',()=>{service.hovered=false;element.classList.remove('is-orbit-hovered');});
-    element.addEventListener('focusin',()=>{service.focused=true;element.classList.add('is-orbit-hovered');});
-    element.addEventListener('focusout',()=>{service.focused=false;element.classList.remove('is-orbit-hovered');});
+    element.addEventListener('mouseenter',()=>{
+      if(passive)return;
+      service.hovered=true;element.classList.add('is-orbit-hovered');
+    });
+    element.addEventListener('mouseleave',()=>{
+      service.hovered=false;element.classList.remove('is-orbit-hovered');
+    });
+    element.addEventListener('focusin',()=>{
+      if(passive)return;
+      service.focused=true;element.classList.add('is-orbit-hovered');
+    });
+    element.addEventListener('focusout',()=>{
+      service.focused=false;element.classList.remove('is-orbit-hovered');
+    });
     return service;
   });
   const observer=('IntersectionObserver' in window)?new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;},{threshold:.05}):null;
   if(observer) observer.observe(stage);
   function angleDelta(from,to){return Math.atan2(Math.sin(to-from),Math.cos(to-from));}
   function animate(time){
-    if(!lastTime) lastTime=time;
+    if(!lastTime)lastTime=time;
     const delta=Math.min((time-lastTime)/1000,.05);lastTime=time;
-    if(visible&&!document.hidden){
+    // Tablet and phone use a passive, video-like orbit: no hover/focus
+    // interaction, no card collision logic, and a capped 30fps update.
+    const shouldRender=!passive || time-lastPassiveFrame>=33;
+    if(visible&&!document.hidden&&shouldRender){
+      if(passive)lastPassiveFrame=time;
       groupAngle+=orbitSpeed*delta;
-      const rect=svg.getBoundingClientRect(), stageRect=stage.getBoundingClientRect();
+      const rect=svg.getBoundingClientRect(),stageRect=stage.getBoundingClientRect();
       const sx=stageRect.width/(stage.clientWidth||1),sy=stageRect.height/(stage.clientHeight||1);
       const width=svg.clientWidth,height=svg.clientHeight;
       sizeCircularOrbits(width,height);
@@ -118,10 +142,12 @@
       const oy=(rect.top-stageRect.top+rect.height/2-stageRect.height/2)/sy;
       services.forEach(service=>{
         const target=groupAngle+service.offset;
-        if(!service.hovered&&!service.focused){
+        if(!passive&&!service.hovered&&!service.focused){
           const diff=angleDelta(service.angle,target);
           service.angle+=diff*(1-Math.exp(-5.2*delta));
-          if(Math.abs(diff)<.001) service.angle=target;
+          if(Math.abs(diff)<.001)service.angle=target;
+        }else if(passive){
+          service.angle=target;
         }
         const orbitRadius=Math.min(width,height)*.43;
         const x=Math.cos(service.angle)*orbitRadius*1.16;
